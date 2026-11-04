@@ -146,6 +146,11 @@ Open the `android/` folder in Android Studio and build; Gradle compiles the Rust
 The desktop applications use gettext catalogs in [`po/`](po/). A new language only needs a new
 `.po` file — the programs don't have to be rebuilt. See [po/README.md](po/README.md).
 
+The Android reader uses standard Android string resources: English in
+`android/app/src/main/res/values/strings.xml`, Ukrainian in `values-uk/`. It follows the phone's
+language, and on Android 13+ the language can also be chosen per app in the system settings.
+A new language is a `values-<lang>/strings.xml` file plus an entry in `res/xml/locales_config.xml`.
+
 ## Contributing
 
 Bug reports, fixes, translations and ideas are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).

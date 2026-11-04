@@ -91,6 +91,8 @@ import uniffi.vnmf_ffi.Book
 import uniffi.vnmf_ffi.BookInfo
 import uniffi.vnmf_ffi.PageInfo
 import kotlin.math.roundToInt
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 
 /** A fragment in reading order: chunk index in the file, the page, and the fragment number within it. */
 data class ChunkRef(val index: UInt, val page: Int, val part: Int, val width: Int, val height: Int) {
@@ -113,6 +115,7 @@ class BookLayout(book: Book) {
         byPage.forEachIndexed { i, parts -> rows[i] = row; row += parts.size }
     }
     val contents = book.contents()
+    val hasVolumes = book.hasVolumes()
 }
 
 /** Cache key of a fragment image: the same width and version (dark or regular) — the same bitmap. */
@@ -189,21 +192,22 @@ fun ReaderScreen(
                 title = {
                     Column {
                         Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                        val position = book.positionLabel(current.toUInt())
+                        val position = positionLabel(book, layout, current)
                         Text(
-                            (position?.let { "$it · " } ?: "") + "page ${current + 1} of ${pages.size}",
+                            if (position != null) stringResource(R.string.reader_position_page, position, current + 1, pages.size)
+                            else stringResource(R.string.reader_page, current + 1, pages.size),
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )
                     }
                 },
-                navigationIcon = { IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back") } },
+                navigationIcon = { IconButton(onClick = onClose) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } },
                 actions = {
-                    if (info.hasText) IconButton(onClick = { showText = true }) { Icon(Icons.AutoMirrored.Filled.Notes, "Page text") }
+                    if (info.hasText) IconButton(onClick = { showText = true }) { Icon(Icons.AutoMirrored.Filled.Notes, stringResource(R.string.page_text)) }
                     if (info.hasMusic || info.hasSfx) {
                         IconButton(onClick = { settings.sound = !settings.sound }) {
-                            Icon(if (settings.sound) Icons.AutoMirrored.Filled.VolumeUp else Icons.AutoMirrored.Filled.VolumeOff, "Sound")
+                            Icon(if (settings.sound) Icons.AutoMirrored.Filled.VolumeUp else Icons.AutoMirrored.Filled.VolumeOff, stringResource(R.string.sound))
                         }
                     }
                     IconButton(onClick = {
@@ -212,12 +216,12 @@ fun ReaderScreen(
                         strip = !strip
                         library.setStripMode(info.uuid, strip)
                     }) {
-                        if (strip) Icon(Icons.Filled.AutoStories, "Read page by page") else Icon(Icons.Filled.ViewDay, "Read as a strip")
+                        if (strip) Icon(Icons.Filled.AutoStories, stringResource(R.string.read_paged)) else Icon(Icons.Filled.ViewDay, stringResource(R.string.read_strip))
                     }
                     if (contents.sumOf { it.chapters.size } > 1) {
-                        IconButton(onClick = { showContents = true }) { Icon(Icons.AutoMirrored.Filled.List, "Contents") }
+                        IconButton(onClick = { showContents = true }) { Icon(Icons.AutoMirrored.Filled.List, stringResource(R.string.contents)) }
                     }
-                    IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Settings") }
+                    IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, stringResource(R.string.settings)) }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.92f)),
             )
@@ -228,14 +232,14 @@ fun ReaderScreen(
         ModalBottomSheet(onDismissRequest = { showContents = false }) {
             LazyColumn {
                 contents.forEach { volume ->
-                    if (volume.label.isNotEmpty()) {
-                        item { Text(volume.label, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 12.dp)) }
+                    if (layout.hasVolumes) {
+                        item { Text(volumeLabel(volume), style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(16.dp, 12.dp)) }
                     }
                     volume.chapters.forEach { chapter ->
                         item {
                             ListItem(
-                                headlineContent = { Text(chapter.label) },
-                                supportingContent = { Text("${chapter.pageCount} pp.") },
+                                headlineContent = { Text(chapterLabel(chapter)) },
+                                supportingContent = { Text(pluralStringResource(R.plurals.chapter_pages, chapter.pageCount.toInt(), chapter.pageCount.toInt())) },
                                 modifier = Modifier.clickable {
                                     showContents = false
                                     JumpBus.request(chapter.firstPage.toInt())
@@ -252,7 +256,7 @@ fun ReaderScreen(
         ModalBottomSheet(onDismissRequest = { showText = false }) {
             val text = remember(current) { runCatching { book.pageText(current.toUInt()) }.getOrNull() }
             Text(
-                text ?: "There is no text on this page.",
+                text ?: stringResource(R.string.no_page_text),
                 modifier = Modifier.padding(20.dp).navigationBarsPadding().verticalScroll(rememberScrollState()),
             )
         }

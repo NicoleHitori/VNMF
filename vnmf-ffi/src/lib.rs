@@ -84,16 +84,25 @@ pub struct PageInfo {
 
 #[derive(uniffi::Record)]
 pub struct ChapterInfo {
-    /// "Chapter 3 — Title".
-    pub label: String,
+    /// Number for display: `"3"`, `"10.5"` (the app composes the localized "Chapter 3 — Title").
+    pub number: String,
+    pub title: Option<String>,
     pub first_page: u32,
     pub page_count: u32,
 }
 
+/// A page's place in the contents: indices into [`Book::contents`].
+#[derive(uniffi::Record, Debug, PartialEq, Eq)]
+pub struct PagePosition {
+    pub volume: u32,
+    pub chapter: u32,
+}
+
 #[derive(uniffi::Record)]
 pub struct VolumeInfo {
-    /// "Volume 1 — Title"; without volumes — empty.
-    pub label: String,
+    /// Volume number; `0` — chapters outside volumes (see [`Book::has_volumes`]).
+    pub number: u32,
+    pub title: Option<String>,
     pub first_page: u32,
     pub page_count: u32,
     pub chapters: Vec<ChapterInfo>,
@@ -374,21 +383,41 @@ impl Book {
             .volumes
             .iter()
             .map(|v| VolumeInfo {
-                label: if self.toc.has_volumes { v.label() } else { String::new() },
+                number: u32::from(v.volume),
+                title: v.title.clone(),
                 first_page: v.pages.start as u32,
                 page_count: v.pages.len() as u32,
                 chapters: v
                     .chapters
                     .iter()
-                    .map(|c| ChapterInfo { label: c.label(), first_page: c.pages.start as u32, page_count: c.pages.len() as u32 })
+                    .map(|c| ChapterInfo {
+                        number: c.display_number(),
+                        title: c.title.clone(),
+                        first_page: c.pages.start as u32,
+                        page_count: c.pages.len() as u32,
+                    })
                     .collect(),
             })
             .collect()
     }
 
-    /// "Volume 1 · Chapter 3 — Title" for a page; `None` — the book has a single chapter without volumes.
-    pub fn position_label(&self, page: u32) -> Option<String> {
-        self.toc.is_structured().then(|| self.toc.position_label(page as usize)).flatten()
+    /// Whether the book is divided into volumes (otherwise [`Self::contents`] is one volume `0` with chapters).
+    pub fn has_volumes(&self) -> bool {
+        self.toc.has_volumes
+    }
+
+    /// Where a page is: indices into [`Self::contents`] (volume, chapter in it). `None` — the book is a
+    /// single chapter without volumes, so there's nothing worth showing. Labels are composed by the app
+    /// from the numbers and titles, in its own language.
+    pub fn position(&self, page: u32) -> Option<PagePosition> {
+        if !self.toc.is_structured() {
+            return None;
+        }
+        let page = page as usize;
+        self.toc.volumes.iter().enumerate().find_map(|(vi, v)| {
+            let ci = v.chapters.iter().position(|c| c.pages.contains(&page))?;
+            Some(PagePosition { volume: vi as u32, chapter: ci as u32 })
+        })
     }
 
     /// Music that should play on the page (it continues until it changes; the boundary is the chapter).
@@ -603,7 +632,9 @@ mod tests {
         let contents = book.contents();
         assert_eq!(contents.len(), 2);
         assert_eq!(contents[1].first_page, 2);
-        assert!(book.position_label(2).is_some());
+        assert!(book.has_volumes());
+        assert_eq!((contents[1].number, contents[1].chapters[0].number.as_str()), (2, "1"));
+        assert_eq!(book.position(2), Some(PagePosition { volume: 1, chapter: 0 }));
 
         // Music continues on page 1 (the effect doesn't interrupt it), volume 2 is a different chapter, silence.
         let music = book.music_at(1).unwrap();

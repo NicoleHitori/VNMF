@@ -83,6 +83,11 @@ The GTK applications are translated with gettext; see [po/README.md](po/README.m
 
 **Adding a translation** is one of the easiest ways to help: create `po/<lang>.po` as described
 in [po/README.md](po/README.md) and open a pull request. No programming is needed.
+For the Android reader, translate `android/app/src/main/res/values/strings.xml` into
+`values-<lang>/strings.xml` and add the language to `res/xml/locales_config.xml`.
+
+In the Android code, user-visible text goes into `res/values/strings.xml` and is used with
+`stringResource(R.string.…)` (`pluralStringResource` for counts) — never as a string literal.
 
 ## Pull requests
 

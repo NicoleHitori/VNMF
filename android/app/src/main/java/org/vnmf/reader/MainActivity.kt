@@ -68,6 +68,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uniffi.vnmf_ffi.Book
 import uniffi.vnmf_ffi.BookInfo
+import androidx.compose.ui.res.stringResource
 
 /** An open book: the Rust object, info, layout (pages, fragments, contents) and the display title. */
 class OpenBook(val book: Book, val info: BookInfo, val layout: BookLayout, val title: String)
@@ -152,8 +153,8 @@ private fun App(incoming: Uri?, onIncomingHandled: () -> Unit) {
     error?.let { message ->
         AlertDialog(
             onDismissRequest = { error = null },
-            confirmButton = { TextButton(onClick = { error = null }) { Text("OK") } },
-            title = { Text("Could not open") },
+            confirmButton = { TextButton(onClick = { error = null }) { Text(stringResource(R.string.ok)) } },
+            title = { Text(stringResource(R.string.could_not_open)) },
             text = { Text(message) },
         )
     }
@@ -177,14 +178,14 @@ private fun LibraryScreen(library: Library, loading: Boolean, onOpen: (Uri) -> U
         topBar = {
             TopAppBar(
                 title = { Text("VNMF Reader") },
-                actions = { IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Reading settings") } },
+                actions = { IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, stringResource(R.string.reading_settings)) } },
             )
         },
         floatingActionButton = {
             ExtendedFloatingActionButton(
                 onClick = { pick.launch(arrayOf("application/x-vnmf", "application/octet-stream", "*/*")) },
                 icon = { Icon(Icons.Filled.Add, null) },
-                text = { Text("Open file") },
+                text = { Text(stringResource(R.string.open_file)) },
             )
         },
         snackbarHost = { SnackbarHost(snackbar) },
@@ -192,7 +193,7 @@ private fun LibraryScreen(library: Library, loading: Boolean, onOpen: (Uri) -> U
         Box(Modifier.fillMaxSize().padding(padding)) {
             if (books.isEmpty()) {
                 Text(
-                    "Opened books will appear here.\nOpen a .vnmf file with the button below or from a file manager.",
+                    stringResource(R.string.library_empty),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodyLarge,
                     modifier = Modifier.align(Alignment.Center).padding(32.dp),
@@ -218,7 +219,7 @@ private fun LibraryScreen(library: Library, loading: Boolean, onOpen: (Uri) -> U
                             }
                             Text(book.title, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
                             library.position(book.uuid)?.let {
-                                Text("p. ${it.page + 1} of ${book.pages}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text(stringResource(R.string.library_progress, it.page + 1, book.pages), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     }
@@ -236,11 +237,11 @@ private fun LibraryScreen(library: Library, loading: Boolean, onOpen: (Uri) -> U
                     library.forget(book)
                     books.remove(book)
                     forget = null
-                }) { Text("Remove") }
+                }) { Text(stringResource(R.string.remove)) }
             },
-            dismissButton = { TextButton(onClick = { forget = null }) { Text("Cancel") } },
-            title = { Text("Remove from library?") },
-            text = { Text("“${book.title}” will disappear from the list. The file itself stays where it is.") },
+            dismissButton = { TextButton(onClick = { forget = null }) { Text(stringResource(R.string.cancel)) } },
+            title = { Text(stringResource(R.string.remove_title)) },
+            text = { Text(stringResource(R.string.remove_text, book.title)) },
         )
     }
 }

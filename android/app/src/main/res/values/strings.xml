@@ -1,4 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- English (default). A translation is values-<lang>/strings.xml plus the language in xml/locales_config.xml. -->
 <resources>
-    <string name="app_name">VNMF Reader</string>
+    <string name="app_name" translatable="false">VNMF Reader</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
+    <string name="could_not_open">Could not open</string>
+    <string name="could_not_open_file">Could not open the file</string>
+    <string name="untitled">Untitled</string>
+    <string name="reading_settings">Reading settings</string>
+    <string name="open_file">Open file</string>
+    <string name="library_empty">Opened books will appear here.\nOpen a .vnmf file with the button below or from a file manager.</string>
+    <string name="library_progress">p. %1$d of %2$d</string>
+    <string name="remove">Remove</string>
+    <string name="remove_title">Remove from library?</string>
+    <string name="remove_text">“%1$s” will disappear from the list. The file itself stays where it is.</string>
+    <string name="reader_page">page %1$d of %2$d</string>
+    <string name="reader_position_page">%1$s · page %2$d of %3$d</string>
+    <string name="page_text">Page text</string>
+    <string name="no_page_text">There is no text on this page.</string>
+    <string name="sound">Sound</string>
+    <string name="read_paged">Read page by page</string>
+    <string name="read_strip">Read as a strip</string>
+    <string name="contents">Contents</string>
+    <string name="settings">Settings</string>
+    <string name="chapter">Chapter %1$s</string>
+    <string name="chapter_titled">Chapter %1$s — %2$s</string>
+    <string name="volume">Volume %1$d</string>
+    <string name="volume_titled">Volume %1$d — %2$s</string>
+    <string name="no_volume">No volume</string>
+    <string name="position">%1$s · %2$s</string>
+    <string name="background_theme">Follow theme</string>
+    <string name="background_black">Black</string>
+    <string name="background_gray">Gray</string>
+    <string name="background_white">White</string>
+    <string name="fit_page">Whole page</string>
+    <string name="fit_width">Fit width</string>
+    <string name="settings_view">View</string>
+    <string name="settings_background">Background</string>
+    <string name="settings_background_summary">Color around the page</string>
+    <string name="settings_page">Page</string>
+    <string name="settings_page_summary">Entirely on screen or full width with scrolling</string>
+    <string name="settings_tap_zones">Turn pages by tapping the edges</string>
+    <string name="settings_tap_zones_summary">The left and right screen edges turn pages, the middle toggles the bar</string>
+    <string name="settings_auto_hide">Hide the reader bar</string>
+    <string name="settings_auto_hide_summary">Disappears by itself after a few seconds</string>
+    <string name="settings_immersive">Fullscreen reading</string>
+    <string name="settings_immersive_summary">System bars are hidden; they appear together with the reader bar</string>
+    <string name="settings_manga">Manga</string>
+    <string name="settings_manga_summary">Paged mode</string>
+    <string name="settings_spread">Spread</string>
+    <string name="settings_spread_summary">In landscape — two pages side by side; wide pages shown alone</string>
+    <string name="settings_cover_alone">Cover alone</string>
+    <string name="settings_cover_alone_summary">In a spread the first page is shown by itself</string>
+    <string name="settings_preload">Preloading</string>
+    <string name="settings_preload_summary">How many pages ahead to prepare</string>
+    <string name="settings_webtoon">Webtoon</string>
+    <string name="settings_webtoon_summary">Strip mode</string>
+    <string name="settings_strip_width" formatted="false">Strip width, %</string>
+    <string name="settings_strip_width_summary" formatted="false">100% — full screen width</string>
+    <string name="settings_strip_gap">Gap between fragments, dp</string>
+    <string name="settings_attachments">Sound and page attachments</string>
+    <string name="settings_attachments_summary">If the file contains them: music, sound effects, text and dark versions of pages</string>
+    <string name="settings_sound_summary">Page music and effects</string>
+    <string name="settings_volume" formatted="false">Volume, %</string>
+    <string name="settings_volume_summary">Shared by music and effects</string>
+    <string name="settings_dark_pages">Dark page versions</string>
+    <string name="settings_dark_pages_summary">Used instead of the regular ones in a dark theme</string>
+    <string name="settings_position">Reading position</string>
+    <string name="settings_remember">Remember the page</string>
+    <string name="settings_remember_summary">Open each book where you left off (by file UUID)</string>
+    <string name="settings_forget">Forget all saved positions</string>
+    <string name="settings_forgotten">Positions forgotten</string>
+    <plurals name="chapter_pages">
+        <item quantity="one">%d page</item>
+        <item quantity="other">%d pages</item>
+    </plurals>
 </resources>

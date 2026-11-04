@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ukrainian. -->
+<resources>
+    <string name="ok">Гаразд</string>
+    <string name="cancel">Скасувати</string>
+    <string name="back">Назад</string>
+    <string name="could_not_open">Не вдалося відкрити</string>
+    <string name="could_not_open_file">Не вдалося відкрити файл</string>
+    <string name="untitled">Без назви</string>
+    <string name="reading_settings">Налаштування читання</string>
+    <string name="open_file">Відкрити файл</string>
+    <string name="library_empty">Тут з\'являться відкриті книги.\nВідкрийте файл .vnmf кнопкою нижче або з файлового менеджера.</string>
+    <string name="library_progress">стор. %1$d з %2$d</string>
+    <string name="remove">Прибрати</string>
+    <string name="remove_title">Прибрати з бібліотеки?</string>
+    <string name="remove_text">«%1$s» зникне зі списку. Сам файл лишиться на місці.</string>
+    <string name="reader_page">сторінка %1$d з %2$d</string>
+    <string name="reader_position_page">%1$s · сторінка %2$d з %3$d</string>
+    <string name="page_text">Текст сторінки</string>
+    <string name="no_page_text">На цій сторінці тексту немає.</string>
+    <string name="sound">Звук</string>
+    <string name="read_paged">Читати посторінково</string>
+    <string name="read_strip">Читати стрічкою</string>
+    <string name="contents">Зміст</string>
+    <string name="settings">Налаштування</string>
+    <string name="chapter">Розділ %1$s</string>
+    <string name="chapter_titled">Розділ %1$s — %2$s</string>
+    <string name="volume">Том %1$d</string>
+    <string name="volume_titled">Том %1$d — %2$s</string>
+    <string name="no_volume">Без тому</string>
+    <string name="position">%1$s · %2$s</string>
+    <string name="background_theme">Як у темі</string>
+    <string name="background_black">Чорний</string>
+    <string name="background_gray">Сірий</string>
+    <string name="background_white">Білий</string>
+    <string name="fit_page">Цілком</string>
+    <string name="fit_width">По ширині</string>
+    <string name="settings_view">Перегляд</string>
+    <string name="settings_background">Фон</string>
+    <string name="settings_background_summary">Колір навколо сторінки</string>
+    <string name="settings_page">Сторінка</string>
+    <string name="settings_page_summary">Цілком на екрані або на всю ширину з прокруткою</string>
+    <string name="settings_tap_zones">Гортання дотиком по краях</string>
+    <string name="settings_tap_zones_summary">Лівий і правий край екрана гортають, середина — панель</string>
+    <string name="settings_auto_hide">Ховати панель читалки</string>
+    <string name="settings_auto_hide_summary">Зникає сама за кілька секунд</string>
+    <string name="settings_immersive">Повноекранне читання</string>
+    <string name="settings_immersive_summary">Системні панелі сховано; з\'являються разом з панеллю читалки</string>
+    <string name="settings_manga">Манга</string>
+    <string name="settings_manga_summary">Посторінковий режим</string>
+    <string name="settings_spread">Розворот</string>
+    <string name="settings_spread_summary">В альбомній орієнтації — дві сторінки поруч; широкі сторінки — окремо</string>
+    <string name="settings_cover_alone">Обкладинка окремо</string>
+    <string name="settings_cover_alone_summary">У розвороті перша сторінка показується сама</string>
+    <string name="settings_preload">Попереднє завантаження</string>
+    <string name="settings_preload_summary">Скільки сторінок наперед готувати</string>
+    <string name="settings_webtoon">Вебтун</string>
+    <string name="settings_webtoon_summary">Режим стрічки</string>
+    <string name="settings_strip_width" formatted="false">Ширина стрічки, %</string>
+    <string name="settings_strip_width_summary" formatted="false">100% — на всю ширину екрана</string>
+    <string name="settings_strip_gap">Проміжок між фрагментами, dp</string>
+    <string name="settings_attachments">Звук і додатки сторінок</string>
+    <string name="settings_attachments_summary">Якщо файл їх містить: музика, звукові ефекти, текст і темні версії сторінок</string>
+    <string name="settings_sound_summary">Музика й ефекти сторінок</string>
+    <string name="settings_volume" formatted="false">Гучність, %</string>
+    <string name="settings_volume_summary">Загальна для музики й ефектів</string>
+    <string name="settings_dark_pages">Темні версії сторінок</string>
+    <string name="settings_dark_pages_summary">У темній темі — замість звичайних</string>
+    <string name="settings_position">Позиція читання</string>
+    <string name="settings_remember">Пам\'ятати сторінку</string>
+    <string name="settings_remember_summary">Відкривати кожну книгу там, де закінчили (за UUID файлу)</string>
+    <string name="settings_forget">Забути всі збережені позиції</string>
+    <string name="settings_forgotten">Позиції забуто</string>
+    <plurals name="chapter_pages">
+        <item quantity="one">%d сторінка</item>
+        <item quantity="few">%d сторінки</item>
+        <item quantity="many">%d сторінок</item>
+        <item quantity="other">%d сторінки</item>
+    </plurals>
+</resources>

@@ -5,6 +5,7 @@ package org.vnmf.reader
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.annotation.StringRes
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import kotlin.math.roundToInt
@@ -44,11 +46,11 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /** Reading area background — as on desktop. */
-enum class Background(val label: String) {
-    Theme("Follow theme"),
-    Black("Black"),
-    Gray("Gray"),
-    White("White");
+enum class Background(@StringRes val label: Int) {
+    Theme(R.string.background_theme),
+    Black(R.string.background_black),
+    Gray(R.string.background_gray),
+    White(R.string.background_white);
 
     /** `null` — the theme color. */
     val color: Color?
@@ -61,11 +63,11 @@ enum class Background(val label: String) {
 }
 
 /** How to fit a manga page. */
-enum class Fit(val label: String) {
+enum class Fit(@StringRes val label: Int) {
     /** The page (spread) entirely on screen. */
-    Page("Whole page"),
+    Page(R.string.fit_page),
     /** Full width, then scroll down. */
-    Width("Fit width"),
+    Width(R.string.fit_width),
 }
 
 /**
@@ -131,39 +133,39 @@ fun SettingsScreen(settings: ReaderSettings, library: Library, onBack: () -> Uni
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Reading settings") },
-                navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back") } },
+                title = { Text(stringResource(R.string.reading_settings)) },
+                navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, stringResource(R.string.back)) } },
             )
         },
     ) { padding ->
         LazyColumn(Modifier.fillMaxSize().padding(padding)) {
-            item { Header("View") }
+            item { Header(R.string.settings_view) }
             item {
-                Choice("Background", "Color around the page", Background.entries, settings.background, { it.label }) { settings.background = it }
+                Choice(R.string.settings_background, R.string.settings_background_summary, Background.entries, settings.background, { stringResource(it.label) }) { settings.background = it }
             }
             item {
-                Choice("Page", "Entirely on screen or full width with scrolling", Fit.entries, settings.fit, { it.label }) { settings.fit = it }
+                Choice(R.string.settings_page, R.string.settings_page_summary, Fit.entries, settings.fit, { stringResource(it.label) }) { settings.fit = it }
             }
-            item { Toggle("Turn pages by tapping the edges", "The left and right screen edges turn pages, the middle toggles the bar", settings.tapZones) { settings.tapZones = it } }
-            item { Toggle("Hide the reader bar", "Disappears by itself after a few seconds", settings.autoHide) { settings.autoHide = it } }
-            item { Toggle("Fullscreen reading", "System bars are hidden; they appear together with the reader bar", settings.immersive) { settings.immersive = it } }
+            item { Toggle(R.string.settings_tap_zones, R.string.settings_tap_zones_summary, settings.tapZones) { settings.tapZones = it } }
+            item { Toggle(R.string.settings_auto_hide, R.string.settings_auto_hide_summary, settings.autoHide) { settings.autoHide = it } }
+            item { Toggle(R.string.settings_immersive, R.string.settings_immersive_summary, settings.immersive) { settings.immersive = it } }
 
-            item { Header("Manga", "Paged mode") }
-            item { Toggle("Spread", "In landscape — two pages side by side; wide pages shown alone", settings.doublePage) { settings.doublePage = it } }
-            item { Toggle("Cover alone", "In a spread the first page is shown by itself", settings.coverAlone) { settings.coverAlone = it } }
-            item { Number("Preloading", "How many pages ahead to prepare", settings.preload, 0..6) { settings.preload = it } }
+            item { Header(R.string.settings_manga, R.string.settings_manga_summary) }
+            item { Toggle(R.string.settings_spread, R.string.settings_spread_summary, settings.doublePage) { settings.doublePage = it } }
+            item { Toggle(R.string.settings_cover_alone, R.string.settings_cover_alone_summary, settings.coverAlone) { settings.coverAlone = it } }
+            item { Number(R.string.settings_preload, R.string.settings_preload_summary, settings.preload, 0..6) { settings.preload = it } }
 
-            item { Header("Webtoon", "Strip mode") }
-            item { Number("Strip width, %", "100% — full screen width", settings.stripWidth, 30..100, step = 5) { settings.stripWidth = it } }
-            item { Number("Gap between fragments, dp", null, settings.stripGap, 0..32) { settings.stripGap = it } }
+            item { Header(R.string.settings_webtoon, R.string.settings_webtoon_summary) }
+            item { Number(R.string.settings_strip_width, R.string.settings_strip_width_summary, settings.stripWidth, 30..100, step = 5) { settings.stripWidth = it } }
+            item { Number(R.string.settings_strip_gap, null, settings.stripGap, 0..32) { settings.stripGap = it } }
 
-            item { Header("Sound and page attachments", "If the file contains them: music, sound effects, text and dark versions of pages") }
-            item { Toggle("Sound", "Page music and effects", settings.sound) { settings.sound = it } }
-            item { Number("Volume, %", "Shared by music and effects", settings.volume, 0..100, step = 5, enabled = settings.sound) { settings.volume = it } }
-            item { Toggle("Dark page versions", "Used instead of the regular ones in a dark theme", settings.darkPages) { settings.darkPages = it } }
+            item { Header(R.string.settings_attachments, R.string.settings_attachments_summary) }
+            item { Toggle(R.string.sound, R.string.settings_sound_summary, settings.sound) { settings.sound = it } }
+            item { Number(R.string.settings_volume, R.string.settings_volume_summary, settings.volume, 0..100, step = 5, enabled = settings.sound) { settings.volume = it } }
+            item { Toggle(R.string.settings_dark_pages, R.string.settings_dark_pages_summary, settings.darkPages) { settings.darkPages = it } }
 
-            item { Header("Reading position") }
-            item { Toggle("Remember the page", "Open each book where you left off (by file UUID)", settings.rememberPosition) { settings.rememberPosition = it } }
+            item { Header(R.string.settings_position) }
+            item { Toggle(R.string.settings_remember, R.string.settings_remember_summary, settings.rememberPosition) { settings.rememberPosition = it } }
             item {
                 var done by remember { mutableStateOf(false) }
                 OutlinedButton(
@@ -173,42 +175,42 @@ fun SettingsScreen(settings: ReaderSettings, library: Library, onBack: () -> Uni
                     },
                     enabled = !done,
                     modifier = Modifier.fillMaxWidth().padding(16.dp, 8.dp, 16.dp, 24.dp),
-                ) { Text(if (done) "Positions forgotten" else "Forget all saved positions", textAlign = TextAlign.Center) }
+                ) { Text(stringResource(if (done) R.string.settings_forgotten else R.string.settings_forget), textAlign = TextAlign.Center) }
             }
         }
     }
 }
 
 @Composable
-private fun Header(title: String, description: String? = null) {
+private fun Header(@StringRes title: Int, @StringRes description: Int? = null) {
     Column(Modifier.padding(16.dp, 20.dp, 16.dp, 4.dp)) {
-        Text(title, style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
-        description?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
+        Text(stringResource(title), style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.primary)
+        description?.let { Text(stringResource(it), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
     }
 }
 
 @Composable
-private fun Toggle(title: String, subtitle: String, value: Boolean, onChange: (Boolean) -> Unit) {
+private fun Toggle(@StringRes title: Int, @StringRes subtitle: Int, value: Boolean, onChange: (Boolean) -> Unit) {
     ListItem(
-        headlineContent = { Text(title) },
-        supportingContent = { Text(subtitle) },
+        headlineContent = { Text(stringResource(title)) },
+        supportingContent = { Text(stringResource(subtitle)) },
         trailingContent = { Switch(checked = value, onCheckedChange = onChange) },
         modifier = Modifier.padding(0.dp),
     )
 }
 
 @Composable
-private fun Number(title: String, subtitle: String?, value: Int, range: IntRange, step: Int = 1, enabled: Boolean = true, onChange: (Int) -> Unit) {
+private fun Number(@StringRes title: Int, @StringRes subtitle: Int?, value: Int, range: IntRange, step: Int = 1, enabled: Boolean = true, onChange: (Int) -> Unit) {
     ListItem(
         headlineContent = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(title, Modifier.weight(1f))
+                Text(stringResource(title), Modifier.weight(1f))
                 Text(value.toString(), style = MaterialTheme.typography.labelLarge)
             }
         },
         supportingContent = {
             Column {
-                subtitle?.let { Text(it) }
+                subtitle?.let { Text(stringResource(it)) }
                 Slider(
                     value = value.toFloat(),
                     onValueChange = { onChange((it / step).roundToInt() * step) },
@@ -222,12 +224,12 @@ private fun Number(title: String, subtitle: String?, value: Int, range: IntRange
 }
 
 @Composable
-private fun <T> Choice(title: String, subtitle: String, options: List<T>, value: T, label: (T) -> String, onChange: (T) -> Unit) {
+private fun <T> Choice(@StringRes title: Int, @StringRes subtitle: Int, options: List<T>, value: T, label: @Composable (T) -> String, onChange: (T) -> Unit) {
     ListItem(
-        headlineContent = { Text(title) },
+        headlineContent = { Text(stringResource(title)) },
         supportingContent = {
             Column {
-                Text(subtitle)
+                Text(stringResource(subtitle))
                 SingleChoiceSegmentedButtonRow(Modifier.fillMaxWidth().padding(top = 8.dp)) {
                     options.forEachIndexed { i, option ->
                         SegmentedButton(

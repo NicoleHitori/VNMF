@@ -11,7 +11,7 @@ import uniffi.vnmf_ffi.Book
 object BookSource {
     fun open(context: Context, uri: Uri): Book {
         val descriptor = context.contentResolver.openFileDescriptor(uri, "r")
-            ?: throw IllegalStateException("Could not open the file")
+            ?: throw IllegalStateException(context.getString(R.string.could_not_open_file))
         // detachFd: the descriptor now belongs to Rust — it will close it.
         return Book.openFd(descriptor.detachFd())
     }
@@ -23,6 +23,6 @@ object BookSource {
                 c.getString(0)?.let { return it.removeSuffix(".vnmf") }
             }
         }
-        return uri.lastPathSegment?.substringAfterLast('/')?.removeSuffix(".vnmf") ?: "Untitled"
+        return uri.lastPathSegment?.substringAfterLast('/')?.removeSuffix(".vnmf") ?: context.getString(R.string.untitled)
     }
 }
