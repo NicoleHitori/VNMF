@@ -12,8 +12,8 @@ use adw::prelude::*;
 use gtk::{gio, glib};
 use serde_json::Value;
 use vnmf::contents::Toc;
-use vnmf::metadata::{self, Metadata};
 use vnmf::health::{Health, assess, chunk_formats, is_mixed, role_name, verify};
+use vnmf::metadata::{self, Metadata};
 use vnmf_core::header::bit_flag::HeaderFlagsFormatter;
 use vnmf_core::{HeaderBitEnum, InfoFormat, PageBitFlags, PageFormat, VnmfReader, recovery};
 use vnmf_gui::aspect_picture::AspectPicture;
@@ -75,11 +75,8 @@ impl InfoWindow {
 
         let banner = health_ui::banner();
 
-        let (empty, empty_button) = widgets::open_status_page(
-            "document-properties-symbolic",
-            tr("VNMF file information"),
-            tr("Open a .vnmf file or drag it into the window"),
-        );
+        let (empty, empty_button) =
+            widgets::open_status_page("document-properties-symbolic", tr("VNMF file information"), tr("Open a .vnmf file or drag it into the window"));
         empty_button.set_action_name(Some("win.open"));
 
         // Contents: viewer panel on the left, properties on the right.
@@ -88,14 +85,8 @@ impl InfoWindow {
         let preview_caption = gtk::Label::builder().wrap(true).justify(gtk::Justification::Center).build();
         preview_caption.add_css_class("dim-label");
         preview_caption.add_css_class("caption");
-        let preview_box = gtk::Box::builder()
-            .orientation(gtk::Orientation::Vertical)
-            .spacing(8)
-            .margin_top(12)
-            .margin_bottom(12)
-            .margin_start(12)
-            .margin_end(12)
-            .build();
+        let preview_box =
+            gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(8).margin_top(12).margin_bottom(12).margin_start(12).margin_end(12).build();
         preview_box.append(&preview_area);
         preview_box.append(&preview_caption);
 
@@ -121,20 +112,10 @@ impl InfoWindow {
         toolbar.add_top_bar(&banner);
         toolbar.set_content(Some(&toasts));
 
-        let window = adw::ApplicationWindow::builder()
-            .application(app)
-            .title("VNMF Info")
-            .default_width(1200)
-            .default_height(800)
-            .content(&toolbar)
-            .build();
+        let window = adw::ApplicationWindow::builder().application(app).title("VNMF Info").default_width(1200).default_height(800).content(&toolbar).build();
 
         // Narrow window — the viewer panel hides, the properties remain.
-        let breakpoint = adw::Breakpoint::new(adw::BreakpointCondition::new_length(
-            adw::BreakpointConditionLengthType::MaxWidth,
-            720.0,
-            adw::LengthUnit::Sp,
-        ));
+        let breakpoint = adw::Breakpoint::new(adw::BreakpointCondition::new_length(adw::BreakpointConditionLengthType::MaxWidth, 720.0, adw::LengthUnit::Sp));
         breakpoint.add_setter(&split, "collapsed", Some(&true.to_value()));
         window.add_breakpoint(breakpoint);
 
@@ -189,7 +170,6 @@ impl InfoWindow {
             }
         }));
     }
-
 }
 
 impl AppWindow for InfoWindow {
@@ -243,12 +223,7 @@ impl InfoWindow {
                 let verification = verify(&reader)?;
                 let health = assess(&reader, Some(&verification));
                 // Numbers of damaged pages.
-                let mut pages: Vec<usize> = verification
-                    .bad_chunks
-                    .iter()
-                    .filter_map(|&c| vnmf::health::chunk_owner(&reader, c))
-                    .map(|p| p - 1)
-                    .collect();
+                let mut pages: Vec<usize> = verification.bad_chunks.iter().filter_map(|&c| vnmf::health::chunk_owner(&reader, c)).map(|p| p - 1).collect();
                 pages.dedup();
                 Ok((health, pages))
             })
@@ -294,11 +269,7 @@ impl InfoWindow {
         if !aux.is_empty() {
             parts.push(trf!("attachments: {0}", aux.join(", ")));
         }
-        let row = adw::ActionRow::builder()
-            .title(trf!("Page {0}", i + 1))
-            .subtitle(parts.join(" · "))
-            .activatable(true)
-            .build();
+        let row = adw::ActionRow::builder().title(trf!("Page {0}", i + 1)).subtitle(parts.join(" · ")).activatable(true).build();
         let this = self.clone();
         row.connect_activated(move |_| this.show(Shown::Page(i)));
         if self.0.bad_pages.borrow().contains(&i) {
@@ -366,12 +337,8 @@ impl InfoWindow {
             b.clipboard().set_text(&command);
             widgets::toast(&toasts, tr("Command copied"));
         });
-        let page = adw::StatusPage::builder()
-            .icon_name("dialog-warning-symbolic")
-            .title(tr("The file can't be opened"))
-            .description(description)
-            .child(&copy)
-            .build();
+        let page =
+            adw::StatusPage::builder().icon_name("dialog-warning-symbolic").title(tr("The file can't be opened")).description(description).child(&copy).build();
         page.add_css_class("compact");
 
         if let Some(old) = self.0.stack.child_by_name("error") {
@@ -402,8 +369,8 @@ impl InfoWindow {
         let h = r.header();
         let flags = h.flags.get();
         let (major, minor) = r.version();
-        let data_bytes: u64 = r.chunks().iter().map(|c| u64::from(c.length())).sum::<u64>()
-            + r.previews().iter().map(|p| u64::from(p.length.get())).sum::<u64>();
+        let data_bytes: u64 =
+            r.chunks().iter().map(|c| u64::from(c.length())).sum::<u64>() + r.previews().iter().map(|p| u64::from(p.length.get())).sum::<u64>();
         let file = adw::PreferencesGroup::builder().title(tr("File")).build();
         file.add(&widgets::property_row(tr("Path"), &path.display().to_string()));
         file.add(&widgets::property_row(tr("Size"), &human_size(file_size)));
@@ -426,20 +393,28 @@ impl InfoWindow {
         file.add(&widgets::property_row("UUID", &vnmf::format_uuid(r.uuid())));
         file.add(&widgets::property_row(tr("Block size"), &r.block_size().to_string()));
         file.add(&widgets::property_row(tr("Flags"), &format!("{flags:#06x} {}", HeaderFlagsFormatter(flags))));
-        file.add(&widgets::property_row(
-            tr("Metadata backup copy"),
-            if r.has_flag(HeaderBitEnum::HasTailDup) { tr("yes") } else { tr("no") },
-        ));
+        file.add(&widgets::property_row(tr("Metadata backup copy"), if r.has_flag(HeaderBitEnum::HasTailDup) { tr("yes") } else { tr("no") }));
         file.add(&widgets::property_row(
             tr("Redundancy"),
             &match r.parity_layout() {
-                Some(l) => trf!("{0}% Reed–Solomon: {1} of parity, recovers contiguous damage of up to {2}", l.redundancy, human_size(l.len()), human_size(l.max_burst_bytes())),
+                Some(l) => trf!(
+                    "{0}% Reed–Solomon: {1} of parity, recovers contiguous damage of up to {2}",
+                    l.redundancy,
+                    human_size(l.len()),
+                    human_size(l.max_burst_bytes())
+                ),
                 None => tr("none").into(),
             },
         ));
         file.add(&widgets::property_row(
             tr("Data"),
-            &trf!("{0} in {1} chunks · overhead {2} ({3}%)", human_size(data_bytes), r.chunks_count(), human_size(file_size.saturating_sub(data_bytes)), format!("{:.1}", 100.0 * file_size.saturating_sub(data_bytes) as f64 / file_size.max(1) as f64)),
+            &trf!(
+                "{0} in {1} chunks · overhead {2} ({3}%)",
+                human_size(data_bytes),
+                r.chunks_count(),
+                human_size(file_size.saturating_sub(data_bytes)),
+                format!("{:.1}", 100.0 * file_size.saturating_sub(data_bytes) as f64 / file_size.max(1) as f64)
+            ),
         ));
         page.add(&file);
 
@@ -452,13 +427,7 @@ impl InfoWindow {
             for (i, p) in r.previews().iter().enumerate() {
                 let row = adw::ActionRow::builder()
                     .title(trf!("Preview #{0} · volume {1}", i, p.volume_id.get()))
-                    .subtitle(format!(
-                        "{}×{} · {} · {}",
-                        p.width.get(),
-                        p.height.get(),
-                        PageFormat::from(p.format),
-                        human_size(u64::from(p.length.get()))
-                    ))
+                    .subtitle(format!("{}×{} · {} · {}", p.width.get(), p.height.get(), PageFormat::from(p.format), human_size(u64::from(p.length.get()))))
                     .activatable(true)
                     .build();
                 row.add_suffix(&gtk::Image::from_icon_name("go-next-symbolic"));
@@ -481,17 +450,18 @@ impl InfoWindow {
         let structured = toc.is_structured();
 
         let pages_word = |range: &std::ops::Range<usize>| {
-            if range.len() == 1 { trf!("p. {0}", range.start + 1) } else { ntrf!("pp. {0}–{1} · {2} page", "pp. {0}–{1} · {2} pages", range.len(), range.start + 1, range.end, range.len()) }
+            if range.len() == 1 {
+                trf!("p. {0}", range.start + 1)
+            } else {
+                ntrf!("pp. {0}–{1} · {2} page", "pp. {0}–{1} · {2} pages", range.len(), range.start + 1, range.end, range.len())
+            }
         };
         let mut chapter_rows = Vec::new();
         if toc.is_structured() {
             // Contents: a group per volume, a chapter — an expander row with pages.
             let volumes = toc.volumes.iter().filter(|v| v.volume != 0).count();
-            let structure = if volumes > 0 {
-                trf!("volumes {0}, chapters {1}", volumes, toc.chapters_count())
-            } else {
-                trf!("chapters {0}", toc.chapters_count())
-            };
+            let structure =
+                if volumes > 0 { trf!("volumes {0}, chapters {1}", volumes, toc.chapters_count()) } else { trf!("chapters {0}", toc.chapters_count()) };
             let head = adw::PreferencesGroup::builder()
                 .title(trf!("Pages ({0})", r.pages_count()))
                 .description(format!("{} · {structure}", summary.join(", ")))
@@ -504,10 +474,7 @@ impl InfoWindow {
                     group.set_description(Some(&pages_word(&volume.pages)));
                 }
                 for chapter in &volume.chapters {
-                    let expander = adw::ExpanderRow::builder()
-                        .title(glib::markup_escape_text(&chapter.label()))
-                        .subtitle(pages_word(&chapter.pages))
-                        .build();
+                    let expander = adw::ExpanderRow::builder().title(glib::markup_escape_text(&chapter.label())).subtitle(pages_word(&chapter.pages)).build();
                     // A chapter's pages — only once it's expanded (contents of thousands of pages).
                     let (this, reader, range) = (self.clone(), r.clone(), chapter.pages.clone());
                     widgets::fill_on_expand(&expander, move |expander| {
@@ -521,10 +488,7 @@ impl InfoWindow {
                 page.add(&group);
             }
         } else {
-            let pages = adw::PreferencesGroup::builder()
-                .title(trf!("Pages ({0})", r.pages_count()))
-                .description(summary.join(", "))
-                .build();
+            let pages = adw::PreferencesGroup::builder().title(trf!("Pages ({0})", r.pages_count())).description(summary.join(", ")).build();
             for i in 0..r.pages_count() {
                 pages.add(&self.page_row(r, i, structured));
             }
@@ -584,11 +548,7 @@ impl InfoWindow {
                     strip.picture().clone()
                 })
                 .collect();
-            let scrolled = gtk::ScrolledWindow::builder()
-                .hscrollbar_policy(gtk::PolicyType::Never)
-                .child(&column)
-                .vexpand(true)
-                .build();
+            let scrolled = gtk::ScrolledWindow::builder().hscrollbar_policy(gtk::PolicyType::Never).child(&column).vexpand(true).build();
             self.0.preview_area.set_child(Some(&scrolled));
             pictures
         };
@@ -633,10 +593,7 @@ fn info_group(r: &VnmfReader) -> adw::PreferencesGroup {
     };
     let format = InfoFormat::detect(info);
     let meta = Metadata::from_info(Some(info));
-    let current = serde_json::from_slice::<Value>(info)
-        .ok()
-        .and_then(|v| v.get("schema")?.as_str().map(|s| s.starts_with("vnmf-metadata/")))
-        .unwrap_or(false);
+    let current = serde_json::from_slice::<Value>(info).ok().and_then(|v| v.get("schema")?.as_str().map(|s| s.starts_with("vnmf-metadata/"))).unwrap_or(false);
     let kind = match (&meta, current) {
         (Some(_), true) => trf!("VNMF metadata ({0})", metadata::SCHEMA),
         (Some(_), false) => tr("ComicInfo (format 1.1) — shown as VNMF metadata").to_string(),

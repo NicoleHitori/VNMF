@@ -92,9 +92,7 @@ enum Outcome {
 fn main() -> ExitCode {
     let args = Args::parse();
     let (files, output) = match &args.command {
-        Command::Protect { files, output, .. }
-        | Command::Repair { files, output }
-        | Command::Strip { files, output } => (files.clone(), output.clone()),
+        Command::Protect { files, output, .. } | Command::Repair { files, output } | Command::Strip { files, output } => (files.clone(), output.clone()),
         Command::Check { files } => (files.clone(), None),
         Command::Formats => {
             print_formats();
@@ -186,11 +184,7 @@ fn print_inspection(i: &Inspection) {
         println!("  blocks with unknown CRC (table damaged): {}", i.status.unknown);
     }
     if !i.is_recoverable() {
-        println!(
-            "  ⚠ {} stripe(s) of {} can't be recovered: more damage than parity",
-            i.status.unrecoverable_stripes.len(),
-            i.layout.stripes
-        );
+        println!("  ⚠ {} stripe(s) of {} can't be recovered: more damage than parity", i.status.unrecoverable_stripes.len(), i.layout.stripes);
     }
 }
 
@@ -243,11 +237,7 @@ fn strip(file: &Path, output: Option<&Path>) -> Result<Outcome> {
             Ok(Outcome::Problem)
         }
         StripOutcome::Stripped { identical, len } => {
-            let note = if identical {
-                "identical to the original byte for byte"
-            } else {
-                "the contents are the same, but the bytes differ from the original"
-            };
+            let note = if identical { "identical to the original byte for byte" } else { "the contents are the same, but the bytes differ from the original" };
             println!("{}: protection removed — {} ({note})", file.display(), human_size(len));
             Ok(if identical { Outcome::Ok } else { Outcome::Problem })
         }

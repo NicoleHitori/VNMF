@@ -50,12 +50,7 @@ pub fn menu_button(items: &[(&str, &str)]) -> gtk::MenuButton {
     for (label, action) in items {
         menu.append(Some(label), Some(action));
     }
-    gtk::MenuButton::builder()
-        .icon_name("open-menu-symbolic")
-        .menu_model(&menu)
-        .primary(true)
-        .tooltip_text(tr("Main menu"))
-        .build()
+    gtk::MenuButton::builder().icon_name("open-menu-symbolic").menu_model(&menu).primary(true).tooltip_text(tr("Main menu")).build()
 }
 
 /// The `app.about` action with an "About" dialog.
@@ -76,12 +71,7 @@ pub fn install_about(window: &adw::ApplicationWindow, name: &str, comments: &str
             .license_type(gtk::License::Gpl30)
             .build();
         about.add_credit_section(Some(tr("Development assistance")), &["AI-assist"]);
-        about.add_legal_section(
-            tr("VNMF format and the vnmf-core library"),
-            Some("© 2026 void_nicole (Nicole Hitori) + AI-assist"),
-            gtk::License::Gpl30,
-            None,
-        );
+        about.add_legal_section(tr("VNMF format and the vnmf-core library"), Some("© 2026 void_nicole (Nicole Hitori) + AI-assist"), gtk::License::Gpl30, None);
         about.present(Some(&window));
     });
     window.add_action(&action);
@@ -107,10 +97,7 @@ pub fn language_row(toasts: &impl IsA<adw::PreferencesDialog>, restart: Language
     if chosen.is_some() && !codes.contains(&chosen) {
         codes.push(chosen.clone());
     }
-    let labels: Vec<String> = codes
-        .iter()
-        .map(|c| c.as_deref().map_or_else(|| tr("System language").to_owned(), vnmf_i18n::language_name))
-        .collect();
+    let labels: Vec<String> = codes.iter().map(|c| c.as_deref().map_or_else(|| tr("System language").to_owned(), vnmf_i18n::language_name)).collect();
     let labels: Vec<&str> = labels.iter().map(String::as_str).collect();
     let row = adw::ComboRow::builder()
         .title(tr("Language"))
@@ -133,19 +120,12 @@ fn language_toast(saved: std::io::Result<()>, restart: &LanguageRestart) -> adw:
     }
     match restart {
         LanguageRestart::Offer(restart) => {
-            let toast = adw::Toast::builder()
-                .title(tr("The language will change after a restart"))
-                .button_label(tr("Restart"))
-                .timeout(0)
-                .build();
+            let toast = adw::Toast::builder().title(tr("The language will change after a restart")).button_label(tr("Restart")).timeout(0).build();
             let restart = restart.clone();
             toast.connect_button_clicked(move |_| restart());
             toast
         }
-        LanguageRestart::NextStart => adw::Toast::builder()
-            .title(tr("The language will change the next time the application starts"))
-            .timeout(0)
-            .build(),
+        LanguageRestart::NextStart => adw::Toast::builder().title(tr("The language will change the next time the application starts")).timeout(0).build(),
     }
 }
 

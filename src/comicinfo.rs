@@ -15,9 +15,9 @@
 //!   XML comments and formatting are not preserved.
 
 use anyhow::{Context, Result, bail};
-use quick_xml::{Reader, XmlVersion};
 use quick_xml::escape::escape;
 use quick_xml::events::{BytesStart, Event};
+use quick_xml::{Reader, XmlVersion};
 use serde_json::{Map, Value};
 use vnmf_core::PageRole;
 

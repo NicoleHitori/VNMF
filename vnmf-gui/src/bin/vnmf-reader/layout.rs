@@ -80,13 +80,7 @@ mod tests {
     #[test]
     fn declared_spread_always_together_and_never_split() {
         // 0 cover, 1 regular, 2+3 — spread from the file, 4 regular.
-        let pages = vec![
-            page(Some(PageRole::FrontCover)),
-            page(None),
-            page(Some(PageRole::SpreadLeft)),
-            page(Some(PageRole::SpreadRight)),
-            page(None),
-        ];
+        let pages = vec![page(Some(PageRole::FrontCover)), page(None), page(Some(PageRole::SpreadLeft)), page(Some(PageRole::SpreadRight)), page(None)];
         // Without spread mode a file-defined spread is still shown together.
         assert_eq!(group_pages(&pages, false, false), vec![vec![0], vec![1], vec![2, 3], vec![4]]);
         // In spread mode page 1 doesn't "steal" the left half — it stays alone.
@@ -96,14 +90,7 @@ mod tests {
     #[test]
     fn roles_from_file_keep_pages_alone() {
         let wide = PageInfo { width: 3200, height: 2400, role: None, multi_chunk: false, chapter_start: false, volume_start: false };
-        let pages = vec![
-            page(None),
-            page(Some(PageRole::SpreadSingle)),
-            page(None),
-            wide,
-            page(None),
-            page(Some(PageRole::BackCover)),
-        ];
+        let pages = vec![page(None), page(Some(PageRole::SpreadSingle)), page(None), wide, page(None), page(Some(PageRole::BackCover))];
         assert_eq!(group_pages(&pages, true, false), vec![vec![0], vec![1], vec![2], vec![3], vec![4], vec![5]]);
     }
 

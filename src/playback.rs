@@ -36,11 +36,7 @@ pub fn sfx_of(reader: &VnmfReader, page: usize) -> Vec<usize> {
 
 /// Dark version of the page's image `part` (index in the aux table).
 pub fn dark_of(reader: &VnmfReader, page: usize, part: usize) -> Option<usize> {
-    reader
-        .page_aux_range(page)
-        .zip(reader.page_aux(page))
-        .find(|(_, a)| a.kind() == AuxKind::DarkImage && a.part.get() as usize == part)
-        .map(|(k, _)| k)
+    reader.page_aux_range(page).zip(reader.page_aux(page)).find(|(_, a)| a.kind() == AuxKind::DarkImage && a.part.get() as usize == part).map(|(k, _)| k)
 }
 
 /// Line `trigger_y` (page px) → (fragment number, fraction of its height).
@@ -66,13 +62,9 @@ pub fn text_layer(bytes: &[u8]) -> String {
     let text = String::from_utf8_lossy(bytes);
     let Ok(json) = serde_json::from_str::<serde_json::Value>(&text) else { return text.trim().to_string() };
     match json.get("regions").and_then(|r| r.as_array()) {
-        Some(regions) => regions
-            .iter()
-            .filter_map(|r| r.get("text").and_then(|t| t.as_str()))
-            .map(str::trim)
-            .filter(|t| !t.is_empty())
-            .collect::<Vec<_>>()
-            .join("\n\n"),
+        Some(regions) => {
+            regions.iter().filter_map(|r| r.get("text").and_then(|t| t.as_str())).map(str::trim).filter(|t| !t.is_empty()).collect::<Vec<_>>().join("\n\n")
+        }
         None => text.trim().to_string(),
     }
 }

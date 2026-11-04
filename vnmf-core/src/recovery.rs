@@ -278,10 +278,7 @@ pub struct SalvageReport {
 pub fn salvage_metadata(bytes: &mut [u8]) -> Result<SalvageReport, ReaderError> {
     let primary = parse_header(bytes, 0).ok().map(|(h, _)| h);
     let tail_pos = bytes.len().checked_sub(spec::HEADER_SIZE).filter(|&p| p >= spec::HEADER_SIZE);
-    let tail = tail_pos
-        .and_then(|p| parse_header(bytes, p).ok())
-        .map(|(h, _)| h)
-        .filter(|h| HeaderBitEnum::HasTailDup.is_set(h.flags.get()));
+    let tail = tail_pos.and_then(|p| parse_header(bytes, p).ok()).map(|(h, _)| h).filter(|h| HeaderBitEnum::HasTailDup.is_set(h.flags.get()));
 
     let target = match (primary, &tail) {
         (Some(p), _) => p,
@@ -296,20 +293,13 @@ pub fn salvage_metadata(bytes: &mut [u8]) -> Result<SalvageReport, ReaderError> 
     // Section candidates: the primary copy, then the tail one.
     let candidates = |pick: fn(&Header) -> EntryRecord| -> Vec<Vec<u8>> {
         let len = pick(&target).length() as usize;
-        [Some(pick(&target)), tail.as_ref().map(pick)]
-            .into_iter()
-            .flatten()
-            .filter_map(|e| copy_of(&e, len))
-            .collect()
+        [Some(pick(&target)), tail.as_ref().map(pick)].into_iter().flatten().filter_map(|e| copy_of(&e, len)).collect()
     };
 
     let chunk_data_ok = |rec: &[u8]| -> bool {
         EntryRecord::read_from_bytes(rec).is_ok_and(|e| {
             let start = e.offset() as usize;
-            start
-                .checked_add(e.length() as usize)
-                .and_then(|end| bytes.get(start..end))
-                .is_some_and(|data| crc32fast::hash(data) == e.crc())
+            start.checked_add(e.length() as usize).and_then(|end| bytes.get(start..end)).is_some_and(|data| crc32fast::hash(data) == e.crc())
         })
     };
 
@@ -382,10 +372,8 @@ pub fn salvage_metadata(bytes: &mut [u8]) -> Result<SalvageReport, ReaderError> 
     bytes[..spec::HEADER_SIZE].copy_from_slice(&target.to_bytes());
 
     report.exact = restored.iter().all(|(e, d)| crc32fast::hash(d) == e.crc())
-        && restored.len() == [target.info, target.preview_table, target.page_table, target.aux_table, target.chunks_table]
-            .iter()
-            .filter(|e| !e.is_empty())
-            .count();
+        && restored.len()
+            == [target.info, target.preview_table, target.page_table, target.aux_table, target.chunks_table].iter().filter(|e| !e.is_empty()).count();
     Ok(report)
 }
 
@@ -511,10 +499,7 @@ fn text_extent(rest: &[u8]) -> Option<(usize, InfoFormat)> {
         Ok(s) => s,
         Err(e) => std::str::from_utf8(&candidate[..e.valid_up_to()]).ok()?,
     };
-    let end = valid
-        .char_indices()
-        .find(|&(_, c)| c.is_control() && !matches!(c, '\n' | '\r' | '\t'))
-        .map_or(valid.len(), |(i, _)| i);
+    let end = valid.char_indices().find(|&(_, c)| c.is_control() && !matches!(c, '\n' | '\r' | '\t')).map_or(valid.len(), |(i, _)| i);
     let text = valid[..end].trim_end();
     if text.trim().len() < 16 {
         return None;

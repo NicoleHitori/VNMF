@@ -34,13 +34,7 @@ pub fn verify(reader: &VnmfReader) -> Result<Verify> {
             bad_previews += 1;
         }
     }
-    Ok(Verify {
-        checked: reader.chunks_count() + reader.previews_count(),
-        bad,
-        bad_chunks,
-        bad_previews,
-        parity: reader.verify_parity(),
-    })
+    Ok(Verify { checked: reader.chunks_count() + reader.previews_count(), bad, bad_chunks, bad_previews, parity: reader.verify_parity() })
 }
 
 pub fn role_name(page: &PageRecord) -> String {
@@ -141,7 +135,12 @@ pub fn assess(reader: &VnmfReader, verification: Option<&Verify>) -> Health {
         }
         if let Some(p) = &v.parity {
             if !p.is_clean() {
-                issues.push(trf!("redundancy: damaged data blocks {0}, parity {1}, CRC tables {2}", p.bad_data.len(), p.bad_parity.len(), p.damaged_table_blocks));
+                issues.push(trf!(
+                    "redundancy: damaged data blocks {0}, parity {1}, CRC tables {2}",
+                    p.bad_data.len(),
+                    p.bad_parity.len(),
+                    p.damaged_table_blocks
+                ));
             }
             parity_fixes_all = p.is_recoverable();
         }

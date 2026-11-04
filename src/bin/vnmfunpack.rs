@@ -196,11 +196,7 @@ fn unpack(reader: &VnmfReader, sink: &mut dyn Sink, format: OutFormat, verify: b
         let mut used = HashSet::new();
         for volume in &structure {
             for chapter in &volume.chapters {
-                let base = if has_volumes {
-                    format!("vol{:02}/ch{:04}", volume.volume_id, chapter.chapter_id)
-                } else {
-                    format!("ch{:04}", chapter.chapter_id)
-                };
+                let base = if has_volumes { format!("vol{:02}/ch{:04}", volume.volume_id, chapter.chapter_id) } else { format!("ch{:04}", chapter.chapter_id) };
                 // Two chapters with the same number in a row (separated by a flag) — different folders.
                 let mut dir = base.clone();
                 let mut n = 2;
@@ -230,11 +226,7 @@ fn unpack(reader: &VnmfReader, sink: &mut dyn Sink, format: OutFormat, verify: b
                 bail!("page {}: CRC32 of chunk #{} doesn't match — data is damaged (--no-verify to ignore)", i + 1, first + j);
             }
             let ext = export::image_extension(data, PageFormat::from(page.format));
-            let name = if chunks.len() == 1 {
-                format!("{dir}{:0width$}.{ext}", i + 1)
-            } else {
-                format!("{dir}{:0width$}_{:02}.{ext}", i + 1, j + 1)
-            };
+            let name = if chunks.len() == 1 { format!("{dir}{:0width$}.{ext}", i + 1) } else { format!("{dir}{:0width$}_{:02}.{ext}", i + 1, j + 1) };
             stats.put(sink, &name, data, false)?;
         }
 

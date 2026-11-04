@@ -24,11 +24,7 @@ const _: () = assert!(std::mem::size_of::<EntryRecord>() == 16);
 impl EntryRecord {
     #[inline]
     pub const fn new(offset: u64, length: u32, crc: u32) -> Self {
-        Self {
-            offset: le::U64::new(offset),
-            length: le::U32::new(length),
-            crc: le::U32::new(crc),
-        }
+        Self { offset: le::U64::new(offset), length: le::U32::new(length), crc: le::U32::new(crc) }
     }
 
     // FIX: the getters were commented out and the code used `.offset.get()` everywhere. They are back as
@@ -57,12 +53,6 @@ impl EntryRecord {
 
 impl fmt::Display for EntryRecord {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            f,
-            "Offset: {:#018x}, Len: {} B, CRC32: {:#010x}",
-            self.offset(),
-            self.length(),
-            self.crc()
-        )
+        write!(f, "Offset: {:#018x}, Len: {} B, CRC32: {:#010x}", self.offset(), self.length(), self.crc())
     }
 }

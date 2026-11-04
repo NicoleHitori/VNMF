@@ -3,12 +3,12 @@
 
 mod aux_record;
 mod entry_record;
-mod preview_record;
 mod page_record;
+mod preview_record;
 mod record_crc;
 
 pub use aux_record::{AuxFlags, AuxKind, AuxRecord};
 pub use entry_record::EntryRecord;
+pub use page_record::{PageBitFlags, PageRecord, PageRole};
 pub use preview_record::PreviewRecord;
-pub use page_record::{PageRecord, PageRole, PageBitFlags};
 pub use record_crc::RecordCrc;

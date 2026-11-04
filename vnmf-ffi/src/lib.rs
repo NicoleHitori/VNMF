@@ -200,9 +200,7 @@ impl Book {
         for page in reader.pages() {
             for chunk in page.chunk_range() {
                 let data = reader.get_chunk_data(chunk).ok();
-                let (width, height) = data
-                    .and_then(vnmf_core::image_dimensions)
-                    .unwrap_or((page.width.get().max(1), page.height.get().max(1)));
+                let (width, height) = data.and_then(vnmf_core::image_dimensions).unwrap_or((page.width.get().max(1), page.height.get().max(1)));
                 let format = data.map_or(PageFormat::Unknown, PageFormat::detect);
                 chunks.push(Chunk { width, height, format });
             }
@@ -440,12 +438,7 @@ impl Book {
     pub fn check(&self, full: bool) -> HealthInfo {
         let verification = full.then(|| health::verify(&self.reader).ok()).flatten();
         let h = health::assess(&self.reader, verification.as_ref());
-        HealthInfo {
-            ok: h.is_ok(),
-            prognosis: if h.is_ok() { String::new() } else { h.prognosis.to_string() },
-            issues: h.issues,
-            data_checked: h.data_checked,
-        }
+        HealthInfo { ok: h.is_ok(), prognosis: if h.is_ok() { String::new() } else { h.prognosis.to_string() }, issues: h.issues, data_checked: h.data_checked }
     }
 }
 

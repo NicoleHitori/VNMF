@@ -49,17 +49,7 @@ pub enum Format {
 }
 
 impl Format {
-    pub const ALL: [Format; 9] = [
-        Format::Matroska,
-        Format::Mp4,
-        Format::Ogg,
-        Format::Flac,
-        Format::Mp3,
-        Format::Zstd,
-        Format::Gzip,
-        Format::Iso,
-        Format::Raw,
-    ];
+    pub const ALL: [Format; 9] = [Format::Matroska, Format::Mp4, Format::Ogg, Format::Flac, Format::Mp3, Format::Zstd, Format::Gzip, Format::Iso, Format::Raw];
 
     pub fn name(self) -> &'static str {
         match self {
@@ -232,8 +222,7 @@ fn prepare(orig: &[u8], format: Format, opts: &Options) -> Result<(Plan, Vec<u8>
             }
         }
         v.resize(layout.offset as usize, 0);
-        let mut section =
-            Section { buf: Vec::with_capacity(layout.len() as usize), base: layout.offset, pos: layout.offset };
+        let mut section = Section { buf: Vec::with_capacity(layout.len() as usize), base: layout.offset, pos: layout.offset };
         vnmf_parity::write_parity(&mut section, &v, &layout)?;
         v.extend_from_slice(&section.buf);
         return Ok((plan, v));
@@ -414,11 +403,7 @@ impl Inspection {
         if parts.is_empty() {
             parts.push(tr("auxiliary fields damaged").into());
         }
-        let verdict = if self.is_recoverable() {
-            tr("recoverable")
-        } else {
-            tr("cannot be fully recovered")
-        };
+        let verdict = if self.is_recoverable() { tr("recoverable") } else { tr("cannot be fully recovered") };
         format!("{head}: {} — {verdict}", parts.join(", "))
     }
 }
@@ -451,15 +436,7 @@ fn inspect_bytes(file: &[u8]) -> Option<(Inspection, Vec<u8>)> {
         }
         pos += piece.len() as usize;
     }
-    let inspection = Inspection {
-        layout,
-        status,
-        file_len: file.len() as u64,
-        maps_total: slots.len(),
-        maps_intact: intact,
-        bad_page_crcs,
-        plan,
-    };
+    let inspection = Inspection { layout, status, file_len: file.len() as u64, maps_total: slots.len(), maps_intact: intact, bad_page_crcs, plan };
     Some((inspection, v))
 }
 
@@ -507,8 +484,7 @@ pub fn repair_bytes(file: &[u8]) -> Result<Option<Repaired>> {
     if inspection.is_clean() {
         return Ok(Some(Repaired { inspection, report: None, bytes: None }));
     }
-    let report =
-        if inspection.status.is_clean() { None } else { Some(vnmf_parity::repair(&mut v, &inspection.layout)?) };
+    let report = if inspection.status.is_clean() { None } else { Some(vnmf_parity::repair(&mut v, &inspection.layout)?) };
     let mut out = Cursor::new(Vec::with_capacity(inspection.plan.total_len() as usize));
     emit(&mut out, &inspection.plan, &v, &inspection.layout)?;
     Ok(Some(Repaired { inspection, report, bytes: Some(out.into_inner()) }))
@@ -599,8 +575,7 @@ pub fn protect(input: &Path, output: Option<&Path>, opts: &Options) -> Result<Pr
     let mut orig = fs::read(input).with_context(|| trf!("reading {0}", input.display()))?;
     let mut previous = None;
     if let Some(inspection) = inspect_slice(&orig) {
-        if inspection.plan.redundancy == opts.redundancy && inspection.plan.block == opts.block && inspection.is_clean()
-        {
+        if inspection.plan.redundancy == opts.redundancy && inspection.plan.block == opts.block && inspection.is_clean() {
             if let Some(out) = output.filter(|o| *o != input) {
                 fs::copy(input, out).with_context(|| trf!("copying to {0}", out.display()))?;
             }

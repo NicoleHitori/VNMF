@@ -14,9 +14,9 @@ use vnmf_core::{BlockSize, Builder, ChunkSource, InfoFormat, PageBitFlags, PageF
 
 use vnmf::comicinfo;
 use vnmf::contents::{self, Contents, Toc};
-use vnmf::metadata::Metadata;
 use vnmf::human_size;
 use vnmf::input::{self, Chapter};
+use vnmf::metadata::Metadata;
 
 #[derive(Parser)]
 #[command(name = "vnmfpack", version, long_version = vnmf::LONG_VERSION, author = vnmf::AUTHORS, about = "Creates .vnmf from CBZ, folders or individual images")]
@@ -207,9 +207,7 @@ fn run(args: Args) -> Result<()> {
             let first = &chapters.iter().find(|c| !c.pages.is_empty()).unwrap().pages[0];
             builder.add_preview(first.source.clone(), 0, 0)?;
         }
-        Some(path) => builder
-            .add_preview_file(path, 0, 0)
-            .with_context(|| format!("cover {path}"))?,
+        Some(path) => builder.add_preview_file(path, 0, 0).with_context(|| format!("cover {path}"))?,
         None => {}
     }
 
@@ -304,9 +302,7 @@ fn add_chapter(builder: &mut Builder, chapter: Chapter, chapter_id: u16, flags: 
         let role = roles.iter().find(|(idx, _)| *idx == i).map_or(PageRole::Normal, |(_, r)| *r);
         let page_number = u16::try_from(i + 1).context("too many pages in a chapter")?;
         let page_flags = if i == 0 { start_flags } else { flags };
-        builder
-            .add_page(page.source, role, chapter_id, page_number, page_flags)
-            .with_context(|| format!("{name}: {}", page.name))?;
+        builder.add_page(page.source, role, chapter_id, page_number, page_flags).with_context(|| format!("{name}: {}", page.name))?;
         for (_, entry) in aux.extract_if(.., |(idx, _)| *idx == i) {
             builder.attach_aux(entry).with_context(|| format!("{name}: attachment of page {}", i + 1))?;
         }

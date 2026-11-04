@@ -275,15 +275,7 @@ mod tests {
     use super::*;
 
     fn sample(pieces: Vec<Piece>) -> Plan {
-        Plan {
-            format: Format::Ogg,
-            block: BlockSize::Page4k,
-            redundancy: 10,
-            orig_len: 12345,
-            orig_crc: 0xDEAD_BEEF,
-            extra: vec![1, 2, 3],
-            pieces,
-        }
+        Plan { format: Format::Ogg, block: BlockSize::Page4k, redundancy: 10, orig_len: 12345, orig_crc: 0xDEAD_BEEF, extra: vec![1, 2, 3], pieces }
     }
 
     #[test]

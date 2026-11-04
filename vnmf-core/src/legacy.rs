@@ -122,10 +122,7 @@ fn convert_flags(old: u16) -> u16 {
 
 /// Parses 1.x metadata at header position `header_pos` and converts it into 2.0 records.
 pub(crate) fn parse(bytes: &[u8], header_pos: usize) -> Result<Parsed, ReaderError> {
-    let slice = header_pos
-        .checked_add(spec::HEADER_SIZE)
-        .and_then(|end| bytes.get(header_pos..end))
-        .ok_or(ReaderError::FileTooSmall(bytes.len() as u64))?;
+    let slice = header_pos.checked_add(spec::HEADER_SIZE).and_then(|end| bytes.get(header_pos..end)).ok_or(ReaderError::FileTooSmall(bytes.len() as u64))?;
     let old = HeaderV1::read_from_bytes(slice).map_err(|_| ReaderError::FileTooSmall(bytes.len() as u64))?;
     if old.magic != spec::MAGIC {
         return Err(ReaderError::InvalidMagic(old.magic));
@@ -232,29 +229,15 @@ pub(crate) fn parse(bytes: &[u8], header_pos: usize) -> Result<Parsed, ReaderErr
     }
     verify_links(&pages, &aux, chunks.len())?;
 
-    let mut header = Header::new(
-        old.flags.get(),
-        old.uuid,
-        old.info,
-        [old.preview_table, old.page_table, EntryRecord::default(), old.chunks_table],
-        block_size,
-    );
+    let mut header =
+        Header::new(old.flags.get(), old.uuid, old.info, [old.preview_table, old.page_table, EntryRecord::default(), old.chunks_table], block_size);
     header.major_version = old.major_version;
     header.minor_version = old.minor_version;
     header.parity_offset = old.parity_offset;
     header.redundancy = old.redundancy;
     header.seal();
 
-    Ok(Parsed {
-        header,
-        block_size,
-        info_range,
-        previews,
-        pages,
-        aux,
-        chunks,
-        legacy: Some((old.major_version, old.minor_version)),
-    })
+    Ok(Parsed { header, block_size, info_range, previews, pages, aux, chunks, legacy: Some((old.major_version, old.minor_version)) })
 }
 
 #[cfg(test)]
@@ -270,8 +253,7 @@ pub(crate) mod tests {
         let chunks_table = 2 * block as u64;
         let data = [png.clone(), [png.clone(), vec![1]].concat(), ogg.clone()];
         let offsets = [3 * block as u64, 4 * block as u64, 5 * block as u64];
-        let chunks: Vec<EntryRecord> =
-            data.iter().zip(offsets).map(|(d, o)| EntryRecord::new(o, d.len() as u32, crc32fast::hash(d))).collect();
+        let chunks: Vec<EntryRecord> = data.iter().zip(offsets).map(|(d, o)| EntryRecord::new(o, d.len() as u32, crc32fast::hash(d))).collect();
         let page = |first: u32, aux: u32, chapter: u16, flags: u16| {
             let mut r = PageRecordV1 {
                 width: le::U32::new(4),

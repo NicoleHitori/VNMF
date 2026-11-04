@@ -44,10 +44,7 @@ fn is_zip(head: &[u8]) -> bool {
 
 fn read_head(path: &Path) -> Result<Vec<u8>> {
     let mut head = Vec::with_capacity(64);
-    File::open(path)
-        .with_context(|| format!("could not open {}", path.display()))?
-        .take(64)
-        .read_to_end(&mut head)?;
+    File::open(path).with_context(|| format!("could not open {}", path.display()))?.take(64).read_to_end(&mut head)?;
     Ok(head)
 }
 
@@ -137,10 +134,7 @@ impl Chapter {
             let json: Option<Value> = serde_json::from_slice(&data).ok();
             let is_vnmf = json.as_ref().and_then(|j| j.get("schema")?.as_str()).is_some_and(|s| s.starts_with("vnmf-metadata/"));
             if base.eq_ignore_ascii_case(metadata::FILE_NAME) || is_vnmf {
-                let meta = json
-                    .as_ref()
-                    .and_then(Metadata::from_json)
-                    .with_context(|| format!("{name}: this is not VNMF metadata"))?;
+                let meta = json.as_ref().and_then(Metadata::from_json).with_context(|| format!("{name}: this is not VNMF metadata"))?;
                 self.contents = Some(meta.contents.clone());
                 self.metadata = Some(meta);
                 return Ok(true);
@@ -211,11 +205,7 @@ pub fn load_inputs(paths: &[PathBuf]) -> Result<Vec<Chapter>> {
                 flush(&mut loose, &mut chapters);
                 chapters.extend(load_dir(path)?);
             }
-            InputKind::Image(format) => loose.pages.push(PageEntry {
-                name: path.display().to_string(),
-                source: ChunkSource::from_file(path)?,
-                format,
-            }),
+            InputKind::Image(format) => loose.pages.push(PageEntry { name: path.display().to_string(), source: ChunkSource::from_file(path)?, format }),
             InputKind::Metadata(_) => {
                 let data = fs::read(path)?;
                 let name = path.display().to_string();

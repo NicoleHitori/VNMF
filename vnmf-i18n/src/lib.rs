@@ -240,8 +240,8 @@ pub fn language_name(code: &str) -> String {
 
 #[cfg(all(target_os = "linux", target_env = "gnu"))]
 mod sys {
-    use std::ffi::{CStr, CString, c_char, c_int, c_ulong};
     use ffi::{bind_textdomain_codeset, bindtextdomain, setlocale};
+    use std::ffi::{CStr, CString, c_char, c_int, c_ulong};
     use std::path::Path;
 
     mod ffi {

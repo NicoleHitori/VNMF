@@ -26,13 +26,13 @@ use std::time::Duration;
 use adw::prelude::*;
 use gtk::{gdk, gio, glib};
 use vnmf::contents::Toc;
+use vnmf::health::{Health, assess, role_name};
 use vnmf::metadata::Metadata;
 use vnmf::playback;
-use vnmf::health::{Health, assess, role_name};
 use vnmf_core::{AuxFlags, AuxKind, HeaderBitEnum, PageBitFlags, PageFormat, PageRole, VnmfReader};
 use vnmf_gui::aspect_picture::AspectPicture;
-use vnmf_gui::imaging::{self, TextureCache};
 use vnmf_gui::audio::{self, Sound};
+use vnmf_gui::imaging::{self, TextureCache};
 use vnmf_gui::{AppWindow, health_ui, widgets};
 
 use layout::PageInfo;
@@ -213,22 +213,15 @@ impl ReaderWindow {
 
         let open_button = gtk::Button::builder().icon_name("document-open-symbolic").tooltip_text(tr("Open (Ctrl+O)")).build();
         open_button.set_action_name(Some("win.open"));
-        let sidebar_button = gtk::ToggleButton::builder()
-            .icon_name("sidebar-show-symbolic")
-            .tooltip_text(tr("Information and pages (F9)"))
-            .build();
+        let sidebar_button = gtk::ToggleButton::builder().icon_name("sidebar-show-symbolic").tooltip_text(tr("Information and pages (F9)")).build();
         header.pack_start(&open_button);
         header.pack_start(&sidebar_button);
         header.pack_end(&reader_menu());
         let zoom_button = zoom_menu_button();
         header.pack_end(&zoom_button);
         // Visible only for files with page sound / text.
-        let text_button = gtk::ToggleButton::builder()
-            .icon_name("text-x-generic-symbolic")
-            .tooltip_text(tr("Page text (T)"))
-            .action_name("win.text")
-            .visible(false)
-            .build();
+        let text_button =
+            gtk::ToggleButton::builder().icon_name("text-x-generic-symbolic").tooltip_text(tr("Page text (T)")).action_name("win.text").visible(false).build();
         let sound_button = gtk::ToggleButton::builder()
             .icon_name("audio-volume-high-symbolic")
             .tooltip_text(tr("Page sound (M)"))
@@ -240,11 +233,7 @@ impl ReaderWindow {
 
         let banner = health_ui::banner();
 
-        let (empty, empty_button) = widgets::open_status_page(
-            "x-office-document-symbolic",
-            "VNMF Reader",
-            tr("Open a .vnmf file or drag it into the window"),
-        );
+        let (empty, empty_button) = widgets::open_status_page("x-office-document-symbolic", "VNMF Reader", tr("Open a .vnmf file or drag it into the window"));
         empty_button.set_action_name(Some("win.open"));
 
         // Paged mode: page sizes are computed explicitly, so scrolling works in both directions.
@@ -254,10 +243,7 @@ impl ReaderWindow {
         // Strip.
         let strip_box = gtk::Box::new(gtk::Orientation::Vertical, 0);
         strip_box.add_css_class("reader-surface");
-        let strip_scroller = gtk::ScrolledWindow::builder()
-            .hscrollbar_policy(gtk::PolicyType::Never)
-            .child(&strip_box)
-            .build();
+        let strip_scroller = gtk::ScrolledWindow::builder().hscrollbar_policy(gtk::PolicyType::Never).child(&strip_box).build();
         strip_scroller.add_css_class("reader-surface");
 
         let views = gtk::Stack::new();
@@ -307,14 +293,8 @@ impl ReaderWindow {
         card_volume.add_css_class("dim-label");
         let card_chapter = gtk::Label::builder().wrap(true).justify(gtk::Justification::Center).max_width_chars(40).build();
         card_chapter.add_css_class("title-3");
-        let card_box = gtk::Box::builder()
-            .orientation(gtk::Orientation::Vertical)
-            .spacing(2)
-            .margin_top(10)
-            .margin_bottom(10)
-            .margin_start(18)
-            .margin_end(18)
-            .build();
+        let card_box =
+            gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(2).margin_top(10).margin_bottom(10).margin_start(18).margin_end(18).build();
         card_box.append(&card_volume);
         card_box.append(&card_chapter);
         let card_frame = gtk::Box::new(gtk::Orientation::Vertical, 0);
@@ -393,13 +373,7 @@ impl ReaderWindow {
         // The header on top of the page when it's shown in fullscreen.
         toolbar.set_top_bar_style(adw::ToolbarStyle::Flat);
 
-        let window = adw::ApplicationWindow::builder()
-            .application(app)
-            .title("VNMF Reader")
-            .default_width(1100)
-            .default_height(900)
-            .content(&toolbar)
-            .build();
+        let window = adw::ApplicationWindow::builder().application(app).title("VNMF Reader").default_width(1100).default_height(900).content(&toolbar).build();
 
         let this = Self(Rc::new(Inner {
             window,
@@ -668,10 +642,7 @@ impl ReaderWindow {
         keys.set_propagation_phase(gtk::PropagationPhase::Capture);
         let this = self.clone();
         keys.connect_key_pressed(move |_, key, keycode, modifiers| {
-            if this.0.state.borrow().reader.is_none()
-                || modifiers.contains(gdk::ModifierType::CONTROL_MASK)
-                || this.focus_in_dialog_or_entry()
-            {
+            if this.0.state.borrow().reader.is_none() || modifiers.contains(gdk::ModifierType::CONTROL_MASK) || this.focus_in_dialog_or_entry() {
                 return glib::Propagation::Proceed;
             }
             this.poke_ui();
@@ -1087,7 +1058,8 @@ impl ReaderWindow {
         let about = adw::PreferencesGroup::builder().title(tr("About the file")).build();
         // Briefly: title, type, authors, translation, genres (in full — in VNMF Info).
         if let Some(meta) = Metadata::from_info(reader.info_bytes()) {
-            const SHOWN: [&str; 8] = [n_("Title"), n_("Original title"), n_("Type"), n_("Status"), n_("Authors and team"), n_("Translation"), n_("Genres"), n_("Age rating")];
+            const SHOWN: [&str; 8] =
+                [n_("Title"), n_("Original title"), n_("Type"), n_("Status"), n_("Authors and team"), n_("Translation"), n_("Genres"), n_("Age rating")];
             let mut credits = Vec::new();
             for (label, value) in meta.display_rows() {
                 if label == tr("Authors and team") {
@@ -1108,14 +1080,8 @@ impl ReaderWindow {
             }
         }
         about.add(&widgets::property_row(tr("Page count"), &format!("{} · {}", reader.pages_count(), formats.join(", "))));
-        about.add(&widgets::property_row(
-            tr("Redundancy"),
-            &reader.parity_layout().map_or(tr("none").into(), |l| format!("{}%", l.redundancy)),
-        ));
-        about.add(&widgets::property_row(
-            tr("Integrity"),
-            &if health.is_ok() { tr("metadata intact").to_string() } else { health.issues.join("; ") },
-        ));
+        about.add(&widgets::property_row(tr("Redundancy"), &reader.parity_layout().map_or(tr("none").into(), |l| format!("{}%", l.redundancy))));
+        about.add(&widgets::property_row(tr("Integrity"), &if health.is_ok() { tr("metadata intact").to_string() } else { health.issues.join("; ") }));
         let more = adw::ButtonRow::builder().title(tr("More in VNMF Info")).end_icon_name("go-next-symbolic").build();
         more.set_action_name(Some("win.info"));
         about.add(&more);
@@ -1131,11 +1097,7 @@ impl ReaderWindow {
                     let range = &chapter.pages;
                     let expander = adw::ExpanderRow::builder()
                         .title(glib::markup_escape_text(&chapter.label()))
-                        .subtitle(if range.len() == 1 {
-                            trf!("p. {0}", range.start + 1)
-                        } else {
-                            trf!("pp. {0}–{1}", range.start + 1, range.end)
-                        })
+                        .subtitle(if range.len() == 1 { trf!("p. {0}", range.start + 1) } else { trf!("pp. {0}–{1}", range.start + 1, range.end) })
                         .build();
                     let go = gtk::Button::builder()
                         .icon_name("go-next-symbolic")
@@ -1210,8 +1172,7 @@ impl ReaderWindow {
         let (chapter_starts, volume_starts) = {
             let state = self.0.state.borrow();
             let chapters: HashSet<usize> = state.toc.chapters().map(|c| c.pages.start).filter(|&p| p > 0).collect();
-            let volumes: HashSet<usize> =
-                state.toc.volumes.iter().filter(|v| state.toc.has_volumes && v.volume != 0).map(|v| v.pages.start).collect();
+            let volumes: HashSet<usize> = state.toc.volumes.iter().filter(|v| state.toc.has_volumes && v.volume != 0).map(|v| v.pages.start).collect();
             (chapters, volumes)
         };
         (0..n)
@@ -1981,8 +1942,7 @@ impl ReaderWindow {
                 })
                 .collect()
         };
-        *self.0.strip_headers.borrow_mut() =
-            headers.iter().map(|h| if h.is_some() { f64::from(STRIP_HEADER) } else { 0.0 }).collect();
+        *self.0.strip_headers.borrow_mut() = headers.iter().map(|h| if h.is_some() { f64::from(STRIP_HEADER) } else { 0.0 }).collect();
         let rows: Vec<(adw::Clamp, AspectPicture)> = chunks
             .iter()
             .zip(&headers)
@@ -2061,8 +2021,7 @@ impl ReaderWindow {
             (f64::from(s.strip_width), f64::from(s.strip_gap))
         };
         let row_width = width.min(self.strip_area_width());
-        let ratios: Vec<f64> =
-            self.0.state.borrow().chunks.iter().map(|c| f64::from(c.height) / f64::from(c.width.max(1))).collect();
+        let ratios: Vec<f64> = self.0.state.borrow().chunks.iter().map(|c| f64::from(c.height) / f64::from(c.width.max(1))).collect();
         StripGeometry {
             tops: layout::strip_tops(&ratios, &self.0.strip_headers.borrow(), row_width, gap),
             heights: ratios.iter().map(|k| (row_width * k).round()).collect(),
@@ -2257,10 +2216,7 @@ impl ReaderWindow {
             }
             let waiters = this.0.loading.borrow_mut().remove(&meta.chunk).unwrap_or_default();
             // Only widgets that still show this chunk (the strip reuses rows).
-            let waiters = waiters
-                .iter()
-                .filter_map(|w| w.upgrade())
-                .filter(|p| p.widget_name() == meta.chunk.to_string());
+            let waiters = waiters.iter().filter_map(|w| w.upgrade()).filter(|p| p.widget_name() == meta.chunk.to_string());
             match result {
                 Ok(texture) => {
                     this.0.cache.borrow_mut().insert(meta.chunk, texture.clone());
@@ -2302,11 +2258,8 @@ impl AppWindow for ReaderWindow {
         let reader = match VnmfReader::open(&path) {
             Ok(r) => Rc::new(r),
             Err(e) => {
-                let health = Health {
-                    issues: vec![trf!("the file can't be opened: {0}", e)],
-                    prognosis: tr("the metadata may be recoverable"),
-                    data_checked: false,
-                };
+                let health =
+                    Health { issues: vec![trf!("the file can't be opened: {0}", e)], prognosis: tr("the metadata may be recoverable"), data_checked: false };
                 health_ui::update_banner(&self.0.banner, &health, &path);
                 widgets::toast(&self.0.toasts, &trf!("Could not open: {0}", e));
                 return;
@@ -2323,11 +2276,8 @@ impl AppWindow for ReaderWindow {
         let mut chunks = Vec::new();
         for (i, page) in reader.pages().iter().enumerate() {
             for chunk in page.chunk_range() {
-                let (width, height) = reader
-                    .get_chunk_data(chunk)
-                    .ok()
-                    .and_then(vnmf_core::image_dimensions)
-                    .unwrap_or((page.width.get().max(1), page.height.get().max(1)));
+                let (width, height) =
+                    reader.get_chunk_data(chunk).ok().and_then(vnmf_core::image_dimensions).unwrap_or((page.width.get().max(1), page.height.get().max(1)));
                 chunks.push(ChunkMeta { page: i, chunk, width, height });
             }
         }
@@ -2384,16 +2334,8 @@ impl AppWindow for ReaderWindow {
                 if self.0.state.borrow().mode == Mode::Strip {
                     self.scroll_strip_to(pos);
                 }
-                let title = if pos.page > 0 {
-                    trf!("Continued from page {0}", pos.page + 1)
-                } else {
-                    tr("Continued from where you left off").to_string()
-                };
-                let toast = adw::Toast::builder()
-                    .title(title)
-                    .button_label(tr("From the start"))
-                    .timeout(5)
-                    .build();
+                let title = if pos.page > 0 { trf!("Continued from page {0}", pos.page + 1) } else { tr("Continued from where you left off").to_string() };
+                let toast = adw::Toast::builder().title(title).button_label(tr("From the start")).timeout(5).build();
                 let this = self.clone();
                 toast.connect_button_clicked(move |_| this.go_to(0));
                 self.0.toasts.add_toast(toast.clone());
@@ -2439,9 +2381,7 @@ fn apply_pending(adj: &gtk::Adjustment, cell: &Cell<Option<(f64, f64)>>, expecte
 /// (in any layout group — e.g. "в" in place of "d" in Ukrainian).
 fn is_key(key: gdk::Key, keycode: u32, target: gdk::Key) -> bool {
     key.to_lower() == target
-        || gdk::Display::default()
-            .and_then(|d| d.map_keycode(keycode))
-            .is_some_and(|keys| keys.iter().any(|(_, k)| k.to_lower() == target))
+        || gdk::Display::default().and_then(|d| d.map_keycode(keycode)).is_some_and(|keys| keys.iter().any(|(_, k)| k.to_lower() == target))
 }
 
 /// Zoom button in the header: "100%" + a popover with −/+/reset and the fit mode.

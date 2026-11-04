@@ -73,17 +73,17 @@ impl PageRecord {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 #[repr(u8)]
 pub enum PageRole {
-    Normal = 0,             // Regular page
-    FrontCover = 1,         // Front cover
-    BackCover = 2,          // Back cover
-    TitlePage = 3,          // Title page
-    SpreadLeft = 4,         // Left half of a spread
-    SpreadRight = 5,        // Right half of a spread
-    SpreadSingle = 6,       // A single continuous wide spread page
-    Credits = 7,            // Authors/translators page
-    TableOfContents = 8,    // Table of contents
-    OmakeBonus = 9,         // Bonus / extra
-    Advertisement = 10,     // Advertisement
+    Normal = 0,          // Regular page
+    FrontCover = 1,      // Front cover
+    BackCover = 2,       // Back cover
+    TitlePage = 3,       // Title page
+    SpreadLeft = 4,      // Left half of a spread
+    SpreadRight = 5,     // Right half of a spread
+    SpreadSingle = 6,    // A single continuous wide spread page
+    Credits = 7,         // Authors/translators page
+    TableOfContents = 8, // Table of contents
+    OmakeBonus = 9,      // Bonus / extra
+    Advertisement = 10,  // Advertisement
 }
 
 impl PageRole {
@@ -153,11 +153,11 @@ impl PageBitFlags {
         Self::NAMES.iter().filter(|(bit, _)| flags & bit != 0).map(|(_, n)| *n).collect()
     }
 
-    pub const HAS_ALPHA: u16        = 1 << 0; // Has an alpha channel
+    pub const HAS_ALPHA: u16 = 1 << 0; // Has an alpha channel
     pub const IS_CHAPTER_START: u16 = 1 << 1; // Start of a new chapter
-    pub const IS_VOLUME_START: u16  = 1 << 2; // Start of a new volume
-    pub const LOSSLESS: u16         = 1 << 3; // Lossless image
-    pub const IS_ANIMATED: u16      = 1 << 4; // Animated page (APNG / Animated WebP / GIF)
-    pub const READING_RTL: u16      = 1 << 5; // Right-to-left reading direction
-    pub const MIXED_FORMATS: u16    = 1 << 6; // The page's chunks have different formats — detect each by signature
+    pub const IS_VOLUME_START: u16 = 1 << 2; // Start of a new volume
+    pub const LOSSLESS: u16 = 1 << 3; // Lossless image
+    pub const IS_ANIMATED: u16 = 1 << 4; // Animated page (APNG / Animated WebP / GIF)
+    pub const READING_RTL: u16 = 1 << 5; // Right-to-left reading direction
+    pub const MIXED_FORMATS: u16 = 1 << 6; // The page's chunks have different formats — detect each by signature
 }

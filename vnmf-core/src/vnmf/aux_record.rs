@@ -171,10 +171,6 @@ impl AuxFlags {
     pub const LOOP: u16 = 1 << 0;
 
     pub fn names(flags: u16) -> Vec<&'static str> {
-        [(Self::LOOP, "LOOP")]
-            .into_iter()
-            .filter(|(bit, _)| flags & bit != 0)
-            .map(|(_, n)| n)
-            .collect()
+        [(Self::LOOP, "LOOP")].into_iter().filter(|(bit, _)| flags & bit != 0).map(|(_, n)| n).collect()
     }
 }

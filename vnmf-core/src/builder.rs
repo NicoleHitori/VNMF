@@ -11,8 +11,8 @@ use std::sync::Arc;
 use imagesize::blob_size;
 use log::info;
 use memmap2::Mmap;
-use zerocopy::{Immutable, IntoBytes};
 use zerocopy::little_endian as le;
+use zerocopy::{Immutable, IntoBytes};
 
 use crate::blocksize::BlockSize;
 use crate::formats::{AuxFormat, PageFormat};
@@ -32,12 +32,7 @@ where
     T: TryFrom<U>,
     U: Copy + Display,
 {
-    T::try_from(value).map_err(|_| {
-        io::Error::new(
-            io::ErrorKind::InvalidInput,
-            format!("{what} ({value}) doesn't fit into the format field"),
-        )
-    })
+    T::try_from(value).map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, format!("{what} ({value}) doesn't fit into the format field")))
 }
 
 /// Size in bytes of a table of `count` records of type `T` (checked against u32).
@@ -127,9 +122,11 @@ impl ChunkSource {
 
     /// A chunk that is a slice of a shared buffer, without copying. The CRC is computed over the bytes themselves.
     pub fn from_shared(buf: SharedBytes, range: std::ops::Range<usize>) -> io::Result<Self> {
-        let bytes = (*buf).as_ref().as_ref().get(range.clone()).ok_or_else(|| {
-            io::Error::new(io::ErrorKind::InvalidInput, format!("slice {range:?} is out of the buffer bounds"))
-        })?;
+        let bytes = (*buf)
+            .as_ref()
+            .as_ref()
+            .get(range.clone())
+            .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, format!("slice {range:?} is out of the buffer bounds")))?;
         let size = narrow(bytes.len(), "chunk size")?;
         let crc = crc32fast::hash(bytes);
         Ok(Self { data: ChunkData::Shared(buf, range), size, crc, label: None })
@@ -336,14 +333,7 @@ impl Builder {
     pub fn add_preview(&mut self, chunk: ChunkSource, volume_id: u16, flags: u8) -> io::Result<()> {
         let (width, height, format) = chunk.probe_image()?;
 
-        self.previews.push(PreviewInput {
-            volume_id,
-            width,
-            height,
-            format,
-            flags,
-            chunk,
-        });
+        self.previews.push(PreviewInput { volume_id, width, height, format, flags, chunk });
         self.set_flag(HeaderBitEnum::HasPreview);
         Ok(())
     }
@@ -358,26 +348,12 @@ impl Builder {
     }
 
     /// Adds a regular page from a single image file
-    pub fn add_page_file<P: AsRef<Path>>(
-        &mut self,
-        path: P,
-        role: PageRole,
-        chapter_id: u16,
-        page_number: u16,
-        flags: u16,
-    ) -> io::Result<()> {
+    pub fn add_page_file<P: AsRef<Path>>(&mut self, path: P, role: PageRole, chapter_id: u16, page_number: u16, flags: u16) -> io::Result<()> {
         self.add_page(ChunkSource::from_file(path)?, role, chapter_id, page_number, flags)
     }
 
     /// Adds a regular page from any source (file or memory).
-    pub fn add_page(
-        &mut self,
-        chunk: ChunkSource,
-        role: PageRole,
-        chapter_id: u16,
-        page_number: u16,
-        flags: u16,
-    ) -> io::Result<()> {
+    pub fn add_page(&mut self, chunk: ChunkSource, role: PageRole, chapter_id: u16, page_number: u16, flags: u16) -> io::Result<()> {
         let (width, height, format) = chunk.probe_image()?;
 
         self.pages.push(PageInput {
@@ -401,30 +377,15 @@ impl Builder {
     /// FIX: the width, height and format used to be passed manually — the example wrote
     /// `PageFormat::WebP` for AVIF files and guessed the height. Now they are taken from the
     /// chunks themselves: the width is the maximum, the height is the sum, the format must be the same for all.
-    pub fn add_webtoon_page<P: AsRef<Path>>(
-        &mut self,
-        chunk_paths: &[P],
-        chapter_id: u16,
-        page_number: u16,
-        flags: u16,
-    ) -> io::Result<()> {
+    pub fn add_webtoon_page<P: AsRef<Path>>(&mut self, chunk_paths: &[P], chapter_id: u16, page_number: u16, flags: u16) -> io::Result<()> {
         let chunks = chunk_paths.iter().map(ChunkSource::from_file).collect::<io::Result<Vec<_>>>()?;
         self.add_webtoon(chunks, chapter_id, page_number, flags)
     }
 
     /// Same as [`Self::add_webtoon_page`], but from arbitrary sources (file or memory).
-    pub fn add_webtoon(
-        &mut self,
-        chunks: Vec<ChunkSource>,
-        chapter_id: u16,
-        page_number: u16,
-        flags: u16,
-    ) -> io::Result<()> {
+    pub fn add_webtoon(&mut self, chunks: Vec<ChunkSource>, chapter_id: u16, page_number: u16, flags: u16) -> io::Result<()> {
         if chunks.is_empty() {
-            return Err(io::Error::new(
-                io::ErrorKind::InvalidInput,
-                "a webtoon page must contain at least one chunk",
-            ));
+            return Err(io::Error::new(io::ErrorKind::InvalidInput, "a webtoon page must contain at least one chunk"));
         }
         narrow::<u32, _>(chunks.len(), "number of page chunks")?;
 
@@ -435,9 +396,7 @@ impl Builder {
         for chunk in &chunks {
             let (w, h, f) = chunk.probe_image()?;
             width = width.max(w);
-            height = height.checked_add(h).ok_or_else(|| {
-                io::Error::new(io::ErrorKind::InvalidInput, "the total webtoon height exceeds u32")
-            })?;
+            height = height.checked_add(h).ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "the total webtoon height exceeds u32"))?;
             match format {
                 None => format = Some(f),
                 Some(first) if first != f && self.allow_mixed_formats => {
@@ -446,10 +405,7 @@ impl Builder {
                 Some(first) if first != f => {
                     return Err(io::Error::new(
                         io::ErrorKind::InvalidInput,
-                        format!(
-                            "webtoon chunks have different formats: {first} and {f} ({})",
-                            chunk.describe()
-                        ),
+                        format!("webtoon chunks have different formats: {first} and {f} ({})", chunk.describe()),
                     ));
                 }
                 Some(_) => {}
@@ -483,14 +439,9 @@ impl Builder {
     /// Attaches an attachment to the last added page. A page may have several attachments
     /// (music + effects + text + dark version).
     pub fn attach_aux(&mut self, aux: AuxInput) -> io::Result<()> {
-        let page = self.pages.last_mut().ok_or_else(|| {
-            io::Error::new(io::ErrorKind::InvalidInput, "there is no page to attach the attachment to")
-        })?;
+        let page = self.pages.last_mut().ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "there is no page to attach the attachment to"))?;
         if aux.kind == AuxKind::DarkImage && aux.part as usize >= page.chunks.len() {
-            return Err(io::Error::new(
-                io::ErrorKind::InvalidInput,
-                format!("dark version for image {} — the page has only {}", aux.part, page.chunks.len()),
-            ));
+            return Err(io::Error::new(io::ErrorKind::InvalidInput, format!("dark version for image {} — the page has only {}", aux.part, page.chunks.len())));
         }
         if aux.volume > 100 {
             return Err(io::Error::new(io::ErrorKind::InvalidInput, format!("volume {}% exceeds 100%", aux.volume)));
@@ -563,8 +514,7 @@ impl Builder {
                 table_len::<EntryRecord>(total_chunks, "chunk table")?,
             ],
         );
-        let (info_offset, [preview_table_offset, page_table_offset, aux_table_offset, chunks_table_offset]) =
-            (front.info, front.tables);
+        let (info_offset, [preview_table_offset, page_table_offset, aux_table_offset, chunks_table_offset]) = (front.info, front.tables);
         let mut cursor = front.end;
 
         // FIX: the data write order used to be reproduced by a separate loop with a manual `chunk_idx`,
@@ -676,11 +626,7 @@ impl Builder {
         // ==========================================
         // 2. HEADER (128 bytes)
         // ==========================================
-        let info_entry = if info_len > 0 {
-            EntryRecord::new(info_offset, info_len, crc32fast::hash(info_bytes))
-        } else {
-            EntryRecord::default()
-        };
+        let info_entry = if info_len > 0 { EntryRecord::new(info_offset, info_len, crc32fast::hash(info_bytes)) } else { EntryRecord::default() };
 
         let mut header = Header::new(
             flags,
@@ -757,7 +703,6 @@ impl Builder {
         info!("--- VNMF file built successfully ---");
         Ok(())
     }
-
 }
 
 /// Reserves space for a section of length `len` with block alignment and returns its offset.
@@ -813,14 +758,8 @@ impl FrontLayout {
 ///
 /// `primary` — the primary header: flags, UUID, block size and parity parameters are taken from it
 /// (they are the same in both copies).
-pub(crate) fn write_tail<W: Write>(
-    writer: &mut PosWriter<W>,
-    primary: &Header,
-    info_bytes: &[u8],
-    tables: [&[u8]; 4],
-) -> io::Result<()> {
-    let block = BlockSize::try_from(primary.block_size_shift)
-        .map_err(|v| io::Error::new(io::ErrorKind::InvalidData, format!("unknown block size {v}")))?;
+pub(crate) fn write_tail<W: Write>(writer: &mut PosWriter<W>, primary: &Header, info_bytes: &[u8], tables: [&[u8]; 4]) -> io::Result<()> {
+    let block = BlockSize::try_from(primary.block_size_shift).map_err(|v| io::Error::new(io::ErrorKind::InvalidData, format!("unknown block size {v}")))?;
 
     // The tail goes in reverse order: chunks, attachments, pages, previews, Info, header.
     let mut tail = *primary;
@@ -847,11 +786,7 @@ fn write_tail_section<W: Write>(writer: &mut PosWriter<W>, block: BlockSize, byt
 /// EntryRecord for a records table (an empty table → a zero record).
 fn section_entry<T: IntoBytes + Immutable>(offset: u64, records: &[T]) -> EntryRecord {
     let bytes = records.as_bytes();
-    if bytes.is_empty() {
-        EntryRecord::default()
-    } else {
-        EntryRecord::new(offset, bytes.len() as u32, crc32fast::hash(bytes))
-    }
+    if bytes.is_empty() { EntryRecord::default() } else { EntryRecord::new(offset, bytes.len() as u32, crc32fast::hash(bytes)) }
 }
 
 /// A writer that tracks its current position itself.
@@ -881,10 +816,7 @@ impl<W: Write> PosWriter<W> {
     pub fn pad_to(&mut self, target: u64) -> io::Result<()> {
         const ZEROES: [u8; 4096] = [0u8; 4096];
         if target < self.pos {
-            return Err(io::Error::other(format!(
-                "layout error: position {} is already past the section boundary {target}",
-                self.pos
-            )));
+            return Err(io::Error::other(format!("layout error: position {} is already past the section boundary {target}", self.pos)));
         }
         while self.pos < target {
             let to_write = (target - self.pos).min(ZEROES.len() as u64) as usize;
@@ -908,12 +840,7 @@ impl<W: Write> PosWriter<W> {
     /// copying happens in `build()`; if the file changed in between, a wrong CRC ended up in the table,
     /// and if it grew — it "ran over" the next chunk and silently corrupted the file.
     fn copy_chunk(&mut self, src: &ChunkSource) -> io::Result<()> {
-        let changed = || {
-            io::Error::new(
-                io::ErrorKind::InvalidData,
-                format!("the file changed after being added to the builder: {}", src.describe()),
-            )
-        };
+        let changed = || io::Error::new(io::ErrorKind::InvalidData, format!("the file changed after being added to the builder: {}", src.describe()));
 
         let path = match &src.data {
             // Bytes in memory are immutable — their CRC was already computed in `from_bytes` / `from_shared`.

@@ -177,8 +177,7 @@ fn rs_error(e: reed_solomon_simd::Error) -> io::Error {
 fn encode_stripe(protected: &[u8], layout: &ParityLayout, stripe: usize, zero: &[u8]) -> io::Result<Vec<Vec<u8>>> {
     let members: Vec<&[u8]> = layout.stripe_members(stripe).map(|i| layout.data_shard(protected, i)).collect();
     let padding = std::iter::repeat_n(zero, layout.per_stripe - members.len());
-    reed_solomon_simd::encode(layout.per_stripe, layout.parity_per_stripe, members.into_iter().chain(padding))
-        .map_err(rs_error)
+    reed_solomon_simd::encode(layout.per_stripe, layout.parity_per_stripe, members.into_iter().chain(padding)).map_err(rs_error)
 }
 
 /// Description at the start of a CRC table block: signature and layout parameters (32 bytes).
@@ -273,14 +272,8 @@ fn decode_table(file: &[u8], layout: &ParityLayout) -> (Vec<Option<u32>>, usize)
     let read_block = |base: u64, copy: TableCopy, i: usize| -> Option<&[u8]> {
         let start = usize::try_from(base).ok()? + i * b;
         let header = parse_block(file, start)?;
-        let expected = BlockHeader {
-            offset: layout.offset,
-            index: i,
-            block: header.block,
-            redundancy: layout.redundancy,
-            copy,
-            table_blocks: layout.table_blocks,
-        };
+        let expected =
+            BlockHeader { offset: layout.offset, index: i, block: header.block, redundancy: layout.redundancy, copy, table_blocks: layout.table_blocks };
         (header == expected && header.block.bytes() == b).then(|| &file[start + TABLE_BLOCK_HEADER..start + b - 4])
     };
 
@@ -480,8 +473,7 @@ pub fn repair(file: &mut [u8], layout: &ParityLayout) -> io::Result<RepairReport
                     let start = layout.parity_shard_offset(layout.parity_index(s, j)) as usize;
                     (j, &file[start..start + b])
                 });
-                reed_solomon_simd::decode(layout.per_stripe, layout.parity_per_stripe, originals, recovery)
-                    .map_err(rs_error)?
+                reed_solomon_simd::decode(layout.per_stripe, layout.parity_per_stripe, originals, recovery).map_err(rs_error)?
             };
             for (pos, data) in restored {
                 if let Some(&i) = members.get(pos) {
@@ -663,7 +655,9 @@ mod tests {
     /// the parity repairs the damaged start of the file (that's where the primary header is).
     #[test]
     fn finds_layout_without_header() {
-        for (blocks, redundancy, block) in [(300usize, 10u8, BlockSize::Page4k), (120, 25, BlockSize::Page8k), (2500, 3, BlockSize::Page4k), (40, 30, BlockSize::Ext32k)] {
+        for (blocks, redundancy, block) in
+            [(300usize, 10u8, BlockSize::Page4k), (120, 25, BlockSize::Page8k), (2500, 3, BlockSize::Page4k), (40, 30, BlockSize::Ext32k)]
+        {
             let b = block.bytes();
             let layout = ParityLayout::new((blocks * b) as u64, block, redundancy).unwrap();
             let protected: Vec<u8> = (0..blocks * b).map(|i| (i * 31 + i / b * 7 + i / 977) as u8).collect();
@@ -744,10 +738,7 @@ mod tests {
     /// GF(2¹⁶) = GF(2)[x] / (x¹⁶ + x⁵ + x³ + x² + 1).
     const GF_POLY: u32 = 0x1002D;
     /// Cantor basis: symbol s (16 bits) denotes the element ⊕ βₖ over the set bits k.
-    const CANTOR: [u16; 16] = [
-        0x0001, 0xACCA, 0x3C0E, 0x163E, 0xC582, 0xED2E, 0x914C, 0x4012, 0x6C98, 0x10D8, 0x6A72, 0xB900, 0xFDB8,
-        0xFB34, 0xFF38, 0x991E,
-    ];
+    const CANTOR: [u16; 16] = [0x0001, 0xACCA, 0x3C0E, 0x163E, 0xC582, 0xED2E, 0x914C, 0x4012, 0x6C98, 0x10D8, 0x6A72, 0xB900, 0xFDB8, 0xFB34, 0xFF38, 0x991E];
 
     fn gf_mul(a: u16, b: u16) -> u16 {
         let (mut a, mut b, mut r) = (u32::from(a), u32::from(b), 0u32);

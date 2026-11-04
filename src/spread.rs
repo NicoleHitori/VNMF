@@ -27,10 +27,7 @@ pub struct PageInfo {
 
 /// Left and right halves of a spread explicitly set by the file (SpreadLeft / SpreadRight roles).
 fn declared_pair(a: Option<PageRole>, b: Option<PageRole>) -> bool {
-    matches!(
-        (a, b),
-        (Some(PageRole::SpreadLeft), Some(PageRole::SpreadRight)) | (Some(PageRole::SpreadRight), Some(PageRole::SpreadLeft))
-    )
+    matches!((a, b), (Some(PageRole::SpreadLeft), Some(PageRole::SpreadRight)) | (Some(PageRole::SpreadRight), Some(PageRole::SpreadLeft)))
 }
 
 /// Splits pages into display groups (in reading order).
@@ -59,8 +56,7 @@ pub fn group_pages(pages: &[PageInfo], double: bool, cover_alone: bool) -> Vec<V
     let mut i = 0;
     while i < n {
         // A pair: a spread set by the file, or (in spread mode) two ordinary pages.
-        let auto_pair =
-            double && !alone(i) && i + 1 < n && !alone(i + 1) && !starts_pair(i + 1) && !pages[i + 1].chapter_start;
+        let auto_pair = double && !alone(i) && i + 1 < n && !alone(i + 1) && !starts_pair(i + 1) && !pages[i + 1].chapter_start;
         if starts_pair(i) || auto_pair {
             groups.push(vec![i, i + 1]);
             i += 2;
@@ -90,11 +86,7 @@ pub fn visual_order(group: &[usize], pages: &[PageInfo], rtl: bool) -> Vec<usize
 /// This is the unit of scale: a wide single-image spread page takes as much space
 /// as two ordinary ones side by side. `None` — there are no ordinary pages.
 pub fn page_unit(pages: &[PageInfo]) -> Option<f64> {
-    let mut ratios: Vec<f64> = pages
-        .iter()
-        .filter(|p| !p.multi_chunk && !is_wide(p))
-        .map(|p| f64::from(p.width) / f64::from(p.height.max(1)))
-        .collect();
+    let mut ratios: Vec<f64> = pages.iter().filter(|p| !p.multi_chunk && !is_wide(p)).map(|p| f64::from(p.width) / f64::from(p.height.max(1))).collect();
     if ratios.is_empty() {
         return None;
     }

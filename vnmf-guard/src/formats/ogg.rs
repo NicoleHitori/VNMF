@@ -97,8 +97,7 @@ fn pages(d: &[u8]) -> Result<Vec<Page>> {
     while pos < d.len() {
         let h = &d[pos..];
         ensure!(h.starts_with(b"OggS") && h.len() >= HEADER && h[4] == 0, "Ogg: no page at {pos}");
-        let len =
-            page_len(h).filter(|&l| l <= h.len()).ok_or_else(|| anyhow::anyhow!("Ogg: truncated page at {pos}"))?;
+        let len = page_len(h).filter(|&l| l <= h.len()).ok_or_else(|| anyhow::anyhow!("Ogg: truncated page at {pos}"))?;
         let page = &h[..len];
         ensure!(page_crc(page) == u32::from_le_bytes(page[22..26].try_into()?), "Ogg: wrong page CRC at {pos}");
         out.push(Page {
@@ -160,10 +159,7 @@ struct Headers {
 fn headers(d: &[u8], pages: &[Page]) -> Result<Headers> {
     let serial = pages[0].serial;
     ensure!(pages[0].flags & FLAG_BOS != 0, "Ogg: the first page is not the beginning of a stream");
-    ensure!(
-        pages.iter().all(|p| p.serial == serial),
-        "Ogg: multiple logical streams (multiplexed or chained file) are not supported"
-    );
+    ensure!(pages.iter().all(|p| p.serial == serial), "Ogg: multiple logical streams (multiplexed or chained file) are not supported");
 
     let mut codec = None;
     let mut packets = Vec::new();
@@ -348,9 +344,7 @@ pub(super) fn strip(file: &[u8], plan: &Plan) -> Result<Vec<u8>> {
         let segs = extra.u8()? as usize;
         let lacing = extra.bytes(segs)?;
         let len: usize = lacing.iter().map(|&l| l as usize).sum();
-        let Some(body) = stream.get(pos..pos + len) else {
-            bail!("Ogg: headers are shorter than the original pages")
-        };
+        let Some(body) = stream.get(pos..pos + len) else { bail!("Ogg: headers are shorter than the original pages") };
         let mut header = page_header(flags, granule, serial, first_seq.wrapping_add(i as u32), lacing);
         set_crc(&mut header, body);
         out.extend_from_slice(&header);

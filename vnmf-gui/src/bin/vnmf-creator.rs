@@ -310,11 +310,8 @@ impl CreatorWindow {
         let header = adw::HeaderBar::new();
         header.set_title_widget(Some(&title));
 
-        let add_button = adw::SplitButton::builder()
-            .label(tr("Add"))
-            .tooltip_text(tr("Add images, CBZ or .vnmf (Ctrl+O)"))
-            .action_name("win.add-files")
-            .build();
+        let add_button =
+            adw::SplitButton::builder().label(tr("Add")).tooltip_text(tr("Add images, CBZ or .vnmf (Ctrl+O)")).action_name("win.add-files").build();
         let add_menu = gio::Menu::new();
         add_menu.append(Some(tr("Open .vnmf for editing…")), Some("win.open-vnmf"));
         add_menu.append(Some(tr("Images, CBZ or .vnmf…")), Some("win.add-files"));
@@ -327,11 +324,8 @@ impl CreatorWindow {
         save_button.add_css_class("suggested-action");
         save_button.set_action_name(Some("win.save"));
         save_button.set_sensitive(false);
-        let sidebar_toggle = gtk::ToggleButton::builder()
-            .icon_name("document-properties-symbolic")
-            .tooltip_text(tr("Metadata and parameters (F9)"))
-            .active(true)
-            .build();
+        let sidebar_toggle =
+            gtk::ToggleButton::builder().icon_name("document-properties-symbolic").tooltip_text(tr("Metadata and parameters (F9)")).active(true).build();
         header.pack_end(&widgets::menu_button(&[
             (tr("Clear project"), "win.clear"),
             (tr("Language…"), "win.language"),
@@ -391,19 +385,9 @@ impl CreatorWindow {
         toolbar.add_top_bar(&header);
         toolbar.set_content(Some(&toasts));
 
-        let window = adw::ApplicationWindow::builder()
-            .application(app)
-            .title("VNMF Creator")
-            .default_width(1300)
-            .default_height(850)
-            .content(&toolbar)
-            .build();
+        let window = adw::ApplicationWindow::builder().application(app).title("VNMF Creator").default_width(1300).default_height(850).content(&toolbar).build();
 
-        let breakpoint = adw::Breakpoint::new(adw::BreakpointCondition::new_length(
-            adw::BreakpointConditionLengthType::MaxWidth,
-            800.0,
-            adw::LengthUnit::Sp,
-        ));
+        let breakpoint = adw::Breakpoint::new(adw::BreakpointCondition::new_length(adw::BreakpointConditionLengthType::MaxWidth, 800.0, adw::LengthUnit::Sp));
         breakpoint.add_setter(&split, "collapsed", Some(&true.to_value()));
         window.add_breakpoint(breakpoint);
 
@@ -490,7 +474,13 @@ impl CreatorWindow {
         motion.connect_motion(move |m, _, y| {
             const EDGE: f64 = 80.0;
             let height = m.widget().map_or(0.0, |w| f64::from(w.height()));
-            let v = if y < EDGE { -(EDGE - y) } else if y > height - EDGE { y - (height - EDGE) } else { 0.0 };
+            let v = if y < EDGE {
+                -(EDGE - y)
+            } else if y > height - EDGE {
+                y - (height - EDGE)
+            } else {
+                0.0
+            };
             sp.set(v / 3.0);
             if v == 0.0 || ticking.replace(true) {
                 return;
@@ -958,10 +948,7 @@ impl CreatorWindow {
         let covers = self.0.covers.borrow().clone();
         let mut rows = Vec::new();
         if covers.is_empty() {
-            let row = adw::ActionRow::builder()
-                .title(tr("None"))
-                .subtitle(tr("Add images with the \"+\" button"))
-                .build();
+            let row = adw::ActionRow::builder().title(tr("None")).subtitle(tr("Add images with the \"+\" button")).build();
             row.add_css_class("dim-label");
             rows.push(row.upcast::<gtk::Widget>());
         }
@@ -1016,7 +1003,8 @@ impl CreatorWindow {
             let remove = gtk::Button::builder().label(tr("Remove")).build();
             remove.add_css_class("flat");
             remove.add_css_class("destructive-action");
-            let content = gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(6).margin_top(6).margin_bottom(6).margin_start(6).margin_end(6).build();
+            let content =
+                gtk::Box::builder().orientation(gtk::Orientation::Vertical).spacing(6).margin_top(6).margin_bottom(6).margin_start(6).margin_end(6).build();
             content.append(&gtk::Label::builder().label(tr("Cover for")).xalign(0.0).css_classes(["dim-label", "caption"]).build());
             content.append(&target);
             content.append(&gtk::Separator::new(gtk::Orientation::Horizontal));
@@ -1075,9 +1063,9 @@ impl CreatorWindow {
 
     /// Importing metadata from a file: vnmf.json, ComicInfo.xml or format 1.1 Info.
     fn import_info(&self, path: &std::path::Path) {
-        let parsed = std::fs::read(path).map_err(anyhow::Error::from).and_then(|bytes| {
-            Metadata::from_info(Some(&bytes)).ok_or_else(|| anyhow::anyhow!(tr("this is neither vnmf.json nor ComicInfo.xml")))
-        });
+        let parsed = std::fs::read(path)
+            .map_err(anyhow::Error::from)
+            .and_then(|bytes| Metadata::from_info(Some(&bytes)).ok_or_else(|| anyhow::anyhow!(tr("this is neither vnmf.json nor ComicInfo.xml"))));
         match parsed {
             Ok(meta) => {
                 self.apply_metadata(meta);
@@ -1558,11 +1546,7 @@ impl CreatorWindow {
         dialog.set_close_response("cancel");
         let this = self.clone();
         dialog.connect_response(Some("save"), move |_, _| {
-            let section = Section {
-                number: number.text().trim().to_string(),
-                title: title.text().trim().to_string(),
-                ..current.clone()
-            };
+            let section = Section { number: number.text().trim().to_string(), title: title.text().trim().to_string(), ..current.clone() };
             if volume && !section.number.is_empty() && section.number.parse::<u16>().is_err() {
                 return widgets::toast(&this.0.toasts, tr("A volume number must be an integer"));
             }
@@ -1912,7 +1896,10 @@ impl CreatorWindow {
         view.buffer().set_text(&current);
         let scroll = gtk::ScrolledWindow::builder().child(&view).min_content_height(220).min_content_width(380).build();
         scroll.add_css_class("card");
-        let dialog = adw::AlertDialog::new(Some(tr("Page text")), Some(tr("The reader shows it in the \"Text\" panel (T). You can paste vnmf-text/1 JSON with regions.")));
+        let dialog = adw::AlertDialog::new(
+            Some(tr("Page text")),
+            Some(tr("The reader shows it in the \"Text\" panel (T). You can paste vnmf-text/1 JSON with regions.")),
+        );
         dialog.set_extra_child(Some(&scroll));
         dialog.add_response("cancel", tr("Cancel"));
         dialog.add_response("save", tr("Save"));
@@ -2457,12 +2444,7 @@ fn load_vnmf(path: &std::path::Path) -> anyhow::Result<(Vec<Loaded>, Option<Meta
     let damaged = opened.damaged();
     let mut pages = Vec::new();
     for chapter in opened.chapters {
-        let mut chapter_mark = Some(Section {
-            number: chapter.number,
-            title: chapter.title.unwrap_or_default(),
-            date: chapter.date,
-            isbn: None,
-        });
+        let mut chapter_mark = Some(Section { number: chapter.number, title: chapter.title.unwrap_or_default(), date: chapter.date, isbn: None });
         let mut volume_mark = chapter.volume_start.then(|| Section {
             number: chapter.volume.to_string(),
             title: chapter.volume_title.unwrap_or_default(),
@@ -2762,17 +2744,12 @@ fn list_set(m: &mut Metadata, key: &str, values: Vec<String>) {
         // The language of an alternative title and a link's label are kept if the entry remains.
         "alternative_titles" => {
             let old = std::mem::take(&mut m.alternative_titles);
-            m.alternative_titles = values
-                .into_iter()
-                .map(|t| old.iter().find(|a| a.title == t).cloned().unwrap_or(metadata::AltTitle { title: t, language: None }))
-                .collect();
+            m.alternative_titles =
+                values.into_iter().map(|t| old.iter().find(|a| a.title == t).cloned().unwrap_or(metadata::AltTitle { title: t, language: None })).collect();
         }
         "links" => {
             let old = std::mem::take(&mut m.links);
-            m.links = values
-                .into_iter()
-                .map(|u| old.iter().find(|l| l.url == u).cloned().unwrap_or(metadata::Link { url: u, title: None }))
-                .collect();
+            m.links = values.into_iter().map(|u| old.iter().find(|l| l.url == u).cloned().unwrap_or(metadata::Link { url: u, title: None })).collect();
         }
         "genres" => m.genres = values,
         "tags" => m.tags = values,
@@ -2980,21 +2957,14 @@ fn build_sidebar() -> (adw::PreferencesPage, MetaForm, Options) {
 
     // Parameters
     let opts = adw::PreferencesGroup::builder().title(tr("Parameters")).build();
-    let webtoon = adw::SwitchRow::builder()
-        .title(tr("Webtoon"))
-        .subtitle(tr("All images form one long page; formats can be mixed"))
-        .build();
+    let webtoon = adw::SwitchRow::builder().title(tr("Webtoon")).subtitle(tr("All images form one long page; formats can be mixed")).build();
     let rtl = adw::SwitchRow::builder().title(tr("Right to left")).subtitle(tr("Manga reading direction")).build();
     let redundancy = adw::SpinRow::builder()
         .title(tr("Redundancy, %"))
         .subtitle(tr("Protection against media damage: a contiguous region of the same size can be recovered"))
         .adjustment(&gtk::Adjustment::new(10.0, 0.0, f64::from(spec::MAX_REDUNDANCY), 1.0, 5.0, 0.0))
         .build();
-    let tail = adw::SwitchRow::builder()
-        .title(tr("Metadata backup copy"))
-        .subtitle(tr("A copy of the tables at the end of the file"))
-        .active(true)
-        .build();
+    let tail = adw::SwitchRow::builder().title(tr("Metadata backup copy")).subtitle(tr("A copy of the tables at the end of the file")).active(true).build();
     let cover = adw::ComboRow::builder()
         .title(tr("Covers"))
         .model(&gtk::StringList::new(&[tr("None"), tr("From pages"), tr("Custom only")]))
@@ -3002,12 +2972,8 @@ fn build_sidebar() -> (adw::PreferencesPage, MetaForm, Options) {
         .subtitle(tr(COVER_HINTS[COVER_AUTO as usize]))
         .build();
     // Custom covers: any number of images from files or pages; they don't become pages.
-    let add = gtk::Button::builder()
-        .icon_name("list-add-symbolic")
-        .tooltip_text(tr("Add images…"))
-        .valign(gtk::Align::Center)
-        .action_name("win.add-covers")
-        .build();
+    let add =
+        gtk::Button::builder().icon_name("list-add-symbolic").tooltip_text(tr("Add images…")).valign(gtk::Align::Center).action_name("win.add-covers").build();
     add.add_css_class("flat");
     let covers_group = adw::PreferencesGroup::builder()
         .title(tr("Custom covers"))
@@ -3020,10 +2986,7 @@ fn build_sidebar() -> (adw::PreferencesPage, MetaForm, Options) {
         combo.set_subtitle(tr(COVER_HINTS[choice as usize]));
         group.set_visible(choice != COVER_NONE);
     });
-    let block = adw::ComboRow::builder()
-        .title(tr("Block size"))
-        .model(&gtk::StringList::new(&["4 KiB", "8 KiB", "16 KiB", "32 KiB"]))
-        .build();
+    let block = adw::ComboRow::builder().title(tr("Block size")).model(&gtk::StringList::new(&["4 KiB", "8 KiB", "16 KiB", "32 KiB"])).build();
     for row in [webtoon.upcast_ref::<gtk::Widget>(), rtl.upcast_ref(), redundancy.upcast_ref(), tail.upcast_ref(), cover.upcast_ref(), block.upcast_ref()] {
         opts.add(row);
     }
@@ -3102,7 +3065,11 @@ fn move_group_in(items: &mut Vec<Item>, a: usize, volume: bool, t: usize, volume
     let mut block: Vec<Item> = items.drain(a..b).collect();
     let t = if t > a { t - (b - a) } else { t };
     // Onto the header of a volume's first chapter — the chapter becomes the first in that volume.
-    if !volume && !volume_header && let Some(next) = items.get_mut(t) && next.volume.is_some() {
+    if !volume
+        && !volume_header
+        && let Some(next) = items.get_mut(t)
+        && next.volume.is_some()
+    {
         block[0].volume = next.volume.take();
     }
     items.splice(t..t, block);
@@ -3254,9 +3221,9 @@ mod tests {
     /// `VNMF_KEEP_TEST_FILE=<path>` — keep the file for manual checking in Reader.
     #[test]
     fn spread_roles_are_written_to_file() {
-        let path = std::env::var("VNMF_KEEP_TEST_FILE").map(PathBuf::from).unwrap_or_else(|_| {
-            std::env::temp_dir().join(format!("vnmf-creator-roles-{}.vnmf", std::process::id()))
-        });
+        let path = std::env::var("VNMF_KEEP_TEST_FILE")
+            .map(PathBuf::from)
+            .unwrap_or_else(|_| std::env::temp_dir().join(format!("vnmf-creator-roles-{}.vnmf", std::process::id())));
         let roles = [
             PageRole::FrontCover,
             PageRole::Normal,
@@ -3487,7 +3454,8 @@ mod tests {
         let mut meta = meta.unwrap();
         meta.contents = plan_contents(&chapters);
         assert_eq!(loaded[1].aux.len(), 2);
-        let pages = loaded.iter().map(|l| ProjectPage { source: l.source.clone(), role: l.role, flags: l.flags, aux: l.aux.clone(), height: l.height }).collect();
+        let pages =
+            loaded.iter().map(|l| ProjectPage { source: l.source.clone(), role: l.role, flags: l.flags, aux: l.aux.clone(), height: l.height }).collect();
         build_volume(project(pages, chapters, Some(meta.to_bytes()), 0), &out).unwrap();
 
         let (a, b) = (VnmfReader::open(&src).unwrap(), VnmfReader::open(&out).unwrap());

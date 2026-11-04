@@ -11,18 +11,8 @@ use vnmf_gui::widgets;
 use vnmf_i18n::tr;
 
 /// A switch row bound to a boolean settings field.
-fn switch(
-    window: &ReaderWindow,
-    title: &str,
-    subtitle: &str,
-    get: fn(&Settings) -> bool,
-    set: fn(&mut Settings, bool),
-) -> adw::SwitchRow {
-    let row = adw::SwitchRow::builder()
-        .title(title)
-        .subtitle(subtitle)
-        .active(get(&window.0.settings.borrow()))
-        .build();
+fn switch(window: &ReaderWindow, title: &str, subtitle: &str, get: fn(&Settings) -> bool, set: fn(&mut Settings, bool)) -> adw::SwitchRow {
+    let row = adw::SwitchRow::builder().title(title).subtitle(subtitle).active(get(&window.0.settings.borrow())).build();
     let window = window.clone();
     row.connect_active_notify(move |row| {
         set(&mut window.0.settings.borrow_mut(), row.is_active());
@@ -32,14 +22,7 @@ fn switch(
 }
 
 /// A spin row for an integer settings field.
-fn spin(
-    window: &ReaderWindow,
-    title: &str,
-    subtitle: &str,
-    range: (f64, f64, f64),
-    get: fn(&Settings) -> i32,
-    set: fn(&mut Settings, i32),
-) -> adw::SpinRow {
+fn spin(window: &ReaderWindow, title: &str, subtitle: &str, range: (f64, f64, f64), get: fn(&Settings) -> i32, set: fn(&mut Settings, i32)) -> adw::SpinRow {
     let adjustment = gtk::Adjustment::new(f64::from(get(&window.0.settings.borrow())), range.0, range.1, range.2, range.2 * 5.0, 0.0);
     let row = adw::SpinRow::builder().title(title).subtitle(subtitle).adjustment(&adjustment).build();
     let window = window.clone();
@@ -57,7 +40,7 @@ pub fn show(window: &ReaderWindow) {
     page.add(&language_group(window, &dialog));
 
     // View
-    let view =adw::PreferencesGroup::builder().title(tr("View")).build();
+    let view = adw::PreferencesGroup::builder().title(tr("View")).build();
     let labels: Vec<&str> = Background::ALL.iter().map(|b| b.label()).collect();
     let background = adw::ComboRow::builder()
         .title(tr("Background"))
@@ -104,13 +87,7 @@ pub fn show(window: &ReaderWindow) {
 
     // Manga
     let manga = adw::PreferencesGroup::builder().title(tr("Manga")).description(tr("Paged mode")).build();
-    let double = switch(
-        window,
-        tr("Spread"),
-        tr("Two pages side by side; wide pages shown alone (D key)"),
-        |s| s.double_page,
-        |s, v| s.double_page = v,
-    );
+    let double = switch(window, tr("Spread"), tr("Two pages side by side; wide pages shown alone (D key)"), |s| s.double_page, |s, v| s.double_page = v);
     // The "Spread" menu item has the same state.
     let w = window.clone();
     double.connect_active_notify(move |row| {
@@ -119,13 +96,7 @@ pub fn show(window: &ReaderWindow) {
         }
     });
     manga.add(&double);
-    manga.add(&switch(
-        window,
-        tr("Cover alone"),
-        tr("In a spread the first page is shown by itself"),
-        |s| s.cover_alone,
-        |s, v| s.cover_alone = v,
-    ));
+    manga.add(&switch(window, tr("Cover alone"), tr("In a spread the first page is shown by itself"), |s| s.cover_alone, |s, v| s.cover_alone = v));
     page.add(&manga);
 
     // Webtoon
@@ -138,14 +109,7 @@ pub fn show(window: &ReaderWindow) {
         |s| s.strip_width,
         |s, v| s.strip_width = v,
     ));
-    strip.add(&spin(
-        window,
-        tr("Gap between fragments, px"),
-        tr("0 — fragments join seamlessly"),
-        (0.0, 64.0, 2.0),
-        |s| s.strip_gap,
-        |s, v| s.strip_gap = v,
-    ));
+    strip.add(&spin(window, tr("Gap between fragments, px"), tr("0 — fragments join seamlessly"), (0.0, 64.0, 2.0), |s| s.strip_gap, |s, v| s.strip_gap = v));
     page.add(&strip);
 
     // Page attachments

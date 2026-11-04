@@ -52,34 +52,21 @@ pub const TYPES: &[(&str, &str)] = &[
 pub const PUBLICATIONS: &[(&str, &str)] =
     &[("serial", n_("Serial")), ("one_shot", n_("One-shot")), ("anthology", n_("Anthology")), ("yonkoma", n_("Yonkoma (4-koma)"))];
 /// `status` — state of the series.
-pub const STATUSES: &[(&str, &str)] = &[
-    ("ongoing", n_("Ongoing")),
-    ("completed", n_("Completed")),
-    ("hiatus", n_("Hiatus")),
-    ("cancelled", n_("Cancelled")),
-    ("upcoming", n_("Upcoming")),
-];
+pub const STATUSES: &[(&str, &str)] =
+    &[("ongoing", n_("Ongoing")), ("completed", n_("Completed")), ("hiatus", n_("Hiatus")), ("cancelled", n_("Cancelled")), ("upcoming", n_("Upcoming"))];
 /// `demographic` — target audience (Japanese terms; the same for manhwa and manhua).
-pub const DEMOGRAPHICS: &[(&str, &str)] = &[
-    ("shounen", n_("Shōnen")),
-    ("shoujo", n_("Shōjo")),
-    ("seinen", n_("Seinen")),
-    ("josei", n_("Josei")),
-    ("kodomo", n_("Kodomo")),
-];
+pub const DEMOGRAPHICS: &[(&str, &str)] =
+    &[("shounen", n_("Shōnen")), ("shoujo", n_("Shōjo")), ("seinen", n_("Seinen")), ("josei", n_("Josei")), ("kodomo", n_("Kodomo"))];
 /// `age_rating`.
-pub const AGE_RATINGS: &[(&str, &str)] =
-    &[("all", n_("All ages")), ("10+", "10+"), ("13+", "13+"), ("16+", "16+"), ("18+", "18+")];
+pub const AGE_RATINGS: &[(&str, &str)] = &[("all", n_("All ages")), ("10+", "10+"), ("13+", "13+"), ("16+", "16+"), ("18+", "18+")];
 /// `reading_direction`.
-pub const DIRECTIONS: &[(&str, &str)] =
-    &[("rtl", n_("Right to left")), ("ltr", n_("Left to right")), ("ttb", n_("Top to bottom"))];
+pub const DIRECTIONS: &[(&str, &str)] = &[("rtl", n_("Right to left")), ("ltr", n_("Left to right")), ("ttb", n_("Top to bottom"))];
 /// `layout` — how it is meant to be read.
 pub const LAYOUTS: &[(&str, &str)] = &[("paged", n_("Page by page")), ("double", n_("In spreads")), ("strip", n_("As a strip"))];
 /// `color`.
 pub const COLORS: &[(&str, &str)] = &[("bw", n_("Black and white")), ("color", n_("Full color")), ("mixed", n_("Partly color"))];
 /// `translation.type`.
-pub const TRANSLATION_TYPES: &[(&str, &str)] =
-    &[("official", n_("Official")), ("fan", n_("Fan")), ("machine", n_("Machine"))];
+pub const TRANSLATION_TYPES: &[(&str, &str)] = &[("official", n_("Official")), ("fan", n_("Fan")), ("machine", n_("Machine"))];
 /// `credits[].roles`.
 pub const ROLES: &[(&str, &str)] = &[
     ("author", n_("Author")),
@@ -472,12 +459,7 @@ impl Metadata {
             }
         };
         let names = |roles: &[&str]| {
-            let list: Vec<String> = self
-                .credits
-                .iter()
-                .filter(|c| c.roles.iter().any(|r| roles.contains(&r.as_str())))
-                .map(|c| c.name.clone())
-                .collect();
+            let list: Vec<String> = self.credits.iter().filter(|c| c.roles.iter().any(|r| roles.contains(&r.as_str()))).map(|c| c.name.clone()).collect();
             (!list.is_empty()).then(|| list.join(", "))
         };
         let (volume, number, chapter_title) = match chapter {

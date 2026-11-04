@@ -56,11 +56,7 @@ fn frames_end(d: &[u8], end: usize, syncsafe: bool) -> Option<usize> {
         if !id.iter().all(|c| c.is_ascii_uppercase() || c.is_ascii_digit()) {
             return None;
         }
-        let size = if syncsafe {
-            from_syncsafe(&d[pos + 4..pos + 8])
-        } else {
-            u32::from_be_bytes(d[pos + 4..pos + 8].try_into().ok()?)
-        };
+        let size = if syncsafe { from_syncsafe(&d[pos + 4..pos + 8]) } else { u32::from_be_bytes(d[pos + 4..pos + 8].try_into().ok()?) };
         pos = pos.checked_add(10 + size as usize)?;
     }
     (pos <= end).then_some(pos)
@@ -91,9 +87,8 @@ pub(super) fn build(orig: &[u8], payload: u64, map: u64) -> Result<Built> {
     ensure!(flags & 0x10 == 0, "MP3: ID3v2 tag with a footer is not supported");
     ensure!(end <= orig.len(), "MP3: ID3v2 tag is longer than the file");
     // Some programs write non-syncsafe frame sizes in v2.4 — try both variants.
-    let insert = frames_end(orig, end, major == 4)
-        .or_else(|| frames_end(orig, end, false))
-        .ok_or_else(|| anyhow::anyhow!("MP3: corrupted ID3v2 frame structure"))?;
+    let insert =
+        frames_end(orig, end, major == 4).or_else(|| frames_end(orig, end, false)).ok_or_else(|| anyhow::anyhow!("MP3: corrupted ID3v2 frame structure"))?;
     let size = (end - 10) as u64 + 10 + data;
     ensure!(size <= MAX_TAG, "MP3: parity doesn't fit into an ID3v2 tag (up to 256 MiB) — reduce the percentage");
 
@@ -115,11 +110,8 @@ pub(super) fn strip(file: &[u8], plan: &Plan) -> Result<Vec<u8>> {
     let mut extra = Extra(&plan.extra);
     let had_tag = extra.u8()? == 1;
     let at = if had_tag { extra.usize()? } else { 10 };
-    let Some(frame) = file.get(at..at + 10).filter(|f| f.starts_with(FRAME_ID)) else {
-        bail!("MP3: parity frame not found")
-    };
-    let data =
-        if file[3] == 4 { from_syncsafe(&frame[4..8]) } else { u32::from_be_bytes(frame[4..8].try_into()?) } as usize;
+    let Some(frame) = file.get(at..at + 10).filter(|f| f.starts_with(FRAME_ID)) else { bail!("MP3: parity frame not found") };
+    let data = if file[3] == 4 { from_syncsafe(&frame[4..8]) } else { u32::from_be_bytes(frame[4..8].try_into()?) } as usize;
     let after = at + 10 + data;
     ensure!(after <= file.len(), "MP3: parity frame is longer than the file");
 

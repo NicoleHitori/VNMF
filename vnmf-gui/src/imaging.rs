@@ -26,16 +26,9 @@ pub async fn decode(bytes: Vec<u8>) -> Result<gdk::Texture, String> {
 pub async fn decode_scaled(bytes: Vec<u8>, width: i32) -> Result<gdk::Texture, String> {
     gio::spawn_blocking(move || {
         let stream = gio::MemoryInputStream::from_bytes(&glib::Bytes::from_owned(bytes));
-        let pixbuf = gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, width, -1, true, gio::Cancellable::NONE)
-            .map_err(|e| e.to_string())?;
+        let pixbuf = gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, width, -1, true, gio::Cancellable::NONE).map_err(|e| e.to_string())?;
         let format = if pixbuf.has_alpha() { gdk::MemoryFormat::R8g8b8a8 } else { gdk::MemoryFormat::R8g8b8 };
-        let texture = gdk::MemoryTexture::new(
-            pixbuf.width(),
-            pixbuf.height(),
-            format,
-            &pixbuf.read_pixel_bytes(),
-            pixbuf.rowstride() as usize,
-        );
+        let texture = gdk::MemoryTexture::new(pixbuf.width(), pixbuf.height(), format, &pixbuf.read_pixel_bytes(), pixbuf.rowstride() as usize);
         Ok(texture.upcast::<gdk::Texture>())
     })
     .await

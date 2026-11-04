@@ -8,10 +8,7 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use vnmf_core::spec;
-use vnmf_core::{
-    AuxFlags, AuxFormat, AuxInput, AuxKind, Builder, ChunkSource, Header, HeaderBitEnum, PageFormat, PageRole, ReaderError,
-    VnmfReader,
-};
+use vnmf_core::{AuxFlags, AuxFormat, AuxInput, AuxKind, Builder, ChunkSource, Header, HeaderBitEnum, PageFormat, PageRole, ReaderError, VnmfReader};
 use zerocopy::IntoBytes;
 
 /// A separate temporary folder for each test (tests run in parallel).
@@ -46,10 +43,7 @@ struct Manga {
 }
 
 fn build_manga(out: &Path, tail_dup: bool) -> Manga {
-    let m = Manga {
-        cover: fake_png(300, 400, 1, 5_000),
-        pages: [fake_png(1600, 2400, 2, 9_000), fake_png(1600, 70_000, 3, 7_000)],
-    };
+    let m = Manga { cover: fake_png(300, 400, 1, 5_000), pages: [fake_png(1600, 2400, 2, 9_000), fake_png(1600, 70_000, 3, 7_000)] };
     let mut b = Builder::new().with_uuid([7; 16]).with_tail_duplicate(tail_dup);
     b.set_info(b"title = \"test\"".to_vec());
     b.add_preview(page(&m.cover), 0, 0).unwrap();
@@ -222,9 +216,7 @@ fn webtoon_dimensions_are_probed_from_chunks() {
 #[test]
 fn webtoon_rejects_mixed_formats() {
     let mut b = Builder::new();
-    let err = b
-        .add_webtoon(vec![page(&fake_png(10, 10, 1, 10)), page(&fake_jpeg())], 1, 1, 0)
-        .unwrap_err();
+    let err = b.add_webtoon(vec![page(&fake_png(10, 10, 1, 10)), page(&fake_jpeg())], 1, 1, 0).unwrap_err();
     assert_eq!(err.kind(), std::io::ErrorKind::InvalidInput);
 }
 
@@ -297,10 +289,7 @@ fn hostile_offsets_return_error_not_panic() {
     bytes[..spec::HEADER_SIZE].copy_from_slice(header.as_bytes());
     fs::write(&out, &bytes).unwrap();
 
-    assert!(matches!(
-        VnmfReader::open(&out),
-        Err(ReaderError::InvalidTableSize { section: "PageTable", .. })
-    ));
+    assert!(matches!(VnmfReader::open(&out), Err(ReaderError::InvalidTableSize { section: "PageTable", .. })));
 }
 
 #[test]
@@ -357,10 +346,7 @@ fn too_small_buffer_is_error() {
 use vnmf_core::{parity, recovery};
 
 fn build_with_redundancy(out: &Path, redundancy: u8) -> Manga {
-    let m = Manga {
-        cover: fake_png(300, 400, 1, 20_000),
-        pages: [fake_png(1600, 2400, 2, 90_000), fake_png(1600, 2400, 3, 70_000)],
-    };
+    let m = Manga { cover: fake_png(300, 400, 1, 20_000), pages: [fake_png(1600, 2400, 2, 90_000), fake_png(1600, 2400, 3, 70_000)] };
     let mut b = Builder::new().with_uuid([9; 16]).with_redundancy(redundancy);
     b.set_info(br#"{"ComicInfo": {"Title": "parity"}}"#.to_vec());
     b.add_preview(page(&m.cover), 0, 0).unwrap();
@@ -447,7 +433,11 @@ fn tail_is_rebuilt_from_primary() {
     let dir = scratch("rebuild_tail");
     for redundancy in [0, 10] {
         let out = dir.join(format!("m{redundancy}.vnmf"));
-        if redundancy == 0 { build_manga(&out, true); } else { build_with_redundancy(&out, redundancy); }
+        if redundancy == 0 {
+            build_manga(&out, true);
+        } else {
+            build_with_redundancy(&out, redundancy);
+        }
         let pristine = fs::read(&out).unwrap();
 
         // The end of the file is lost together with the tail header.
@@ -469,11 +459,7 @@ fn carving_finds_pages_when_metadata_is_gone() {
     let mut bytes = fs::read(&out).unwrap();
     bytes[..4096].fill(0); // header + Info
     let found = recovery::carve(&bytes);
-    let images: Vec<&[u8]> = found
-        .iter()
-        .filter(|c| matches!(c.kind, recovery::CarvedKind::Image(_)))
-        .map(|c| c.data(&bytes))
-        .collect();
+    let images: Vec<&[u8]> = found.iter().filter(|c| matches!(c.kind, recovery::CarvedKind::Image(_))).map(|c| c.data(&bytes)).collect();
     assert_eq!(images, [m.cover.as_slice(), &m.pages[0], &m.pages[1]]);
 }
 
@@ -545,10 +531,7 @@ fn damaged_record_is_reported_by_index() {
     bytes[..spec::HEADER_SIZE].copy_from_slice(header.as_bytes());
     fs::write(&out, &bytes).unwrap();
 
-    assert!(matches!(
-        VnmfReader::open(&out),
-        Err(ReaderError::RecordCrc { section: "PageTable", index: 1 })
-    ));
+    assert!(matches!(VnmfReader::open(&out), Err(ReaderError::RecordCrc { section: "PageTable", index: 1 })));
 }
 
 fn crc32fast_hash(data: &[u8]) -> u32 {
@@ -598,9 +581,7 @@ fn uniform_webtoon_has_no_mixed_flag_and_error_names_the_chunk() {
     assert_eq!(flags & PageBitFlags::MIXED_FORMATS, 0, "allowing doesn't mean the flag is always set");
 
     let mut strict = Builder::new();
-    let err = strict
-        .add_webtoon(vec![page(&fake_png(10, 10, 1, 10)), page(&fake_jpeg()).with_label("002.jpeg")], 1, 1, 0)
-        .unwrap_err();
+    let err = strict.add_webtoon(vec![page(&fake_png(10, 10, 1, 10)), page(&fake_jpeg()).with_label("002.jpeg")], 1, 1, 0).unwrap_err();
     assert!(err.to_string().contains("002.jpeg"), "{err}");
 }
 
@@ -631,11 +612,8 @@ fn volumes_and_chapters_roundtrip() {
     assert_eq!((s[1].volume_id, s[1].pages.clone(), s[1].chapters.len()), (2, 3..5, 1));
 
     // The builder sets the start flags itself.
-    let starts: Vec<(bool, bool)> = r
-        .pages()
-        .iter()
-        .map(|p| (p.flags.get() & PageBitFlags::IS_VOLUME_START != 0, p.flags.get() & PageBitFlags::IS_CHAPTER_START != 0))
-        .collect();
+    let starts: Vec<(bool, bool)> =
+        r.pages().iter().map(|p| (p.flags.get() & PageBitFlags::IS_VOLUME_START != 0, p.flags.get() & PageBitFlags::IS_CHAPTER_START != 0)).collect();
     assert_eq!(starts, vec![(true, true), (false, false), (false, true), (true, true), (false, false)]);
     assert_eq!(vnmf_core::structure::locate(&s, 4), Some((1, 0)));
 }

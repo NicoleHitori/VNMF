@@ -61,11 +61,7 @@ pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 /// Path to a sibling tool (next to the current executable), otherwise from `PATH`.
 pub fn sibling_binary(name: &str) -> PathBuf {
-    std::env::current_exe()
-        .ok()
-        .and_then(|exe| exe.parent().map(|dir| dir.join(name)))
-        .filter(|p| p.exists())
-        .unwrap_or_else(|| PathBuf::from(name))
+    std::env::current_exe().ok().and_then(|exe| exe.parent().map(|dir| dir.join(name))).filter(|p| p.exists()).unwrap_or_else(|| PathBuf::from(name))
 }
 
 /// Launches another VNMF application with a file (e.g. Reader after saving in Creator).
@@ -140,9 +136,7 @@ const READER_DESKTOP: &str = "org.vnmf.Reader.desktop";
 pub fn ensure_default_handler() {
     let list = glib::user_config_dir().join("mimeapps.list");
     let keys = glib::KeyFile::new();
-    if keys.load_from_file(&list, glib::KeyFileFlags::NONE).is_ok()
-        && keys.has_key("Default Applications", MIME_TYPE).unwrap_or(false)
-    {
+    if keys.load_from_file(&list, glib::KeyFileFlags::NONE).is_ok() && keys.has_key("Default Applications", MIME_TYPE).unwrap_or(false) {
         return;
     }
     let Some(reader) = gio::AppInfo::all().into_iter().find(|a| a.id().as_deref() == Some(READER_DESKTOP)) else { return };
@@ -155,10 +149,7 @@ pub fn ensure_default_handler() {
 pub fn run_app<W: AppWindow>(app_id: &str, build: impl Fn(&adw::Application) -> W + 'static) -> glib::ExitCode {
     // Translations: the system language, catalogs from `<prefix>/share/locale` (see `po/README.md`).
     vnmf_i18n::init(None);
-    let app = adw::Application::builder()
-        .application_id(app_id)
-        .flags(gio::ApplicationFlags::HANDLES_OPEN | gio::ApplicationFlags::NON_UNIQUE)
-        .build();
+    let app = adw::Application::builder().application_id(app_id).flags(gio::ApplicationFlags::HANDLES_OPEN | gio::ApplicationFlags::NON_UNIQUE).build();
 
     app.connect_startup(|_| ensure_default_handler());
 
@@ -247,9 +238,7 @@ pub fn snapshot_if_requested(window: &impl IsA<gtk::Window>) {
             let w = w.clone();
             glib::timeout_add_local_once(std::time::Duration::from_millis(step * (i as u64 + 1)), move || {
                 // Support for "detailed" names with a parameter: `win.mode::strip`.
-                let (name, target) = gio::Action::parse_detailed_name(&action)
-                    .map(|(n, t)| (n.to_string(), t))
-                    .unwrap_or_else(|_| (action.clone(), None));
+                let (name, target) = gio::Action::parse_detailed_name(&action).map(|(n, t)| (n.to_string(), t)).unwrap_or_else(|_| (action.clone(), None));
                 if let Err(e) = w.activate_action(&name, target.as_ref()) {
                     eprintln!("VNMF_GUI_SNAPSHOT_ACTION {action}: {e}");
                 }

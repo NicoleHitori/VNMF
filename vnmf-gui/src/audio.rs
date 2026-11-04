@@ -11,8 +11,8 @@
 use std::cell::Cell;
 use std::path::PathBuf;
 
-use gtk::prelude::*;
 use gtk::glib;
+use gtk::prelude::*;
 use vnmf_core::{AuxFormat, AuxKind};
 
 /// Sound from attachment bytes.

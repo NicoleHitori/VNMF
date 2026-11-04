@@ -314,21 +314,12 @@ fn repair_parity(bytes: &mut Vec<u8>, layout: &ParityLayout) -> Result<bool> {
         println!("  all shards are intact");
         return Ok(true);
     }
-    println!(
-        "  damaged: data shards {}, parity {}, CRC table blocks {}",
-        status.bad_data.len(),
-        status.bad_parity.len(),
-        status.damaged_table_blocks
-    );
+    println!("  damaged: data shards {}, parity {}, CRC table blocks {}", status.bad_data.len(), status.bad_parity.len(), status.damaged_table_blocks);
 
     let report = parity::repair(bytes, layout)?;
     println!("  repaired: data shards {}, parity {}", report.repaired_data, report.repaired_parity);
     if !report.is_complete() {
-        println!(
-            "  ⚠ could not recover {} stripe(s) of {}: more damage than redundancy",
-            report.failed_stripes.len(),
-            layout.stripes
-        );
+        println!("  ⚠ could not recover {} stripe(s) of {}: more damage than redundancy", report.failed_stripes.len(), layout.stripes);
     }
     Ok(report.is_complete())
 }
@@ -474,9 +465,7 @@ fn extract_by_signatures(bytes: &[u8], dir: &Path) -> Result<Outcome> {
     }
     fs::write(dir.join("recovery.tsv"), log)?;
 
-    println!(
-        "  by signatures: images {images} (incomplete among them {partial}), descriptions {texts}; log — recovery.tsv"
-    );
+    println!("  by signatures: images {images} (incomplete among them {partial}), descriptions {texts}; log — recovery.tsv");
     if images > 0 {
         println!("  note: a preview cover may come first; the order is as in the file. To pack back: vnmfpack {}", dir.display());
     }

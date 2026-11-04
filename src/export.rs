@@ -45,11 +45,8 @@ pub fn comicinfo_file(info: &[u8], reader: &VnmfReader) -> Result<Option<(String
         _ => None,
     };
     let mut value = meta.to_comicinfo(single);
-    let pages: Vec<(PageRole, u32, u32)> = reader
-        .pages()
-        .iter()
-        .map(|p| (PageRole::try_from(p.role).unwrap_or(PageRole::Normal), p.width.get(), p.height.get()))
-        .collect();
+    let pages: Vec<(PageRole, u32, u32)> =
+        reader.pages().iter().map(|p| (PageRole::try_from(p.role).unwrap_or(PageRole::Normal), p.width.get(), p.height.get())).collect();
     // Webtoon pages are fragments, they have no roles.
     if reader.pages().iter().all(|p| p.chunk_count.get() == 1)
         && let Some(root) = value.get_mut(comicinfo::ROOT).and_then(|v| v.as_object_mut())

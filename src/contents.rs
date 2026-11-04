@@ -73,10 +73,7 @@ fn non_empty(s: Option<String>) -> Option<String> {
 impl Contents {
     pub fn is_empty(&self) -> bool {
         self.volumes.iter().all(|v| {
-            v.title.is_none()
-                && v.date.is_none()
-                && v.isbn.is_none()
-                && v.chapters.iter().all(|c| c.number.is_none() && c.title.is_none() && c.date.is_none())
+            v.title.is_none() && v.date.is_none() && v.isbn.is_none() && v.chapters.iter().all(|c| c.number.is_none() && c.title.is_none() && c.date.is_none())
         })
     }
 
@@ -111,12 +108,7 @@ impl Contents {
                                 .map(|chs| {
                                     chs.iter()
                                         .filter_map(|c| {
-                                            Some(ChapterMeta {
-                                                chapter: id(c, "Chapter")?,
-                                                number: text(c, "Number"),
-                                                title: text(c, "Title"),
-                                                date: None,
-                                            })
+                                            Some(ChapterMeta { chapter: id(c, "Chapter")?, number: text(c, "Number"), title: text(c, "Title"), date: None })
                                         })
                                         .collect()
                                 })

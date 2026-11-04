@@ -32,17 +32,10 @@ pub enum ReaderError {
     InvalidBlockSize(u8),
 
     #[error("CRC32 integrity error in {section}: expected {expected:#010x}, found {actual:#010x}")]
-    CrcMismatch {
-        section: &'static str,
-        expected: u32,
-        actual: u32,
-    },
+    CrcMismatch { section: &'static str, expected: u32, actual: u32 },
 
     #[error("Section size mismatch in {section}: {message}")]
-    InvalidTableSize {
-        section: &'static str,
-        message: String,
-    },
+    InvalidTableSize { section: &'static str, message: String },
 
     #[error("Record #{index} in {section} is damaged: record CRC32 mismatch")]
     RecordCrc { section: &'static str, index: usize },
@@ -139,9 +132,7 @@ impl VnmfReader {
         let primary_err = match Self::parse(&mmap, 0) {
             // The primary copy is "1.x" and the tail is an intact 2.0: it's a 2.0 file with a damaged version byte
             // (see `recovery::is_legacy`), so trust the tail.
-            Ok(parsed) if parsed.legacy.is_some() && tail().is_some_and(|t| t.legacy.is_none()) => {
-                ReaderError::UnsupportedVersion(spec::LEGACY_MAJOR, mmap[5])
-            }
+            Ok(parsed) if parsed.legacy.is_some() && tail().is_some_and(|t| t.legacy.is_none()) => ReaderError::UnsupportedVersion(spec::LEGACY_MAJOR, mmap[5]),
             Ok(parsed) => {
                 return Ok(Self { mmap, parsed, recovered_from_tail: false });
             }
@@ -284,11 +275,7 @@ impl VnmfReader {
     /// Returns the raw bytes of the Info section (TOML / JSON / Text)
     #[inline]
     pub fn info_bytes(&self) -> Option<&[u8]> {
-        if self.parsed.info_range.is_empty() {
-            None
-        } else {
-            Some(&self.mmap[self.parsed.info_range.clone()])
-        }
+        if self.parsed.info_range.is_empty() { None } else { Some(&self.mmap[self.parsed.info_range.clone()]) }
     }
 
     /// Returns Info as a UTF-8 string
@@ -310,10 +297,7 @@ impl VnmfReader {
 
     /// Gets the bytes of a preview by index without copying
     pub fn get_preview_data(&self, index: usize) -> Result<&[u8], ReaderError> {
-        let rec = self.parsed.previews.get(index).ok_or(ReaderError::IndexOutOfBounds {
-            index,
-            total: self.parsed.previews.len(),
-        })?;
+        let rec = self.parsed.previews.get(index).ok_or(ReaderError::IndexOutOfBounds { index, total: self.parsed.previews.len() })?;
 
         self.get_slice_by_coords(rec.offset.get(), rec.length.get(), "Preview Data")
     }
@@ -362,17 +346,11 @@ impl VnmfReader {
     }
 
     fn page(&self, page_idx: usize) -> Result<&PageRecord, ReaderError> {
-        self.parsed.pages.get(page_idx).ok_or(ReaderError::IndexOutOfBounds {
-            index: page_idx,
-            total: self.parsed.pages.len(),
-        })
+        self.parsed.pages.get(page_idx).ok_or(ReaderError::IndexOutOfBounds { index: page_idx, total: self.parsed.pages.len() })
     }
 
     fn chunk(&self, chunk_idx: usize) -> Result<&EntryRecord, ReaderError> {
-        self.parsed.chunks.get(chunk_idx).ok_or(ReaderError::IndexOutOfBounds {
-            index: chunk_idx,
-            total: self.parsed.chunks.len(),
-        })
+        self.parsed.chunks.get(chunk_idx).ok_or(ReaderError::IndexOutOfBounds { index: chunk_idx, total: self.parsed.chunks.len() })
     }
 
     /// Gets the raw bytes of a specific physical chunk by its global index
@@ -397,10 +375,7 @@ impl VnmfReader {
 
     /// A preview as a source for [`crate::Builder`] — a slice of this file without copying.
     pub fn shared_preview(self: &std::sync::Arc<Self>, index: usize) -> Result<crate::ChunkSource, ReaderError> {
-        let rec = self.parsed.previews.get(index).ok_or(ReaderError::IndexOutOfBounds {
-            index,
-            total: self.parsed.previews.len(),
-        })?;
+        let rec = self.parsed.previews.get(index).ok_or(ReaderError::IndexOutOfBounds { index, total: self.parsed.previews.len() })?;
         let range = checked_range(self.mmap.len(), rec.offset.get(), rec.length.get(), "Preview Data")?;
         let shared: crate::SharedBytes = self.clone();
         Ok(crate::ChunkSource::from_shared(shared, range)?)
@@ -427,9 +402,7 @@ impl VnmfReader {
 
         // The range is checked element by element in `get_chunk_data`; saturating_add only
         // protects against overflow on 32-bit platforms.
-        (start..start.saturating_add(count))
-            .map(|idx| self.get_chunk_data(idx))
-            .collect()
+        (start..start.saturating_add(count)).map(|idx| self.get_chunk_data(idx)).collect()
     }
 
     // === ATTACHMENTS (AUX) ===
@@ -462,12 +435,7 @@ impl VnmfReader {
     }
 
     /// Helper for a safe slice of the memory map
-    fn get_slice_by_coords(
-        &self,
-        offset: u64,
-        length: u32,
-        section_name: &'static str,
-    ) -> Result<&[u8], ReaderError> {
+    fn get_slice_by_coords(&self, offset: u64, length: u32, section_name: &'static str) -> Result<&[u8], ReaderError> {
         let range = checked_range(self.mmap.len(), offset, length, section_name)?;
         Ok(&self.mmap[range])
     }
@@ -484,14 +452,10 @@ impl AsRef<[u8]> for VnmfReader {
 /// Reads and validates only the header (magic, CRC, version, block size) at position `header_pos`.
 /// Tables are not checked — `VnmfReader::open` does that. Also used for recovery.
 pub fn parse_header(bytes: &[u8], header_pos: usize) -> Result<(Header, BlockSize), ReaderError> {
-    let header_slice = header_pos
-        .checked_add(spec::HEADER_SIZE)
-        .and_then(|end| bytes.get(header_pos..end))
-        .ok_or(ReaderError::FileTooSmall(bytes.len() as u64))?;
-    let header = Header::read_from_bytes(header_slice).map_err(|_| ReaderError::InvalidTableSize {
-        section: "Header",
-        message: "Unable to parse the header structure".to_string(),
-    })?;
+    let header_slice =
+        header_pos.checked_add(spec::HEADER_SIZE).and_then(|end| bytes.get(header_pos..end)).ok_or(ReaderError::FileTooSmall(bytes.len() as u64))?;
+    let header = Header::read_from_bytes(header_slice)
+        .map_err(|_| ReaderError::InvalidTableSize { section: "Header", message: "Unable to parse the header structure".to_string() })?;
 
     // Magic check
     if header.magic != spec::MAGIC {
@@ -501,11 +465,7 @@ pub fn parse_header(bytes: &[u8], header_pos: usize) -> Result<(Header, BlockSiz
     // Header CRC32 check
     let calculated_header_crc = header.calculate_crc();
     if header.crc.get() != calculated_header_crc {
-        return Err(ReaderError::CrcMismatch {
-            section: "Header",
-            expected: header.crc.get(),
-            actual: calculated_header_crc,
-        });
+        return Err(ReaderError::CrcMismatch { section: "Header", expected: header.crc.get(), actual: calculated_header_crc });
     }
 
     // FIX: the version used to be unchecked, so a file with an incompatible major version was read with
@@ -515,8 +475,7 @@ pub fn parse_header(bytes: &[u8], header_pos: usize) -> Result<(Header, BlockSiz
         return Err(ReaderError::UnsupportedVersion(header.major_version, header.minor_version));
     }
 
-    let block_size =
-        BlockSize::try_from(header.block_size_shift).map_err(ReaderError::InvalidBlockSize)?;
+    let block_size = BlockSize::try_from(header.block_size_shift).map_err(ReaderError::InvalidBlockSize)?;
     Ok((header, block_size))
 }
 
@@ -531,10 +490,7 @@ pub(crate) fn checked_range(total: usize, offset: u64, length: u32, section: &'s
     let end = start.and_then(|s| s.checked_add(length as usize));
     match (start, end) {
         (Some(start), Some(end)) if end <= total => Ok(start..end),
-        _ => Err(ReaderError::InvalidTableSize {
-            section,
-            message: format!("Coordinates {offset}+{length} are beyond the end of the file ({total})"),
-        }),
+        _ => Err(ReaderError::InvalidTableSize { section, message: format!("Coordinates {offset}+{length} are beyond the end of the file ({total})") }),
     }
 }
 
@@ -589,11 +545,7 @@ pub(crate) fn read_table<T: FromBytes + Immutable + KnownLayout + Copy>(
     // `ref_from_bytes` checks the record size multiple for a slice by itself.
     let records = <[T]>::ref_from_bytes(slice).map_err(|_| ReaderError::InvalidTableSize {
         section,
-        message: format!(
-            "Size {} is not a multiple of the record size {}",
-            slice.len(),
-            std::mem::size_of::<T>()
-        ),
+        message: format!("Size {} is not a multiple of the record size {}", slice.len(), std::mem::size_of::<T>()),
     })?;
 
     Ok(records.to_vec())

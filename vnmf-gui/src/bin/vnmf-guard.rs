@@ -97,7 +97,15 @@ fn run(job: Job, path: &Path) -> (State, String) {
                     ProtectOutcome::Protected { plan, original_len, new_len, previous } => {
                         let again = previous.map(|p| trf!(" (was {0}%)", p)).unwrap_or_default();
                         let burst = plan.layout().map(|l| human_size(l.max_burst_bytes())).unwrap_or_default();
-                        let text = trf!("Protected {0}%{1} · {2} · {3} → {4} · recovers up to {5} in a row", plan.redundancy, again, plan.format.name(), human_size(original_len), human_size(new_len), burst);
+                        let text = trf!(
+                            "Protected {0}%{1} · {2} · {3} → {4} · recovers up to {5} in a row",
+                            plan.redundancy,
+                            again,
+                            plan.format.name(),
+                            human_size(original_len),
+                            human_size(new_len),
+                            burst
+                        );
                         (State::Clean, text)
                     }
                 }
@@ -106,24 +114,15 @@ fn run(job: Job, path: &Path) -> (State, String) {
                 RepairOutcome::Unprotected => unprotected(path)?,
                 RepairOutcome::Intact(i) => describe(&i),
                 RepairOutcome::Repaired { before, report, .. } => match report {
-                    Some(r) if !r.is_complete() => {
-                        (State::Lost, trf!("Partially repaired: {0} blocks, the rest is lost", r.repaired_data))
-                    }
-                    Some(r) => (
-                        State::Clean,
-                        trf!("Repaired: {0} data blocks, {1} parity", r.repaired_data, r.repaired_parity),
-                    ),
+                    Some(r) if !r.is_complete() => (State::Lost, trf!("Partially repaired: {0} blocks, the rest is lost", r.repaired_data)),
+                    Some(r) => (State::Clean, trf!("Repaired: {0} data blocks, {1} parity", r.repaired_data, r.repaired_parity)),
                     None => (State::Clean, trf!("Auxiliary fields repaired · {0}", before.plan.format.name())),
                 },
             },
             Job::Strip => match vnmf_guard::strip(path, None)? {
                 StripOutcome::Unprotected => unprotected(path)?,
                 StripOutcome::Stripped { identical, len } => {
-                    let note = if identical {
-                        tr("as before protection, byte for byte")
-                    } else {
-                        tr("bytes differ from the original")
-                    };
+                    let note = if identical { tr("as before protection, byte for byte") } else { tr("bytes differ from the original") };
                     (State::Unprotected, trf!("Protection removed · {0} · {1}", human_size(len), note))
                 }
             },
@@ -204,25 +203,22 @@ impl GuardWindow {
         let (empty, empty_button) = widgets::open_status_page(
             "security-high-symbolic",
             tr("Protect files from damage"),
-            tr("Add videos, audio or disk images, or drag them into the window.\nParity goes inside the file so programs won't notice it, and damaged parts can be recovered."),
+            tr(
+                "Add videos, audio or disk images, or drag them into the window.\nParity goes inside the file so programs won't notice it, and damaged parts can be recovered.",
+            ),
         );
         empty_button.set_action_name(Some("win.open"));
 
         let redundancy = adw::SpinRow::with_range(0.0, f64::from(vnmf_guard::vnmf_parity::MAX_REDUNDANCY), 1.0);
         redundancy.set_title(tr("Redundancy, %"));
-        redundancy.set_subtitle(
-            tr("How much to add to the file. 10% recovers ≈9% of the file in a row, 30% — ≈23%. 0 — change nothing"),
-        );
+        redundancy.set_subtitle(tr("How much to add to the file. 10% recovers ≈9% of the file in a row, 30% — ≈23%. 0 — change nothing"));
         redundancy.set_value(10.0);
         let settings_group = adw::PreferencesGroup::new();
         settings_group.add(&redundancy);
 
         let list = gtk::ListBox::builder().selection_mode(gtk::SelectionMode::None).build();
         list.add_css_class("boxed-list");
-        let files_group = adw::PreferencesGroup::builder()
-            .title(tr("Files"))
-            .description(tr("Modified in place (atomically, via a temporary file)"))
-            .build();
+        let files_group = adw::PreferencesGroup::builder().title(tr("Files")).description(tr("Modified in place (atomically, via a temporary file)")).build();
         files_group.add(&list);
 
         let page = adw::PreferencesPage::new();
@@ -236,14 +232,7 @@ impl GuardWindow {
         let toasts = adw::ToastOverlay::new();
         toasts.set_child(Some(&stack));
 
-        let actions = gtk::Box::builder()
-            .spacing(8)
-            .halign(gtk::Align::Center)
-            .margin_top(8)
-            .margin_bottom(8)
-            .margin_start(12)
-            .margin_end(12)
-            .build();
+        let actions = gtk::Box::builder().spacing(8).halign(gtk::Align::Center).margin_top(8).margin_bottom(8).margin_start(12).margin_end(12).build();
         for (label, action, style) in [
             (tr("Check"), "win.check", None),
             (tr("Repair"), "win.repair", None),
@@ -257,11 +246,7 @@ impl GuardWindow {
             }
             actions.append(&button);
         }
-        let bottom = gtk::ScrolledWindow::builder()
-            .vscrollbar_policy(gtk::PolicyType::Never)
-            .propagate_natural_height(true)
-            .child(&actions)
-            .build();
+        let bottom = gtk::ScrolledWindow::builder().vscrollbar_policy(gtk::PolicyType::Never).propagate_natural_height(true).child(&actions).build();
 
         let toolbar = adw::ToolbarView::new();
         toolbar.add_top_bar(&header);
@@ -278,16 +263,7 @@ impl GuardWindow {
             .content(&toolbar)
             .build();
 
-        let this = Self(Rc::new(Inner {
-            window,
-            stack,
-            list,
-            redundancy,
-            toasts,
-            actions,
-            entries: RefCell::new(Vec::new()),
-            busy: Cell::new(false),
-        }));
+        let this = Self(Rc::new(Inner { window, stack, list, redundancy, toasts, actions, entries: RefCell::new(Vec::new()), busy: Cell::new(false) }));
         this.install_actions();
         widgets::install_about(
             &this.0.window,
@@ -313,9 +289,7 @@ impl GuardWindow {
         });
         window.add_action(&open);
 
-        for (name, job) in
-            [("check", Job::Check), ("repair", Job::Repair), ("strip", Job::Strip), ("protect", Job::Protect(0))]
-        {
+        for (name, job) in [("check", Job::Check), ("repair", Job::Repair), ("strip", Job::Strip), ("protect", Job::Protect(0))] {
             let action = gio::SimpleAction::new(name, None);
             let this = self.clone();
             action.connect_activate(move |_, _| {
@@ -376,11 +350,7 @@ impl GuardWindow {
         spinner.set_visible(false);
         row.add_prefix(&icon);
         row.add_prefix(&spinner);
-        let remove = gtk::Button::builder()
-            .icon_name("window-close-symbolic")
-            .tooltip_text(tr("Remove from list"))
-            .valign(gtk::Align::Center)
-            .build();
+        let remove = gtk::Button::builder().icon_name("window-close-symbolic").tooltip_text(tr("Remove from list")).valign(gtk::Align::Center).build();
         remove.add_css_class("flat");
         row.add_suffix(&remove);
         self.0.list.append(&row);
@@ -422,9 +392,7 @@ impl GuardWindow {
             for entry in &entries {
                 entry.busy(true);
                 let path = entry.path.clone();
-                let (state, text) = gio::spawn_blocking(move || run(job, &path))
-                    .await
-                    .unwrap_or_else(|_| (State::Error, tr("Processing crashed").into()));
+                let (state, text) = gio::spawn_blocking(move || run(job, &path)).await.unwrap_or_else(|_| (State::Error, tr("Processing crashed").into()));
                 entry.busy(false);
                 entry.set(state, &text);
                 problems += usize::from(matches!(state, State::Damaged | State::Lost | State::Error));
@@ -448,11 +416,7 @@ impl GuardWindow {
         let body = Format::ALL
             .iter()
             .map(|f| {
-                let ext = if f.extensions().is_empty() {
-                    tr("only with vnmfguard --raw").to_string()
-                } else {
-                    f.extensions().join(", ")
-                };
+                let ext = if f.extensions().is_empty() { tr("only with vnmfguard --raw").to_string() } else { f.extensions().join(", ") };
                 format!("• {} ({ext}) — {}", f.name(), f.placement())
             })
             .collect::<Vec<_>>()

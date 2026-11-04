@@ -99,7 +99,10 @@ mod tests {
     fn names_and_params_roundtrip() {
         assert_eq!(file_name(3, 3, AuxKind::Music, 1, "ogg"), "003.music.ogg");
         assert_eq!(file_name(3, 3, AuxKind::Sfx, 2, "wav"), "003.sfx2.wav");
-        let manifest = parse_manifest(br#"{"schema": "vnmf-aux/1", "files": {"003.sfx2.wav": {"loop": true, "volume": 40, "delay_ms": 500, "duration_ms": 8000, "pages": 2}}}"#).unwrap();
+        let manifest = parse_manifest(
+            br#"{"schema": "vnmf-aux/1", "files": {"003.sfx2.wav": {"loop": true, "volume": 40, "delay_ms": 500, "duration_ms": 8000, "pages": 2}}}"#,
+        )
+        .unwrap();
         let src = || ChunkSource::from_bytes(b"RIFF\0\0\0\0WAVE".to_vec()).unwrap();
         let (idx, aux) = parse("003.sfx2.wav", src(), &manifest, b"RIFF\0\0\0\0WAVE").unwrap();
         assert_eq!((idx, aux.kind, aux.flags, aux.volume, aux.delay_ms), (2, AuxKind::Sfx, AuxFlags::LOOP, 40, 500));

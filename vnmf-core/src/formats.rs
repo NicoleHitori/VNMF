@@ -174,9 +174,7 @@ impl InfoFormat {
         let first_line = text.lines().next().unwrap_or("").trim();
         if first_line.starts_with('[') {
             let header = first_line.trim_start_matches('[').trim_end_matches(']');
-            let is_toml_table = first_line.ends_with(']')
-                && !header.is_empty()
-                && header.chars().all(|c| c.is_alphanumeric() || "_-. \"'".contains(c));
+            let is_toml_table = first_line.ends_with(']') && !header.is_empty() && header.chars().all(|c| c.is_alphanumeric() || "_-. \"'".contains(c));
             return if is_toml_table { InfoFormat::Toml } else { InfoFormat::Json };
         }
 

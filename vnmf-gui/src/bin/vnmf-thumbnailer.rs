@@ -88,13 +88,11 @@ fn thumbnail(data: &[u8], size: i32) -> Result<gdk_pixbuf::Pixbuf, String> {
     let strip = image_dimensions(data).is_some_and(|(w, h)| f64::from(h) > f64::from(w.max(1)) * STRIP_RATIO);
     if !strip {
         // Fit into a size×size square keeping proportions (scaling already happens during decoding).
-        return gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, size, size, true, gio::Cancellable::NONE)
-            .map_err(|e| e.to_string());
+        return gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, size, size, true, gio::Cancellable::NONE).map_err(|e| e.to_string());
     }
     // Strip: width such that the cropped top fits into the square, then take the top part.
     let width = (f64::from(size) / CROP_RATIO).round() as i32;
-    let pixbuf = gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, width, -1, true, gio::Cancellable::NONE)
-        .map_err(|e| e.to_string())?;
+    let pixbuf = gdk_pixbuf::Pixbuf::from_stream_at_scale(&stream, width, -1, true, gio::Cancellable::NONE).map_err(|e| e.to_string())?;
     let height = pixbuf.height().min((f64::from(pixbuf.width()) * CROP_RATIO).round() as i32);
     Ok(pixbuf.new_subpixbuf(0, 0, pixbuf.width(), height).copy().unwrap_or(pixbuf))
 }

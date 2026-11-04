@@ -19,11 +19,7 @@ pub fn natural_cmp(a: &str, b: &str) -> Ordering {
                 let (a_num, a_tail) = split_digits(a_rest);
                 let (b_num, b_tail) = split_digits(b_rest);
                 let (a_trim, b_trim) = (a_num.trim_start_matches('0'), b_num.trim_start_matches('0'));
-                let ord = a_trim
-                    .len()
-                    .cmp(&b_trim.len())
-                    .then_with(|| a_trim.cmp(b_trim))
-                    .then_with(|| a_num.len().cmp(&b_num.len()));
+                let ord = a_trim.len().cmp(&b_trim.len()).then_with(|| a_trim.cmp(b_trim)).then_with(|| a_num.len().cmp(&b_num.len()));
                 if ord != Ordering::Equal {
                     return ord;
                 }

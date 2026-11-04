@@ -15,8 +15,8 @@ use vnmf_core::header::bit_flag::HeaderFlagsFormatter;
 use vnmf_core::parity::ParityStatus;
 use vnmf_core::{AuxFlags, AuxFormat, AuxKind, HeaderBitEnum, InfoFormat, PageBitFlags, PageFormat, VnmfReader, recovery, spec};
 
-use vnmf::health::{Health, Verify, assess, aux_summary, chunk_formats, is_mixed, page_format, problems_word, role_name, verify};
 use vnmf::contents::Toc;
+use vnmf::health::{Health, Verify, assess, aux_summary, chunk_formats, is_mixed, page_format, problems_word, role_name, verify};
 use vnmf::metadata::{self, Metadata};
 use vnmf::{format_uuid, human_size};
 
@@ -80,13 +80,11 @@ fn run(args: Args) -> Result<bool> {
 fn report_unreadable(args: &Args, open_err: &str) -> Result<bool> {
     let bytes = fs::read(&args.input).with_context(|| format!("reading {}", args.input.display()))?;
     let copies = recovery::inspect_headers(&bytes);
-    let has_signature = bytes.starts_with(&spec::MAGIC)
-        || bytes.len().checked_sub(spec::HEADER_SIZE).is_some_and(|tail| bytes[tail..].starts_with(&spec::MAGIC));
+    let has_signature =
+        bytes.starts_with(&spec::MAGIC) || bytes.len().checked_sub(spec::HEADER_SIZE).is_some_and(|tail| bytes[tail..].starts_with(&spec::MAGIC));
     // Without signatures it's either a foreign file or a VNMF with both headers destroyed. Tell them apart by
     // contents: in VNMF images sit at positions that are multiples of 4 KiB — that's what recovery looks for.
-    let carvable = if has_signature { 0 } else {
-        recovery::carve(&bytes).iter().filter(|c| matches!(c.kind, recovery::CarvedKind::Image(_))).count()
-    };
+    let carvable = if has_signature { 0 } else { recovery::carve(&bytes).iter().filter(|c| matches!(c.kind, recovery::CarvedKind::Image(_))).count() };
     if !has_signature && carvable == 0 {
         if args.json {
             let out = json!({ "file": args.input.display().to_string(), "readable": false, "vnmf": false, "error": open_err });
@@ -138,10 +136,7 @@ fn report_unreadable(args: &Args, open_err: &str) -> Result<bool> {
         );
     }
     println!("Error:          {open_err}");
-    print_damage_box(&[
-        format!("primary metadata copy: {primary}"),
-        format!("backup metadata copy: {tail}"),
-    ], prognosis, args);
+    print_damage_box(&[format!("primary metadata copy: {primary}"), format!("backup metadata copy: {tail}")], prognosis, args);
     Ok(false)
 }
 
@@ -150,11 +145,7 @@ fn recommendation(args: &Args) -> String {
 }
 
 fn shell_quote(s: &str) -> String {
-    if s.chars().all(|c| c.is_alphanumeric() || "/._-+".contains(c)) {
-        s.to_string()
-    } else {
-        format!("'{}'", s.replace('\'', "'\\''"))
-    }
+    if s.chars().all(|c| c.is_alphanumeric() || "/._-+".contains(c)) { s.to_string() } else { format!("'{}'", s.replace('\'', "'\\''")) }
 }
 
 fn print_damage_box(issues: &[String], prognosis: &str, args: &Args) {
@@ -173,12 +164,15 @@ fn print_text(args: &Args, r: &VnmfReader, file_size: u64, verification: Option<
     let h = r.header();
     let flags = h.flags.get();
     let (major, minor) = r.version();
-    let data_bytes: u64 = r.chunks().iter().map(|c| u64::from(c.length())).sum::<u64>()
-        + r.previews().iter().map(|p| u64::from(p.length.get())).sum::<u64>();
+    let data_bytes: u64 = r.chunks().iter().map(|c| u64::from(c.length())).sum::<u64>() + r.previews().iter().map(|p| u64::from(p.length.get())).sum::<u64>();
 
     println!("File:           {} ({})", args.input.display(), human_size(file_size));
     match r.legacy_version() {
-        Some(_) => println!("Format:         VNMF {major}.{minor} — old format, read-only (rebuild as {}.{} in VNMF Creator)", spec::DEFAULT_VERSION.0, spec::DEFAULT_VERSION.1),
+        Some(_) => println!(
+            "Format:         VNMF {major}.{minor} — old format, read-only (rebuild as {}.{} in VNMF Creator)",
+            spec::DEFAULT_VERSION.0,
+            spec::DEFAULT_VERSION.1
+        ),
         None => println!("Format:         VNMF {major}.{minor}"),
     }
     println!("UUID:           {}", format_uuid(r.uuid()));
@@ -187,12 +181,7 @@ fn print_text(args: &Args, r: &VnmfReader, file_size: u64, verification: Option<
     println!(
         "Status:         {}",
         match (health.is_ok(), health.data_checked) {
-            (false, _) => format!(
-                "⚠ DAMAGED ({} {}) — run {}",
-                health.issues.len(),
-                problems_word(health.issues.len()),
-                recommendation(args)
-            ),
+            (false, _) => format!("⚠ DAMAGED ({} {}) — run {}", health.issues.len(), problems_word(health.issues.len()), recommendation(args)),
             (true, true) => "✔ intact (metadata, data and parity checked)".to_string(),
             (true, false) => "✔ metadata intact (data not checked: --quick)".to_string(),
         }
@@ -382,8 +371,7 @@ fn print_text(args: &Args, r: &VnmfReader, file_size: u64, verification: Option<
 
 fn print_json(args: &Args, r: &VnmfReader, file_size: u64, verification: Option<&Verify>, health: &Health) -> Result<()> {
     let flags = r.header().flags.get();
-    let flag_names: Vec<String> =
-        HeaderBitEnum::ALL.iter().filter(|b| b.is_set(flags)).map(|b| b.to_string()).collect();
+    let flag_names: Vec<String> = HeaderBitEnum::ALL.iter().filter(|b| b.is_set(flags)).map(|b| b.to_string()).collect();
 
     let info = r.info_bytes().map(|bytes| {
         let format = InfoFormat::detect(bytes);
@@ -530,18 +518,11 @@ fn toc_json(r: &VnmfReader) -> Value {
 }
 
 fn is_current_schema(info: &[u8]) -> bool {
-    serde_json::from_slice::<Value>(info)
-        .ok()
-        .and_then(|v| v.get("schema")?.as_str().map(|s| s.starts_with("vnmf-metadata/")))
-        .unwrap_or(false)
+    serde_json::from_slice::<Value>(info).ok().and_then(|v| v.get("schema")?.as_str().map(|s| s.starts_with("vnmf-metadata/"))).unwrap_or(false)
 }
 
 /// The first `max` characters on a single line.
 fn shorten(text: &str, max: usize) -> String {
     let flat = text.split_whitespace().collect::<Vec<_>>().join(" ");
-    if flat.chars().count() <= max {
-        flat
-    } else {
-        format!("{}… (--full-info)", flat.chars().take(max).collect::<String>())
-    }
+    if flat.chars().count() <= max { flat } else { format!("{}… (--full-info)", flat.chars().take(max).collect::<String>()) }
 }

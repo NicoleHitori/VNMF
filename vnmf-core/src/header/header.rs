@@ -21,11 +21,11 @@ use crate::vnmf::EntryRecord;
 #[derive(Debug, Clone, Copy, IntoBytes, FromBytes, Unaligned, Immutable, KnownLayout)]
 #[repr(C, packed)]
 pub struct Header {
-    pub magic: [u8; 4],          // "vnmf" (4B)
-    pub major_version: u8,       // 1 (1B)
-    pub minor_version: u8,       // 0 (1B)
-    pub flags: le::U16,          // General file flags (HasInfo, HasTailDup, IsWebToon...) (2B)
-    pub uuid: [u8; 16],          // Unique UUID of the volume/manga (16B)
+    pub magic: [u8; 4],    // "vnmf" (4B)
+    pub major_version: u8, // 1 (1B)
+    pub minor_version: u8, // 0 (1B)
+    pub flags: le::U16,    // General file flags (HasInfo, HasTailDup, IsWebToon...) (2B)
+    pub uuid: [u8; 16],    // Unique UUID of the volume/manga (16B)
 
     pub info: EntryRecord,          // 24: Info section (JSON / TOML / text)
     pub preview_table: EntryRecord, // 40: Preview table
@@ -42,8 +42,8 @@ pub struct Header {
     /// 113: 12 (4 KiB) … 15 (32 KiB).
     pub block_size_shift: u8,
 
-    pub reserved: [u8; 10],      // 114: Reserved (zeros)
-    pub crc: le::U32,            // 124: Header CRC32
+    pub reserved: [u8; 10], // 114: Reserved (zeros)
+    pub crc: le::U32,       // 124: Header CRC32
 }
 
 // Compile-time size check
@@ -53,13 +53,7 @@ const _: () = assert!(std::mem::offset_of!(Header, parity_offset) == 104);
 const _: () = assert!(std::mem::offset_of!(Header, crc) == 124);
 
 impl Header {
-    pub fn new(
-        flags: u16,
-        uuid: [u8; 16],
-        info: EntryRecord,
-        [preview, page_table, aux_table, chunks_table]: [EntryRecord; 4],
-        block_size: BlockSize,
-    ) -> Self {
+    pub fn new(flags: u16, uuid: [u8; 16], info: EntryRecord, [preview, page_table, aux_table, chunks_table]: [EntryRecord; 4], block_size: BlockSize) -> Self {
         Self {
             magic: spec::MAGIC,
             major_version: spec::DEFAULT_VERSION.0,
@@ -123,8 +117,22 @@ impl fmt::Display for Header {
             self.major_version,
             self.minor_version,
             magic,
-            u[0], u[1], u[2], u[3], u[4], u[5], u[6], u[7],
-            u[8], u[9], u[10], u[11], u[12], u[13], u[14], u[15],
+            u[0],
+            u[1],
+            u[2],
+            u[3],
+            u[4],
+            u[5],
+            u[6],
+            u[7],
+            u[8],
+            u[9],
+            u[10],
+            u[11],
+            u[12],
+            u[13],
+            u[14],
+            u[15],
             self.flags.get(),
             HeaderFlagsFormatter(self.flags.get()),
             self.block_size_shift,

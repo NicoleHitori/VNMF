@@ -160,10 +160,7 @@ impl Settings {
         s.strip_gap = get_i32("strip_gap", s.strip_gap).clamp(0, 64);
         s.double_page = get_bool("double_page", s.double_page);
         s.cover_alone = get_bool("cover_alone", s.cover_alone);
-        s.background = Background::ALL
-            .into_iter()
-            .find(|b| v.get("background").and_then(Value::as_str) == Some(b.key()))
-            .unwrap_or(Background::Theme);
+        s.background = Background::ALL.into_iter().find(|b| v.get("background").and_then(Value::as_str) == Some(b.key())).unwrap_or(Background::Theme);
         s.click_zones = get_bool("click_zones", s.click_zones);
         s.autohide_bar = get_bool("autohide_bar", s.autohide_bar);
         s.hide_header_fullscreen = get_bool("hide_header_fullscreen", s.hide_header_fullscreen);

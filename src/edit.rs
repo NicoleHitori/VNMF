@@ -17,8 +17,7 @@ use vnmf_core::{AuxInput, BlockSize, ChunkSource, HeaderBitEnum, PageBitFlags, P
 use crate::metadata::Metadata;
 
 /// Page flags the builder sets itself (the rest — alpha, lossless, animation — are carried over).
-const DERIVED_FLAGS: u16 =
-    PageBitFlags::IS_CHAPTER_START | PageBitFlags::IS_VOLUME_START | PageBitFlags::READING_RTL | PageBitFlags::MIXED_FORMATS;
+const DERIVED_FLAGS: u16 = PageBitFlags::IS_CHAPTER_START | PageBitFlags::IS_VOLUME_START | PageBitFlags::READING_RTL | PageBitFlags::MIXED_FORMATS;
 
 /// A single image (chunk) of a page.
 pub struct OpenedImage {
@@ -145,8 +144,7 @@ pub fn open(path: &Path) -> Result<Opened> {
     }
 
     // Custom covers: previews whose bytes are not among the page images.
-    let page_crcs: std::collections::HashSet<u32> =
-        chapters.iter().flat_map(|c| &c.pages).flat_map(|p| &p.images).map(|i| i.source.crc).collect();
+    let page_crcs: std::collections::HashSet<u32> = chapters.iter().flat_map(|c| &c.pages).flat_map(|p| &p.images).map(|i| i.source.crc).collect();
     let mut custom_previews = Vec::new();
     let mut page_previews = false;
     for (i, rec) in reader.previews().iter().enumerate() {

@@ -41,9 +41,7 @@ pub(super) fn matroska(orig: &[u8], payload: u64, map: u64) -> Result<Built> {
         .filter(|&at| orig.get(at..at + 4) == Some(&[0x18, 0x53, 0x80, 0x67]))
         .and_then(|at| Some((at + 4, vint(orig, at + 4)?)));
     match segment_size {
-        Some((at, (size, len, false)))
-            if at + len + size as usize == orig.len() && size + void_len < (1 << (7 * len)) - 1 =>
-        {
+        Some((at, (size, len, false))) if at + len + size as usize == orig.len() && size + void_len < (1 << (7 * len)) - 1 => {
             let grown = (size + void_len) | 1 << (7 * len);
             segs.push(Seg::Orig(0..at));
             segs.push(Seg::Bytes(grown.to_be_bytes()[8 - len..].to_vec()));
@@ -79,18 +77,14 @@ pub(super) fn mp4(orig: &[u8], payload: u64, map: u64) -> Result<Built> {
             }
             n => (u64::from(n), 8),
         };
-        ensure!(
-            size >= header && pos + size <= len,
-            "MP4: corrupted box structure at {pos} (garbage after it or the file is truncated)"
-        );
+        ensure!(size >= header && pos + size <= len, "MP4: corrupted box structure at {pos} (garbage after it or the file is truncated)");
         pos += size;
     }
 
     let mut segs = Vec::new();
     let mut extra = Vec::new();
     if let Some(at) = open_ended {
-        let size =
-            u32::try_from(len - at).map_err(|_| anyhow::anyhow!("MP4: the last box without a size is larger than 4 GiB"))?;
+        let size = u32::try_from(len - at).map_err(|_| anyhow::anyhow!("MP4: the last box without a size is larger than 4 GiB"))?;
         segs.push(Seg::Orig(0..at as usize));
         segs.push(Seg::Bytes(size.to_be_bytes().to_vec()));
         segs.push(Seg::Orig(at as usize + 4..orig.len()));

@@ -36,7 +36,13 @@ pub fn update_banner(banner: &adw::Banner, health: &Health, path: &Path) {
         banner.set_revealed(false);
         return;
     }
-    banner.set_title(&ntrf!("File is damaged: {0} problem. {1}", "File is damaged: {0} problems. {1}", health.issues.len(), health.issues.len(), capitalize(health.prognosis)));
+    banner.set_title(&ntrf!(
+        "File is damaged: {0} problem. {1}",
+        "File is damaged: {0} problems. {1}",
+        health.issues.len(),
+        health.issues.len(),
+        capitalize(health.prognosis)
+    ));
     banner.set_revealed(true);
 
     // Reconnect the handler for the current state.
@@ -56,7 +62,12 @@ pub fn update_banner(banner: &adw::Banner, health: &Health, path: &Path) {
 /// Dialog with the list of problems, the prognosis and the recovery command (with a copy button).
 pub fn show_details(parent: &impl IsA<gtk::Widget>, issues: &[String], prognosis: &str, path: &Path) {
     let command = recovery_command(path);
-    let body = trf!("{0}\n\nPrognosis: {1}.\n\nRun recovery in a terminal:\n{2}", issues.iter().map(|i| format!("• {i}")).collect::<Vec<_>>().join("\n"), prognosis, command);
+    let body = trf!(
+        "{0}\n\nPrognosis: {1}.\n\nRun recovery in a terminal:\n{2}",
+        issues.iter().map(|i| format!("• {i}")).collect::<Vec<_>>().join("\n"),
+        prognosis,
+        command
+    );
     let dialog = adw::AlertDialog::new(Some(tr("File is damaged")), Some(&body));
     dialog.add_response("close", tr("Close"));
     dialog.add_response("copy", tr("Copy command"));
