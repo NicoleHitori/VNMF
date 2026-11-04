@@ -146,6 +146,10 @@ Open the `android/` folder in Android Studio and build; Gradle compiles the Rust
 The desktop applications use gettext catalogs in [`po/`](po/). A new language only needs a new
 `.po` file — the programs don't have to be rebuilt. See [po/README.md](po/README.md).
 
+## Contributing
+
+Bug reports, fixes, translations and ideas are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## About the development
 
 VNMF is designed and maintained by void_nicole (Nicole Hitori). A large part of the code and
