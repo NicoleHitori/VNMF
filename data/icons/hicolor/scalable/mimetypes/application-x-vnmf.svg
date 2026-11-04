@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+  <path d="M24 8 H82 L106 32 V116 Q106 120 102 120 H26 Q22 120 22 116 V12 Q22 8 26 8 Z" fill="#f6f5f4" stroke="#c0bfbc" stroke-width="2"/>
+  <path d="M82 8 V28 Q82 32 86 32 H106 Z" fill="#deddda"/>
+  <rect x="32" y="20" width="40" height="30" rx="2" fill="#9141ac"/>
+  <rect x="32" y="54" width="20" height="30" rx="2" fill="#c061cb"/>
+  <rect x="56" y="54" width="40" height="30" rx="2" fill="#dc8add"/>
+  <rect x="30" y="92" width="68" height="20" rx="4" fill="#613583"/>
+  <text x="64" y="107" font-family="Cantarell, sans-serif" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle">VNMF</text>
+</svg>

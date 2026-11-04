@@ -1,0 +1,15 @@
+[package]
+name = "vnmf-guard"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "Unobtrusive Reed–Solomon redundancy inside media files and images: mkv, webm, mp4, flac, ogg/opus, mp3, zst, gz, iso"
+
+[dependencies]
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+crc32fast = "1.3"
+memchr = "2.8"
+vnmf-parity = { version = "0.1.0-beta", path = "../vnmf-parity" }
+vnmf-i18n = { version = "0.1.0-beta", path = "../vnmf-i18n" }

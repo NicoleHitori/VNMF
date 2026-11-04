@@ -1,0 +1,2517 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR void_nicole (Nicole Hitori)
+# This file is distributed under the same license as the vnmf package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: vnmf 0.1.0-beta\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-04 12:49+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: src/contents.rs:254 src/contents.rs:335
+msgid "No volume"
+msgstr ""
+
+#: src/contents.rs:254 src/contents.rs:335 vnmf-gui/src/bin/vnmf-creator.rs:189
+#: vnmf-gui/src/bin/vnmf-creator.rs:937
+#, rust-format
+msgid "Volume {0}"
+msgstr ""
+
+#: src/contents.rs:270 vnmf-gui/src/bin/vnmf-creator.rs:182
+#, rust-format
+msgid "Chapter {0}"
+msgstr ""
+
+#: src/health.rs:27
+#, rust-format
+msgid "chunk #{0}"
+msgstr ""
+
+#: src/health.rs:33
+#, rust-format
+msgid "preview #{0}"
+msgstr ""
+
+#: src/health.rs:114
+msgid ""
+"the primary metadata copy (start of file) is damaged — the backup was used"
+msgstr ""
+
+#: src/health.rs:117
+msgid "the backup metadata copy (end of file) is damaged"
+msgstr ""
+
+#: src/health.rs:122
+#, rust-format
+msgid ""
+"the primary and backup headers are intact but differ ({0}) — one of them was "
+"modified"
+msgstr ""
+
+#: src/health.rs:133
+#, rust-format
+msgid "damaged data: {0} of {1}"
+msgstr ""
+
+#: src/health.rs:135
+#, rust-format
+msgid " — pages {0}{1}"
+msgstr ""
+
+#: src/health.rs:138
+#, rust-format
+msgid "; previews: {0}"
+msgstr ""
+
+#: src/health.rs:144
+#, rust-format
+msgid "redundancy: damaged data blocks {0}, parity {1}, CRC tables {2}"
+msgstr ""
+
+#: src/health.rs:153
+msgid "fully recoverable: redundancy will confirm the genuine header copy"
+msgstr ""
+
+#: src/health.rs:155
+msgid ""
+"the copies agree with the backup, but without redundancy there's no way to "
+"verify which one is genuine"
+msgstr ""
+
+#: src/health.rs:158
+msgid "fully recoverable from the backup metadata copy"
+msgstr ""
+
+#: src/health.rs:160
+msgid "fully recoverable thanks to redundancy"
+msgstr ""
+
+#: src/health.rs:162
+msgid ""
+"more damage than redundancy: some pages will be lost, the surviving ones can "
+"be extracted"
+msgstr ""
+
+#: src/health.rs:164 vnmf-gui/src/bin/vnmf-reader/main.rs:1076
+msgid ""
+"no redundancy: damaged pages can't be recovered, the surviving ones can be "
+"extracted"
+msgstr ""
+
+#: src/health.rs:172
+msgid "problem"
+msgid_plural "problems"
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/metadata.rs:39 vnmf-gui/src/bin/vnmf-reader/prefs.rs:106
+msgid "Manga"
+msgstr ""
+
+#: src/metadata.rs:40
+msgid "Manhwa"
+msgstr ""
+
+#: src/metadata.rs:41
+msgid "Manhua"
+msgstr ""
+
+#: src/metadata.rs:42 vnmf-gui/src/bin/vnmf-creator.rs:2984
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:132
+msgid "Webtoon"
+msgstr ""
+
+#: src/metadata.rs:43
+msgid "Webcomic"
+msgstr ""
+
+#: src/metadata.rs:44
+msgid "Comic"
+msgstr ""
+
+#: src/metadata.rs:45
+msgid "Graphic novel"
+msgstr ""
+
+#: src/metadata.rs:46
+msgid "Bande dessinée (BD)"
+msgstr ""
+
+#: src/metadata.rs:47
+msgid "Doujinshi"
+msgstr ""
+
+#: src/metadata.rs:48
+msgid "Artbook"
+msgstr ""
+
+#: src/metadata.rs:49
+msgid "Other"
+msgstr ""
+
+#: src/metadata.rs:53
+msgid "Anthology"
+msgstr ""
+
+#: src/metadata.rs:53
+msgid "One-shot"
+msgstr ""
+
+#: src/metadata.rs:53
+msgid "Serial"
+msgstr ""
+
+#: src/metadata.rs:53
+msgid "Yonkoma (4-koma)"
+msgstr ""
+
+#: src/metadata.rs:56
+msgid "Ongoing"
+msgstr ""
+
+#: src/metadata.rs:57
+msgid "Completed"
+msgstr ""
+
+#: src/metadata.rs:58
+msgid "Hiatus"
+msgstr ""
+
+#: src/metadata.rs:59
+msgid "Cancelled"
+msgstr ""
+
+#: src/metadata.rs:60
+msgid "Upcoming"
+msgstr ""
+
+#: src/metadata.rs:64
+msgid "Shōnen"
+msgstr ""
+
+#: src/metadata.rs:65
+msgid "Shōjo"
+msgstr ""
+
+#: src/metadata.rs:66
+msgid "Seinen"
+msgstr ""
+
+#: src/metadata.rs:67
+msgid "Josei"
+msgstr ""
+
+#: src/metadata.rs:68
+msgid "Kodomo"
+msgstr ""
+
+#: src/metadata.rs:72
+msgid "All ages"
+msgstr ""
+
+#: src/metadata.rs:75
+msgid "Left to right"
+msgstr ""
+
+#: src/metadata.rs:75 vnmf-gui/src/bin/vnmf-creator.rs:2987
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2497
+msgid "Right to left"
+msgstr ""
+
+#: src/metadata.rs:75
+msgid "Top to bottom"
+msgstr ""
+
+#: src/metadata.rs:77
+msgid "As a strip"
+msgstr ""
+
+#: src/metadata.rs:77
+msgid "In spreads"
+msgstr ""
+
+#: src/metadata.rs:77
+msgid "Page by page"
+msgstr ""
+
+#: src/metadata.rs:79
+msgid "Black and white"
+msgstr ""
+
+#: src/metadata.rs:79
+msgid "Full color"
+msgstr ""
+
+#: src/metadata.rs:79
+msgid "Partly color"
+msgstr ""
+
+#: src/metadata.rs:82
+msgid "Fan"
+msgstr ""
+
+#: src/metadata.rs:82
+msgid "Machine"
+msgstr ""
+
+#: src/metadata.rs:82
+msgid "Official"
+msgstr ""
+
+#: src/metadata.rs:85
+msgid "Author"
+msgstr ""
+
+#: src/metadata.rs:86 vnmf-gui/src/bin/vnmf-creator.rs:2908
+msgid "Writer"
+msgstr ""
+
+#: src/metadata.rs:87 vnmf-gui/src/bin/vnmf-creator.rs:2909
+msgid "Artist"
+msgstr ""
+
+#: src/metadata.rs:88
+msgid "Original creator"
+msgstr ""
+
+#: src/metadata.rs:89
+msgid "Penciller"
+msgstr ""
+
+#: src/metadata.rs:90
+msgid "Inker"
+msgstr ""
+
+#: src/metadata.rs:91
+msgid "Colorist"
+msgstr ""
+
+#: src/metadata.rs:92
+msgid "Letterer"
+msgstr ""
+
+#: src/metadata.rs:93
+msgid "Cover artist"
+msgstr ""
+
+#: src/metadata.rs:94
+msgid "Assistant"
+msgstr ""
+
+#: src/metadata.rs:95
+msgid "Editor"
+msgstr ""
+
+#: src/metadata.rs:96
+msgid "Translator"
+msgstr ""
+
+#: src/metadata.rs:97
+msgid "Proofreader"
+msgstr ""
+
+#: src/metadata.rs:98
+msgid "Typesetter"
+msgstr ""
+
+#: src/metadata.rs:99
+msgid "Cleaner"
+msgstr ""
+
+#: src/metadata.rs:100
+msgid "Redrawer"
+msgstr ""
+
+#: src/metadata.rs:101
+msgid "Quality checker"
+msgstr ""
+
+#: src/metadata.rs:102
+msgid "Raw provider"
+msgstr ""
+
+#: src/metadata.rs:556 vnmf-gui/src/bin/vnmf-creator.rs:1540
+#: vnmf-gui/src/bin/vnmf-creator.rs:2891
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Title"
+msgstr ""
+
+#: src/metadata.rs:557 vnmf-gui/src/bin/vnmf-creator.rs:2892
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Original title"
+msgstr ""
+
+#: src/metadata.rs:558 vnmf-gui/src/bin/vnmf-creator.rs:2896
+msgid "Romanized"
+msgstr ""
+
+#: src/metadata.rs:560
+msgid "Other titles"
+msgstr ""
+
+#: src/metadata.rs:572 vnmf-gui/src/bin/vnmf-creator.rs:2893
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Type"
+msgstr ""
+
+#: src/metadata.rs:573
+msgid "Publication"
+msgstr ""
+
+#: src/metadata.rs:574 vnmf-gui/src/bin/vnmf-creator.rs:2894
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Status"
+msgstr ""
+
+#: src/metadata.rs:575 vnmf-gui/src/bin/vnmf-creator.rs:2901
+msgid "Audience"
+msgstr ""
+
+#: src/metadata.rs:577
+msgid "Origin"
+msgstr ""
+
+#: src/metadata.rs:589 vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1093
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1100
+msgid "Authors and team"
+msgstr ""
+
+#: src/metadata.rs:596
+msgid "Serialized in"
+msgstr ""
+
+#: src/metadata.rs:597 vnmf-gui/src/bin/vnmf-creator.rs:2965
+msgid "Original publisher"
+msgstr ""
+
+#: src/metadata.rs:599
+msgid "Years"
+msgstr ""
+
+#: src/metadata.rs:602
+#, rust-format
+msgid "since {0}"
+msgstr ""
+
+#: src/metadata.rs:607
+msgid "In the series"
+msgstr ""
+
+#: src/metadata.rs:609 vnmf-gui/src/bin/vnmf-info.rs:491
+#, rust-format
+msgid "volumes {0}, chapters {1}"
+msgstr ""
+
+#: src/metadata.rs:610
+#, rust-format
+msgid "volumes {0}"
+msgstr ""
+
+#: src/metadata.rs:611 vnmf-gui/src/bin/vnmf-info.rs:493
+#, rust-format
+msgid "chapters {0}"
+msgstr ""
+
+#: src/metadata.rs:615 vnmf-gui/src/widgets.rs:116 vnmf-gui/src/widgets.rs:159
+msgid "Language"
+msgstr ""
+
+#: src/metadata.rs:618 vnmf-gui/src/bin/vnmf-creator.rs:2920
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Translation"
+msgstr ""
+
+#: src/metadata.rs:633 vnmf-gui/src/bin/vnmf-creator.rs:2929
+msgid "Publisher"
+msgstr ""
+
+#: src/metadata.rs:634 vnmf-gui/src/bin/vnmf-creator.rs:2930
+msgid "Imprint"
+msgstr ""
+
+#: src/metadata.rs:635 vnmf-gui/src/bin/vnmf-creator.rs:2928
+msgid "Edition"
+msgstr ""
+
+#: src/metadata.rs:636
+msgid "Release date"
+msgstr ""
+
+#: src/metadata.rs:638 vnmf-gui/src/bin/vnmf-creator.rs:2939
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Genres"
+msgstr ""
+
+#: src/metadata.rs:639 vnmf-gui/src/bin/vnmf-creator.rs:2940
+msgid "Tags"
+msgstr ""
+
+#: src/metadata.rs:640 vnmf-gui/src/bin/vnmf-creator.rs:2943
+msgid "Characters"
+msgstr ""
+
+#: src/metadata.rs:641 vnmf-gui/src/bin/vnmf-creator.rs:2941
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1090
+msgid "Age rating"
+msgstr ""
+
+#: src/metadata.rs:642 vnmf-gui/src/bin/vnmf-creator.rs:2944
+msgid "Content warnings"
+msgstr ""
+
+#: src/metadata.rs:643
+msgid "Reading direction"
+msgstr ""
+
+#: src/metadata.rs:644
+msgid "How to read"
+msgstr ""
+
+#: src/metadata.rs:645 vnmf-gui/src/bin/vnmf-creator.rs:2945
+msgid "Color"
+msgstr ""
+
+#: src/metadata.rs:648
+msgid "Catalogs"
+msgstr ""
+
+#: src/metadata.rs:651
+msgid "Links"
+msgstr ""
+
+#: src/metadata.rs:654 vnmf-gui/src/bin/vnmf-creator.rs:2938
+#: vnmf-gui/src/bin/vnmf-creator.rs:2957
+msgid "Description"
+msgstr ""
+
+#: vnmf-core/src/vnmf/aux_record.rs:116 vnmf-gui/src/bin/vnmf-creator.rs:933
+#: vnmf-gui/src/bin/vnmf-info.rs:407
+msgid "File"
+msgstr ""
+
+#: vnmf-core/src/vnmf/aux_record.rs:117
+msgid "Music"
+msgstr ""
+
+#: vnmf-core/src/vnmf/aux_record.rs:118
+msgid "Sound effect"
+msgstr ""
+
+#: vnmf-core/src/vnmf/aux_record.rs:119
+msgid "Text"
+msgstr ""
+
+#: vnmf-core/src/vnmf/aux_record.rs:120
+msgid "Dark version"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:74
+msgid "raw file"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:96
+msgid "Void element at the end"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:97
+msgid "free box at the end"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:98
+msgid "data after the comments in the header"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:99
+msgid "APPLICATION metadata blocks"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:100
+msgid "ID3v2 XVNM frame"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:101
+msgid "skippable frames at the end"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:102
+msgid "empty gzip members with FEXTRA at the end"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:103
+msgid "after the image"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:104
+msgid "simply at the end (the file grows — programs may notice it)"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:177
+msgid "parity section: unsupported seek"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:187
+msgid "empty file"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:215
+msgid "invalid redundancy parameters"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:241
+msgid "could not find a layout"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:324
+msgid "Ogg: corrupted page"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:400
+#, rust-format
+msgid "{0}: intact"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:404
+#, rust-format
+msgid "damaged data ≈{0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:407
+#, rust-format
+msgid "parity blocks: {0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:410
+#, rust-format
+msgid "truncated by {0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:412
+#, rust-format
+msgid "extra tail {0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:415
+msgid "auxiliary fields damaged"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:418
+msgid "recoverable"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:420
+msgid "cannot be fully recovered"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:497
+msgid ""
+"the file was protected, but both map copies are destroyed — recovery is "
+"impossible"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:537
+msgid ""
+"the file is damaged more than the parity can recover — protection not removed"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:554 vnmf-guard/src/lib.rs:599
+#: vnmf-guard/src/lib.rs:642 vnmf-guard/src/lib.rs:673
+#, rust-format
+msgid "reading {0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:564
+msgid "path without a file name"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:579
+#, rust-format
+msgid "writing {0}"
+msgstr ""
+
+#: vnmf-guard/src/lib.rs:605 vnmf-guard/src/lib.rs:650
+#, rust-format
+msgid "copying to {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:36
+msgid "No previews; the thumbnail is the first page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:37
+msgid ""
+"Custom ones and pages with the \"Cover\" role; without them — the first page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:38
+msgid "Custom covers only"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:51
+msgid "Regular"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:52
+msgid "Cover"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:53
+msgid "Back cover"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:54
+msgid "Title page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:55
+msgid "Spread: left"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:56
+msgid "Spread: right"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:57
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:109
+msgid "Spread"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:58
+msgid "Credits"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:59
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1129
+msgid "Contents"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:60
+msgid "Bonus"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:61
+msgid "Advertisement"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:181
+#, rust-format
+msgid "Chapter {0} — {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:188
+#, rust-format
+msgid "Volume {0} — {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:309 vnmf-gui/src/bin/vnmf-creator.rs:1409
+msgid "New volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:314 vnmf-gui/src/bin/vnmf-creator.rs:1598
+msgid "Add"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:315
+msgid "Add images, CBZ or .vnmf (Ctrl+O)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:319
+msgid "Open .vnmf for editing…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:320
+msgid "Images, CBZ or .vnmf…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:321
+msgid "Folder…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:322
+msgid "Import ComicInfo.xml / JSON…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:326
+msgid "Save .vnmf (Ctrl+S)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:326 vnmf-gui/src/bin/vnmf-creator.rs:2343
+msgid "Save…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:332
+msgid "Metadata and parameters (F9)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:336
+msgid "Clear project"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:337 vnmf-gui/src/bin/vnmf-guard.rs:200
+#: vnmf-gui/src/bin/vnmf-info.rs:74
+msgid "Language…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:338
+msgid "About VNMF Creator"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:346
+msgid "Drag pages here"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:347
+msgid ""
+"Images (PNG, JPEG, WebP, AVIF, JPEG XL, GIF), folders, CBZ or .vnmf.\n"
+"The order can be changed by dragging cards, chapters and volumes.\n"
+"A .vnmf is opened for editing and saved into a new file."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:349
+msgid "Add files…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:444
+msgid "Creating VNMF files from images, folders and CBZ."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:535
+msgid "Images, CBZ and VNMF"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:542
+msgid "Add pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:553 vnmf-gui/src/widgets.rs:15
+msgid "VNMF files"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:559
+msgid "Open .vnmf for editing"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:567
+msgid "Open for editing?"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:568
+msgid ""
+"The current project will be replaced by the file's contents. Or the file's "
+"pages can be added to the end of the project."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:570 vnmf-gui/src/bin/vnmf-creator.rs:621
+#: vnmf-gui/src/bin/vnmf-creator.rs:1554 vnmf-gui/src/bin/vnmf-creator.rs:1917
+msgid "Cancel"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:571
+msgid "Add to the end"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:572
+msgid "Replace"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:593
+msgid "Add a folder of pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:604
+msgid "Import metadata"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:620
+msgid "All pages and metadata will be removed."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:620
+msgid "Clear the project?"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:622
+msgid "Clear"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:779
+#, rust-format
+msgid "Could not add: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:780
+msgid "Adding crashed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:815 vnmf-gui/src/bin/vnmf-creator.rs:1084
+msgid "Metadata imported"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:824
+#, rust-format
+msgid "{0}: the primary metadata is damaged — the backup copy was read"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:827
+#, rust-format
+msgid "{0}: damaged images — {1} (marked in red)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:830
+#, rust-format
+msgid "{0}: pages that couldn't be read — {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:833
+#, rust-format
+msgid ""
+"{0}: Info is neither VNMF nor ComicInfo — it won't make it into the new file"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:837
+#, rust-format
+msgid "Skipped files that aren't images: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:840
+msgid "No images found"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:855
+#, rust-format
+msgid "From file · {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:866
+#, rust-format
+msgid "Editing: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:869
+msgid "Changes will be saved into a new file — the source stays unchanged"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:890
+msgid "Images"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:897 vnmf-gui/src/bin/vnmf-creator.rs:3013
+msgid "Custom covers"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:908
+#, rust-format
+msgid "{0}: this is not a supported image"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:914
+msgid "Reading the images crashed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:922
+#, rust-format
+msgid "Could not add the cover — {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:937
+#, rust-format
+msgid "Volume {0}: {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:954
+#, rust-format
+msgid "Volume {0} (not in the project)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:962 vnmf-gui/src/bin/vnmf-creator.rs:3000
+#: vnmf-gui/src/bin/vnmf-info.rs:631
+msgid "None"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:963
+msgid "Add images with the \"+\" button"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:972
+msgid " · additional"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1014
+msgid "The first cover of a file or volume is the main one"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1014
+msgid "Up"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1016
+msgid "Remove"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1020
+msgid "Cover for"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1028
+msgid "Cover for…, order, remove"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1086
+#, rust-format
+msgid "Could not import: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1176 vnmf-gui/src/bin/vnmf-creator.rs:1180
+#: vnmf-gui/src/bin/vnmf-creator.rs:1488
+#, rust-format
+msgid "{0} page"
+msgid_plural "{0} pages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1361
+msgid "Drop here to move a chapter or volume to the end"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1361
+msgid "Drop here to move a chapter to the end"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1400
+#, rust-format
+msgid "{0} page · {1}"
+msgid_plural "{0} pages · {1}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1404
+#, rust-format
+msgid "{0} · volumes {1}, chapters {2}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1406
+#, rust-format
+msgid "{0} · chapters {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1485
+msgid "Drag the header to move the whole chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1485
+msgid "Drag the header to move the whole volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1491
+msgid "Chapter number and title"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1491
+msgid "Volume number and title"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1499
+msgid "Merge with the previous chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1499
+msgid "Remove the split: the volume's pages will join the previous one"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1520
+msgid "The first page always starts a chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1539
+#, rust-format
+msgid "Number (empty — {0})"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1549
+msgid "Chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1549
+msgid "Volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1551
+msgid ""
+"The number can be fractional (\"10.5\") — in the file it's stored in the "
+"table of contents."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1555 vnmf-gui/src/bin/vnmf-creator.rs:1918
+msgid "Save"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1567
+msgid "A volume number must be an integer"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1596
+#, rust-format
+msgid "Fragment {0} attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1596
+#, rust-format
+msgid "Page {0} attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1601
+msgid "Music…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1602
+msgid "Sound effect…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1603
+msgid "Text from a file…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1604
+msgid "Dark version…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1605
+msgid "Other file…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1611
+msgid "Write text…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1669
+msgid "No attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1670
+msgid ""
+"The \"+\" button: music, sound effects, page text or its dark version.\n"
+"The reader plays the sound and shows the text, and the dark version — in a "
+"dark theme."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1677
+msgid ""
+"Music plays from this point until the next music or the end of the chapter; "
+"an effect — when the reader reaches the trigger line."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1679
+msgid ""
+"Music plays from this page until the next music or the end of the chapter; "
+"an effect — when the page is opened."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1690
+msgid "Remove attachment"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1707
+msgid "Preview"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1743
+msgid "Edit text"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1752
+msgid "Loop"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1752
+msgid "Loop while the page is visible"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1763
+msgid "Number of pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1765
+msgid ""
+"How many episode pages it plays for, starting from this one; 0 — until the "
+"next music or the end of the chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1767
+msgid ""
+"How many pages it plays for, starting from this one; 0 — until the next "
+"music or the end of the chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1779
+msgid "Duration, s"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1781
+msgid ""
+"How long to play from the start (the same with looping), then fade out; 0 — "
+"unlimited"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1783
+msgid ""
+"Cut the effect off after this many seconds (handy with looping); 0 — "
+"unlimited"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1793
+msgid "Delay, ms"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1802
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:165
+msgid "Volume, %"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1812
+msgid "Trigger line, px"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1813
+msgid ""
+"From the top of this fragment: the effect plays when the reader reaches it"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1826
+msgid "(empty)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1838
+msgid "Replaces the page in a dark theme"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1838
+msgid "Replaces this fragment in a dark theme"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1839
+msgid "The dimensions must match the original"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1880
+msgid "a sound (Ogg, MP3, FLAC, WAV, M4A)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1881
+msgid "UTF-8 text or JSON"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1882
+msgid "an image"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1884
+#, rust-format
+msgid "{0}: this is not {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1897
+#, rust-format
+msgid "{0}: the aspect ratio differs from the page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1915
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2504
+msgid "Page text"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1915
+msgid ""
+"The reader shows it in the \"Text\" panel (T). You can paste vnmf-text/1 "
+"JSON with regions."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1926
+msgid "page text"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1966
+msgid "Damaged"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1968
+msgid ""
+"The image CRC in the source file doesn't match — the page should be checked "
+"or replaced"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:1994
+#, rust-format
+msgid "Attachments: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2016
+msgid "Move left (Ctrl+←)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2017
+msgid "Move right (Ctrl+→)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2018
+msgid "Remove (Delete)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2057
+msgid "Chapter and volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2057
+#, rust-format
+msgid "Role: {0} · chapter and volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2254
+#, rust-format
+msgid "{0} (modified).vnmf"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2257
+msgid "volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2268
+msgid "Save as a new file"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2268
+msgid "Save volume"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2280
+msgid "The source file is never overwritten — choose a different name"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2303
+msgid ""
+"No custom cover for the file: add an image or attach one of the covers to "
+"\"File\""
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2320
+#, rust-format
+msgid "Saved {0} · {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2321
+msgid "Open in Reader"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2327
+#, rust-format
+msgid "Could not launch Reader: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2332
+#, rust-format
+msgid "Could not save: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2333
+msgid "Saving crashed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2870
+msgid "not specified"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2880
+msgid "Work"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2881
+msgid ""
+"VNMF metadata: all fields are optional, lists are comma-separated. A CBZ "
+"gets them as ComicInfo.xml"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2885
+msgid "Import vnmf.json or ComicInfo.xml"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2895
+msgid "Other titles and origin"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2895
+msgid "romanized, alternative, language and country"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2897
+msgid "Alternative titles"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2898
+msgid "Original language (ja, ko, zh)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+msgid "Country (JP, KR, CN)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2900
+msgid "Form of publication"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2906
+msgid "Authors"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2907
+msgid "Author (story and art)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2910
+msgid "Other roles"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2910
+msgid "original creator, colorist, editor…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2918
+msgid "Translation and edition"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2919
+msgid "Text language (en, uk)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2921
+msgid "Translation team"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2922
+msgid "Team members"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2922
+msgid "translator, proofreader, typesetter…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2926
+msgid "Translation notes"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2928
+msgid "publisher, date, ISBN"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2931
+msgid "Edition (Deluxe, digital…)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2932
+msgid "Release date (YYYY-MM-DD)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
+msgid "More"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
+msgid "characters, warnings, color"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2962
+msgid "Series and catalogs"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2963
+msgid "Original publication"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2963
+msgid "magazine or platform, years, number of volumes"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2964
+msgid "Magazine / platform"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2966
+msgid "Start (YYYY-MM-DD)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2967
+msgid "End"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2968
+msgid "Total volumes"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2969
+msgid "Total chapters"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2971
+msgid "Catalogs and links"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2975
+msgid "Links (comma-separated URLs)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2982
+msgid "Parameters"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2985
+msgid "All images form one long page; formats can be mixed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2987
+msgid "Manga reading direction"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2989 vnmf-gui/src/bin/vnmf-guard.rs:212
+msgid "Redundancy, %"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2990
+msgid ""
+"Protection against media damage: a contiguous region of the same size can be "
+"recovered"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2994 vnmf-gui/src/bin/vnmf-info.rs:430
+msgid "Metadata backup copy"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2995
+msgid "A copy of the tables at the end of the file"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2999
+msgid "Covers"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3000
+msgid "Custom only"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3000
+msgid "From pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3007
+msgid "Add images…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3014
+msgid ""
+"Images from files — they don't become pages. A cover from pages is the "
+"\"Cover\" page role. For the file and each volume the first one is the main "
+"one, the rest are additional."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3024 vnmf-gui/src/bin/vnmf-info.rs:427
+msgid "Block size"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3041
+msgid "Don't start a chapter here"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3041
+msgid "Start a new chapter here"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3046
+msgid "Don't start a volume here"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3046
+msgid "Start a new volume here"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3050
+msgid "Structure"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3052
+#, rust-format
+msgid "Attachments ({0})…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3052
+msgid "Sound, text, dark version…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3056
+msgid "Attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:3064
+msgid "Page role"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:77
+#, rust-format
+msgid "Protected {0}% · {1} · {2} · intact"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:95
+msgid "0% — nothing changed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:96
+#, rust-format
+msgid "Already protected {0}%"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:98
+#, rust-format
+msgid " (was {0}%)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:100
+#, rust-format
+msgid "Protected {0}%{1} · {2} · {3} → {4} · recovers up to {5} in a row"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:110
+#, rust-format
+msgid "Partially repaired: {0} blocks, the rest is lost"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:114
+#, rust-format
+msgid "Repaired: {0} data blocks, {1} parity"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:116
+#, rust-format
+msgid "Auxiliary fields repaired · {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:123
+msgid "as before protection, byte for byte"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:125
+msgid "bytes differ from the original"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:127
+#, rust-format
+msgid "Protection removed · {0} · {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:132
+#, rust-format
+msgid "Error: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:145
+#, rust-format
+msgid "Not protected · {0} · {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:146
+#, rust-format
+msgid "Not protected · unknown format · {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:194
+msgid "Add files (Ctrl+O)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:198
+msgid "Clear list"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:199 vnmf-gui/src/bin/vnmf-guard.rs:461
+msgid "Supported formats"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:201
+msgid "About VNMF Guard"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:206
+msgid "Protect files from damage"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:207
+msgid ""
+"Add videos, audio or disk images, or drag them into the window.\n"
+"Parity goes inside the file so programs won't notice it, and damaged parts "
+"can be recovered."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:214
+msgid ""
+"How much to add to the file. 10% recovers ≈9% of the file in a row, 30% — "
+"≈23%. 0 — change nothing"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:223
+msgid "Files"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:224
+msgid "Modified in place (atomically, via a temporary file)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:248
+msgid "Check"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:249
+msgid "Repair"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:250
+msgid "Remove protection"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:251
+msgid "Protect"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:295
+msgid ""
+"Unobtrusive Reed–Solomon redundancy in video, audio and disk images: files "
+"open as usual, and damaged parts are recovered."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:372 vnmf-gui/src/bin/vnmf-info.rs:394
+msgid "Checking…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:381
+msgid "Remove from list"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:414
+msgid "Redundancy 0% — files not changed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:427
+msgid "Processing crashed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:436
+msgid "Check finished"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:437
+msgid "Protection finished"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:438
+msgid "Repair finished"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:439
+msgid "Protection removal finished"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:441
+#, rust-format
+msgid "{0}, problems: {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:452
+msgid "only with vnmfguard --raw"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:460
+#, rust-format
+msgid ""
+"{0}\n"
+"\n"
+"Compress .img images to .zst or .gz: .xz has no room for foreign data."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:462 vnmf-gui/src/health_ui.rs:61
+msgid "Close"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:491
+msgid "Added — check it after the current action finishes"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:502
+msgid "Supported files"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:507 vnmf-gui/src/widgets.rs:18
+msgid "All files"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-guard.rs:512
+msgid "Add files"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:71 vnmf-gui/src/bin/vnmf-reader/main.rs:214
+msgid "Open (Ctrl+O)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:74
+msgid "About VNMF Info"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:80
+msgid "VNMF file information"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:81 vnmf-gui/src/bin/vnmf-reader/main.rs:246
+msgid "Open a .vnmf file or drag it into the window"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:159
+msgid "Full information about VNMF files and integrity checking."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:262
+#, rust-format
+msgid "Check not completed: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:263
+msgid "Check crashed"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:281
+#, rust-format
+msgid "p. {0} in chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:283
+#, rust-format
+msgid "ch. {0} · p. {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:287
+#, rust-format
+msgid "{0} fragment"
+msgid_plural "{0} fragments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:295
+#, rust-format
+msgid "attachments: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:298 vnmf-gui/src/bin/vnmf-reader/main.rs:1174
+#, rust-format
+msgid "Page {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:332
+#, rust-format
+msgid "Damaged pages: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:344
+msgid "header damaged"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:345
+msgid "header intact, tables damaged"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:346
+msgid "intact"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:350 vnmf-gui/src/bin/vnmf-info.rs:437
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1113
+msgid "none"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:355
+#, rust-format
+msgid ""
+"{0}\n"
+"\n"
+"Primary metadata copy: {1}\n"
+"Backup metadata copy: {2}\n"
+"\n"
+"Run recovery in a terminal:\n"
+"<tt>{3}</tt>"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:361 vnmf-gui/src/health_ui.rs:62
+msgid "Copy command"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:367
+msgid "Command copied"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:371
+msgid "The file can't be opened"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:393 vnmf-gui/src/bin/vnmf-reader/main.rs:1116
+msgid "Integrity"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:394
+msgid "metadata, data and redundancy"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:408
+msgid "Path"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:409
+msgid "Size"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:411
+msgid "Format"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:413
+#, rust-format
+msgid "VNMF {0}.{1} — old format, read-only (rebuild in VNMF Creator)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:424
+msgid "Page attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:428
+msgid "Flags"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:431
+msgid "no"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:431
+msgid "yes"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:434 vnmf-gui/src/bin/vnmf-reader/main.rs:1112
+msgid "Redundancy"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:436
+#, rust-format
+msgid ""
+"{0}% Reed–Solomon: {1} of parity, recovers contiguous damage of up to {2}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:441
+msgid "Data"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:442
+#, rust-format
+msgid "{0} in {1} chunks · overhead {2} ({3}%)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:451
+#, rust-format
+msgid "Previews ({0})"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:454
+#, rust-format
+msgid "Preview #{0} · volume {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:484 vnmf-gui/src/bin/vnmf-reader/main.rs:1135
+#, rust-format
+msgid "p. {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:484
+#, rust-format
+msgid "pp. {0}–{1} · {2} page"
+msgid_plural "pp. {0}–{1} · {2} pages"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:496 vnmf-gui/src/bin/vnmf-info.rs:525
+#, rust-format
+msgid "Pages ({0})"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:548
+#, rust-format
+msgid "Preview #{0} · {1}×{2} · {3}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:554
+#, rust-format
+msgid "Page {0} of {1} · {2}×{3} · {4}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:602
+#, rust-format
+msgid "Could not display: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:619
+msgid "File is intact"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:620
+msgid "metadata, data and redundancy checked"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:622
+#, rust-format
+msgid "Damaged: {0} problem"
+msgid_plural "Damaged: {0} problems"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:623
+#, rust-format
+msgid ""
+"{0}\n"
+"Prognosis: {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:629
+msgid "Metadata"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:641
+#, rust-format
+msgid "VNMF metadata ({0})"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:642
+msgid "ComicInfo (format 1.1) — shown as VNMF metadata"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:666
+msgid "Raw contents"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-info.rs:686
+msgid "Page data is damaged (CRC mismatch)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:218
+msgid "Information and pages (F9)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:228
+msgid "Page text (T)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:234
+msgid "Page sound (M)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:268
+msgid "Left page (←)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:271
+msgid "Right page (→)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:274
+msgid "Previous chapter (Ctrl+←)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:277
+msgid "Next chapter (Ctrl+→)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:339
+msgid "Hide (T)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:496
+msgid "A manga and webtoon reader for the VNMF format."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:585
+#, rust-format
+msgid "Could not launch VNMF Info: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1022
+msgid "Spreads work in \"Pages\" mode"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1029
+msgid ""
+"Spread enabled: the cover is shown alone, spreads start from the next page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1031
+msgid "This page is a webtoon strip, it's shown alone"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1033
+msgid "The file marked this page as a cover — it's shown alone"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1036
+msgid "The file marked this page as a whole spread — it's shown alone"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1038
+msgid "This page is wide (a spread by itself) — it's shown alone"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1072
+#, rust-format
+msgid "damaged page data: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1074
+msgid "recoverable thanks to redundancy"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1081
+#, rust-format
+msgid "Page {0} is damaged — the data doesn't match the checksum"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1087
+msgid "About the file"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1110
+msgid "Page count"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1117
+msgid "metadata intact"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1119
+msgid "More in VNMF Info"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1137
+#, rust-format
+msgid "pp. {0}–{1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1142
+msgid "Read from the start of the chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1164
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2492
+msgid "Pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1378
+#, rust-format
+msgid "{0} · page {1} of {2}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1379
+#, rust-format
+msgid "{0} — page {1} of {2}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1456
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2510
+msgid "Next chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1456
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2509
+msgid "Previous chapter"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1720
+#, rust-format
+msgid "Text · {0} {1}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1720
+msgid "page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1720
+msgid "pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:1722
+msgid "There is no text on this page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2277
+#, rust-format
+msgid "Could not display the page: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2283
+#, rust-format
+msgid ""
+"Page {0} could not be displayed: the format isn't supported by the system "
+"decoder"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2306
+#, rust-format
+msgid "the file can't be opened: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2307
+msgid "the metadata may be recoverable"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2311
+#, rust-format
+msgid "Could not open: {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2388
+#, rust-format
+msgid "Continued from page {0}"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2390
+msgid "Continued from where you left off"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2394
+msgid "From the start"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2449
+msgid "Zoom out (Ctrl+−)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2450
+msgid "Full window width (Ctrl+0)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2451
+msgid "Zoom in (Ctrl+=)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2458
+msgid "Fit page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2460
+msgid "Fit width"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2463
+msgid ""
+"100% — the page at full window width; a spread takes the space of two "
+"pages.\n"
+"\"Fit page\" shows the whole spread.\n"
+"Ctrl+scroll or pinch — zoom around the cursor."
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2485
+msgid "Zoom"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2493
+msgid "Strip (webtoon)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2494
+msgid "Mode"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2498
+msgid "Spread (two pages)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2499
+msgid "Fullscreen"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2503
+msgid "Page sound"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2505
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:169
+msgid "Dark page versions"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2514
+msgid "Reading settings…"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2515
+msgid "Open in VNMF Info"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2516
+msgid "About VNMF Reader"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/main.rs:2519 vnmf-gui/src/widgets.rs:57
+msgid "Main menu"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:54
+msgid "Reading settings"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:55
+msgid "Reading"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:60
+msgid "View"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:63
+msgid "Background"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:64
+msgid "Color around the page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:76
+msgid "Turn pages by clicking the edges"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:77
+msgid "Click in the left half of the window — left, in the right half — right"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:83
+msgid "Hide the navigation bar"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:84
+msgid "The floating bar disappears while the mouse is still"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:90
+msgid "Hide the header in fullscreen"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:91
+msgid "Appears when the mouse is near the top edge"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:97
+msgid "Preloading"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:98
+msgid ""
+"How many pages to prepare ahead of the current one and as many behind it"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:106
+msgid "Paged mode"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:110
+msgid "Two pages side by side; wide pages shown alone (D key)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:124
+msgid "Cover alone"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:125
+msgid "In a spread the first page is shown by itself"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:132
+msgid "Strip mode"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:135
+msgid "Strip width, px"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:136
+msgid ""
+"Also changed by zooming in the strip (Ctrl+scroll); 100% — full window width"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:143
+msgid "Gap between fragments, px"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:144
+msgid "0 — fragments join seamlessly"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:153
+msgid "Sound and page attachments"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:154
+msgid ""
+"If the file contains them: music, sound effects, text and dark versions of "
+"pages"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:156
+msgid "Page music and effects (M)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:156
+msgid "Sound"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:165
+msgid "Shared by music and effects"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:169
+msgid "Used instead of the regular ones in a dark theme"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:176
+msgid "Reading position"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:179
+msgid "Remember the page"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:180
+msgid "Open each file where you left off (by file UUID)"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:184
+msgid "Forget all saved positions"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:191
+msgid "Positions forgotten"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/prefs.rs:203
+msgid "Interface"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/settings.rs:40
+msgid "Follow theme"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/settings.rs:41
+msgid "Black"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/settings.rs:42
+msgid "Gray"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-reader/settings.rs:43
+msgid "White"
+msgstr ""
+
+#: vnmf-gui/src/health_ui.rs:28
+msgid "What to do?"
+msgstr ""
+
+#: vnmf-gui/src/health_ui.rs:39
+#, rust-format
+msgid "File is damaged: {0} problem. {1}"
+msgid_plural "File is damaged: {0} problems. {1}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: vnmf-gui/src/health_ui.rs:59
+#, rust-format
+msgid ""
+"{0}\n"
+"\n"
+"Prognosis: {1}.\n"
+"\n"
+"Run recovery in a terminal:\n"
+"{2}"
+msgstr ""
+
+#: vnmf-gui/src/health_ui.rs:60
+msgid "File is damaged"
+msgstr ""
+
+#: vnmf-gui/src/imaging.rs:19 vnmf-gui/src/imaging.rs:42
+msgid "decoding crashed"
+msgstr ""
+
+#: vnmf-gui/src/imaging.rs:136
+msgid "reading crashed"
+msgstr ""
+
+#: vnmf-gui/src/lib.rs:268
+msgid "empty render node"
+msgstr ""
+
+#: vnmf-gui/src/lib.rs:269
+msgid "no renderer"
+msgstr ""
+
+#: vnmf-gui/src/lib.rs:271
+msgid "could not write PNG"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:28
+msgid "Open VNMF file"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:78
+msgid "Development assistance"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:80
+msgid "VNMF format and the vnmf-core library"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:112
+msgid "System language"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:117
+msgid "For all VNMF applications; applies after a restart"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:132
+#, rust-format
+msgid "Could not save the language: {0}"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:137
+msgid "The language will change after a restart"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:138
+msgid "Restart"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:146
+msgid "The language will change the next time the application starts"
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:162
+msgid ""
+"The language of the VNMF applications. Translations are installed with them; "
+"the system language is used by default."
+msgstr ""
+
+#: vnmf-gui/src/widgets.rs:181
+msgid "Open…"
+msgstr ""

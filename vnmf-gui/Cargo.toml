@@ -1,0 +1,18 @@
+[package]
+name = "vnmf-gui"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "GTK4/libadwaita tools for VNMF: Info, Reader, Creator, Guard"
+
+[dependencies]
+adw = { version = "0.9.2", package = "libadwaita", features = ["v1_8"] }
+anyhow = "1.0.104"
+gtk = { version = "0.11.5", package = "gtk4", features = ["v4_22"] }
+serde_json = "1.0.154"
+uuid = { version = "1.28.0", features = ["v4", "fast-rng"] }
+vnmf = { version = "0.1.0-beta", path = ".." }
+vnmf-core = { version = "0.1.0-beta", path = "../vnmf-core" }
+vnmf-guard = { version = "0.1.0-beta", path = "../vnmf-guard" }
+vnmf-i18n = { version = "0.1.0-beta", path = "../vnmf-i18n" }

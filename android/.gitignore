@@ -1,0 +1,8 @@
+.gradle/
+.kotlin/
+build/
+local.properties
+.idea/
+*.iml
+# Built Rust libraries and generated bindings are build products.
+app/src/main/jniLibs/

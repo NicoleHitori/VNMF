@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+  <defs>
+    <linearGradient id="l" x1="0" x2="1"><stop offset="0" stop-color="#f6f5f4"/><stop offset="1" stop-color="#deddda"/></linearGradient>
+    <linearGradient id="r" x1="0" x2="1"><stop offset="0" stop-color="#deddda"/><stop offset="1" stop-color="#f6f5f4"/></linearGradient>
+  </defs>
+  <path d="M10 28 Q36 18 64 30 Q92 18 118 28 V108 Q92 98 64 110 Q36 98 10 108 Z" fill="#613583"/>
+  <path d="M14 24 Q38 14 62 26 V104 Q38 94 14 102 Z" fill="url(#l)"/>
+  <path d="M66 26 Q90 14 114 24 V102 Q90 94 66 104 Z" fill="url(#r)"/>
+  <rect x="22" y="30" width="32" height="26" rx="2" fill="#9141ac" transform="rotate(-6 38 43)"/>
+  <rect x="22" y="62" width="14" height="28" rx="2" fill="#c061cb" transform="rotate(-6 29 76)"/>
+  <rect x="40" y="60" width="14" height="26" rx="2" fill="#dc8add" transform="rotate(-6 47 73)"/>
+  <rect x="74" y="28" width="32" height="20" rx="2" fill="#e01b24" transform="rotate(6 90 38)"/>
+  <rect x="74" y="54" width="32" height="34" rx="2" fill="#f66151" transform="rotate(6 90 71)"/>
+</svg>

@@ -1,0 +1,30 @@
+[package]
+name = "vnmf-ffi"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "VNMF for Android (Kotlin) via UniFFI: reading books, pages, contents, sound rules, integrity check"
+
+[lib]
+name = "vnmf_ffi"
+# cdylib — libvnmf_ffi.so for Android; lib — for tests and the binding generator.
+crate-type = ["cdylib", "lib"]
+
+[[bin]]
+# Kotlin binding generator: cargo run -p vnmf-ffi --features cli --bin uniffi-bindgen -- generate …
+name = "uniffi-bindgen"
+path = "src/bin/uniffi-bindgen.rs"
+required-features = ["cli"]
+
+[features]
+cli = ["uniffi/cli"]
+
+[dependencies]
+vnmf = { path = ".." }
+vnmf-core = { path = "../vnmf-core" }
+uniffi = "0.32"
+thiserror = "2.0.18"
+# AVIF without a system decoder: Android 12–13 often can't handle 4:4:4 (AV1 High profile). Pure Rust (rav1d).
+avif-decode = { version = "3", default-features = false }
+imgref = "1.12"

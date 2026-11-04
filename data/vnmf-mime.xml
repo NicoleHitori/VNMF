@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<!-- VNMF file type for shared-mime-info: detected by the "vnmf" signature at the start and by extension. -->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/x-vnmf">
+    <comment>VNMF manga archive</comment>
+    <comment xml:lang="uk">Архів манги VNMF</comment>
+    <acronym>VNMF</acronym>
+    <generic-icon name="x-office-document"/>
+    <magic priority="80">
+      <match type="string" offset="0" value="vnmf"/>
+    </magic>
+    <glob pattern="*.vnmf"/>
+  </mime-type>
+</mime-info>

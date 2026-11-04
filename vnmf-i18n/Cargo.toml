@@ -1,0 +1,9 @@
+[package]
+name = "vnmf-i18n"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "Runtime translations for the VNMF applications (gettext message catalogs, no recompilation needed)"
+
+[dependencies]

@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=VNMF Creator
+Name[uk]=VNMF Creator
+GenericName=Manga Archive Creator
+GenericName[uk]=Створення архівів манги
+Comment=Create and edit VNMF files from images
+Comment[uk]=Створення й редагування файлів VNMF із зображень
+Icon=org.vnmf.Creator
+TryExec=vnmf-creator
+Exec=vnmf-creator %F
+Terminal=false
+StartupNotify=true
+Categories=Graphics;GTK;
+MimeType=application/x-vnmf;
+Keywords=manga;comic;webtoon;vnmf;create;pack;edit;
+Keywords[uk]=манга;комікс;вебтун;vnmf;створити;редагувати;

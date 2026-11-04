@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=VNMF Info
+Name[uk]=VNMF Info
+GenericName=File Inspector
+GenericName[uk]=Інформація про файл
+Comment=Inspect VNMF files: metadata, pages, integrity
+Comment[uk]=Відомості про файл VNMF: метадані, сторінки, цілісність
+Icon=org.vnmf.Info
+TryExec=vnmf-info
+Exec=vnmf-info %F
+Terminal=false
+StartupNotify=true
+Categories=Graphics;Viewer;GTK;
+Keywords=manga;comic;vnmf;info;metadata;crc;
+Keywords[uk]=манга;vnmf;інформація;метадані;пошкодження;
+MimeType=application/x-vnmf;

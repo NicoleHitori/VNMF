@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=VNMF Reader
+Name[uk]=VNMF Reader
+GenericName=Manga Reader
+GenericName[uk]=Читалка манги
+Comment=Read manga and webtoons in VNMF format
+Comment[uk]=Читання манги й вебтунів у форматі VNMF
+Icon=org.vnmf.Reader
+TryExec=vnmf-reader
+Exec=vnmf-reader %F
+Terminal=false
+StartupNotify=true
+Categories=Graphics;Viewer;GTK;
+Keywords=manga;comic;webtoon;vnmf;reader;
+Keywords[uk]=манга;комікс;вебтун;vnmf;читалка;
+MimeType=application/x-vnmf;
+InitialPreference=10

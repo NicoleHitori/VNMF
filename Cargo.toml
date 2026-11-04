@@ -1,0 +1,21 @@
+[workspace]
+members = ["vnmf-core", "vnmf-ffi", "vnmf-gui", "vnmf-guard", "vnmf-i18n", "vnmf-parity"]
+
+[package]
+name = "vnmf"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "Console tools for the VNMF format: vnmfinfo, vnmfpack, vnmfunpack"
+
+[dependencies]
+vnmf-core = { path = "vnmf-core" }
+uuid = { version = "1.3", features = ["v4", "fast-rng"] }
+anyhow = "1.0.104"
+clap = { version = "4.6.7", features = ["derive"] }
+zip = { version = "9.0.3", default-features = false, features = ["deflate"] }
+quick-xml = "0.42.0"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+vnmf-i18n = { version = "0.1.0-beta", path = "vnmf-i18n" }

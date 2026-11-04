@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<component type="desktop-application">
+  <id>org.vnmf.Reader</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>VNMF Reader</name>
+  <summary>Read manga and webtoons in VNMF format</summary>
+  <summary xml:lang="uk">Читання манги й вебтунів у форматі VNMF</summary>
+  <developer id="org.vnmf">
+    <name>void_nicole (Nicole Hitori)</name>
+  </developer>
+  <description>
+    <p>A reader for VNMF manga archives: single pages and spreads, right-to-left reading, a continuous webtoon strip, zoom and integrity checks.</p>
+    <p xml:lang="uk">Читалка архівів манги VNMF: сторінки й розвороти, читання справа наліво, безперервна стрічка вебтуна, масштаб і перевірка цілісності.</p>
+  </description>
+  <launchable type="desktop-id">org.vnmf.Reader.desktop</launchable>
+  <provides>
+    <binary>vnmf-reader</binary>
+    <mediatype>application/x-vnmf</mediatype>
+  </provides>
+  <categories>
+    <category>Graphics</category>
+    <category>Viewer</category>
+  </categories>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0~beta" date="2026-11-04"/>
+  </releases>
+</component>

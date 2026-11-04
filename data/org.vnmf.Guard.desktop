@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Application
+Name=VNMF Guard
+Name[uk]=VNMF Guard
+GenericName=File Damage Protection
+GenericName[uk]=Захист файлів від пошкоджень
+Comment=Add invisible Reed–Solomon redundancy to videos, music and disk images and repair them
+Comment[uk]=Непомітна надлишковість Reed–Solomon у відео, музиці й образах і відновлення пошкоджених
+Icon=org.vnmf.Guard
+TryExec=vnmf-guard
+Exec=vnmf-guard %F
+Terminal=false
+StartupNotify=true
+Categories=Utility;GTK;
+MimeType=video/x-matroska;video/webm;video/mp4;video/quicktime;audio/x-matroska;audio/webm;audio/mp4;audio/flac;audio/ogg;audio/x-vorbis+ogg;audio/x-opus+ogg;audio/mpeg;application/zstd;application/gzip;application/x-cd-image;
+Keywords=parity;redundancy;repair;recovery;reed-solomon;backup;video;audio;iso;
+Keywords[uk]=парність;надлишковість;відновлення;захист;пошкодження;відео;аудіо;образ;
