@@ -312,7 +312,7 @@
                 {t('admin.administrator')}
               </label>
             </td>
-            <td class="muted">{u.last_seen_at ? date(u.last_seen_at) : '—'}</td>
+            <td class="muted seen" data-label="{t('admin.lastSeen')}: ">{u.last_seen_at ? date(u.last_seen_at) : '—'}</td>
             <td class="row actions">
               <button onclick={() => resetPassword(u)}>{t('admin.resetPassword')}</button>
               {#if u.id !== session.user.id}<button class="danger" onclick={() => removeUser(u)}>{t('remove')}</button>{/if}
@@ -445,5 +445,50 @@
   }
   .add .row input {
     flex: 1 1 10rem;
+  }
+  /* Phones: each user is a card (name, rights, last seen, actions) instead of a table row, and the
+     new user form is a column. */
+  @media (max-width: 640px) {
+    thead {
+      display: none;
+    }
+    table,
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: auto;
+    }
+    tr {
+      padding: 10px 14px;
+    }
+    tr + tr {
+      border-top: 1px solid var(--border);
+    }
+    td {
+      padding: 4px 0;
+      border: none;
+    }
+    td.seen::before {
+      content: attr(data-label);
+    }
+    .actions {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding-top: 8px;
+    }
+    .table-wrap {
+      overflow-x: visible;
+    }
+    .add .row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .add .row input {
+      flex: none;
+    }
+    .add .row .primary {
+      width: 100%;
+    }
   }
 </style>

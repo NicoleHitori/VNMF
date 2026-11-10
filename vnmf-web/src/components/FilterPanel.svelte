@@ -155,6 +155,7 @@
   .panel {
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
   .head {
     display: flex;
@@ -220,8 +221,9 @@
     display: grid;
     gap: 2px 12px;
   }
+  /* minmax(0, …): columns may shrink below their content's width (a narrow drawer on phones). */
   .checks.two {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
   .scroll {
     max-height: 16rem;
@@ -253,12 +255,13 @@
   }
   .range {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: 8px;
   }
   .range input {
     width: 100%;
+    min-width: 0;
   }
   .dash {
     color: var(--dim);

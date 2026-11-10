@@ -37,12 +37,12 @@
   });
 
   const tabs = $derived([
-    { page: 'library', href: '/', icon: 'library', label: t('nav.library') },
-    { page: 'my', href: '/my', icon: 'bookmark', label: t('nav.my') },
+    { page: 'library', href: '/', icon: 'library', label: t('nav.library'), short: t('nav.libraryShort') },
+    { page: 'my', href: '/my', icon: 'bookmark', label: t('nav.my'), short: t('nav.myShort') },
     ...(session.user?.is_admin
       ? [
-          { page: 'upload', href: '/upload', icon: 'upload', label: t('nav.upload') },
-          { page: 'admin', href: '/admin', icon: 'admin', label: t('nav.admin') },
+          { page: 'upload', href: '/upload', icon: 'upload', label: t('nav.upload'), short: t('nav.uploadShort') },
+          { page: 'admin', href: '/admin', icon: 'admin', label: t('nav.admin'), short: t('nav.adminShort') },
         ]
       : []),
   ]);
@@ -72,7 +72,8 @@
       {#each tabs as tab (tab.page)}
         <a href={tab.href} class:active={view.page === tab.page} aria-current={view.page === tab.page ? 'page' : undefined}>
           <Icon name={tab.icon} />
-          <span>{tab.label}</span>
+          <span class="long">{tab.label}</span>
+          <span class="short" aria-hidden="true">{tab.short}</span>
         </a>
       {/each}
     </nav>
@@ -182,6 +183,9 @@
   .switcher a.active {
     background: var(--button-bg);
   }
+  .switcher .short {
+    display: none;
+  }
   main {
     max-width: 1400px;
     margin: 0 auto;
@@ -219,17 +223,54 @@
       opacity: 0;
     }
   }
+  /* Phones: the switcher moves to a bar at the bottom, like AdwViewSwitcherBar — an icon over a
+     short label per page; the header keeps the logo, the language and the account. */
   @media (max-width: 720px) {
     .headerbar {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
     }
-    .brand span,
-    .username,
-    .switcher a span {
+    .username {
       display: none;
     }
     .switcher {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: 4px;
+      padding: 6px max(6px, env(safe-area-inset-left)) max(6px, env(safe-area-inset-bottom));
+      background: var(--headerbar-bg);
+      box-shadow: inset 0 1px var(--headerbar-shade);
+    }
+    .switcher a {
+      flex-direction: column;
+      gap: 2px;
+      min-height: 48px;
+      padding: 4px 2px;
+      font-size: 0.72rem;
       justify-content: center;
+    }
+    .switcher .long {
+      display: none;
+    }
+    .switcher .short {
+      display: block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .switcher a.active {
+      color: var(--accent);
+    }
+    main {
+      padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    }
+    .toasts {
+      bottom: calc(76px + env(safe-area-inset-bottom));
     }
   }
 </style>

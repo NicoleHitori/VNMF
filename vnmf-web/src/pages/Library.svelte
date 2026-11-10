@@ -191,12 +191,16 @@
   {/if}
   </div>
 
-  <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
-  <div class="scrim" class:open={panelOpen} onclick={() => (panelOpen = false)}></div>
-  <aside class="filters" class:open={panelOpen} aria-label={t('filter.title')}>
-    <FilterPanel bind:filters {facets} onreset={resetFilters} />
-    <button class="primary pill show" onclick={() => (panelOpen = false)}>{t('filter.show', { n: total })}</button>
-  </aside>
+  <!-- On narrow screens the filters are a drawer. The layer clips it: a closed drawer waits off the
+       screen's edge, and phone browsers would otherwise widen the page to show it. -->
+  <div class="drawer-layer" class:open={panelOpen}>
+    <!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
+    <div class="scrim" class:open={panelOpen} onclick={() => (panelOpen = false)}></div>
+    <aside class="filters" class:open={panelOpen} aria-label={t('filter.title')}>
+      <FilterPanel bind:filters {facets} onreset={resetFilters} />
+      <button class="primary pill show" onclick={() => (panelOpen = false)}>{t('filter.show', { n: total })}</button>
+    </aside>
+  </div>
 </section>
 
 <style>
@@ -224,6 +228,10 @@
   .scrim {
     display: none;
   }
+  /* On wide screens the layer isn't there: the filters are the grid's second column. */
+  .drawer-layer {
+    display: contents;
+  }
   .filters-button.on {
     background: var(--accent-soft);
     color: var(--accent);
@@ -240,14 +248,28 @@
     place-items: center;
   }
   @media (max-width: 1000px) {
+    /* minmax(0, …): the column may be narrower than its content — the "continue reading" shelf
+       scrolls sideways instead of widening the page. */
     .catalog {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
     .filters-button {
       display: inline-flex;
     }
-    .filters {
+    .drawer-layer {
+      display: block;
       position: fixed;
+      inset: 0;
+      z-index: 59;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .drawer-layer.open {
+      pointer-events: auto;
+    }
+    .filters {
+      position: absolute;
+      pointer-events: auto;
       top: 0;
       right: 0;
       bottom: 0;
@@ -257,11 +279,18 @@
       padding: 16px;
       background: var(--window-bg);
       box-shadow: var(--popover-shadow);
+      overflow-x: hidden;
       transform: translateX(105%);
-      transition: transform 0.2s ease-out;
+      /* Hidden once slid out: not reachable with Tab while closed. */
+      visibility: hidden;
+      transition:
+        transform 0.2s ease-out,
+        visibility 0s 0.2s;
     }
     .filters.open {
       transform: none;
+      visibility: visible;
+      transition: transform 0.2s ease-out;
     }
     /* Stays at the bottom of the drawer while its content scrolls. */
     .filters .show {
@@ -274,7 +303,7 @@
     }
     .scrim {
       display: block;
-      position: fixed;
+      position: absolute;
       inset: 0;
       z-index: 59;
       background: rgb(0 0 6 / 0.35);
@@ -342,6 +371,9 @@
     cursor: pointer;
   }
   .card-in {
+    min-width: 0;
+  }
+  .results {
     min-width: 0;
   }
   .grid {

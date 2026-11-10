@@ -122,6 +122,10 @@ const en = {
 
   'nav.library': 'Catalog',
   'nav.my': 'My library',
+  'nav.libraryShort': 'Catalog',
+  'nav.myShort': 'Mine',
+  'nav.uploadShort': 'Upload',
+  'nav.adminShort': 'Admin',
   'nav.upload': 'Upload',
   'nav.admin': 'Administration',
   'nav.settings': 'Settings',
@@ -576,6 +580,10 @@ const uk = {
 
   'nav.library': 'Каталог',
   'nav.my': 'Моя бібліотека',
+  'nav.libraryShort': 'Каталог',
+  'nav.myShort': 'Моє',
+  'nav.uploadShort': 'Додати',
+  'nav.adminShort': 'Керування',
   'nav.upload': 'Завантажити',
   'nav.admin': 'Адміністрування',
   'nav.settings': 'Налаштування',

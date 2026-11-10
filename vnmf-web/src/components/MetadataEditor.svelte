@@ -248,7 +248,7 @@
   }
   @media (max-width: 600px) {
     .credit {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto;
     }
   }
 </style>
