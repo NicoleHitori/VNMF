@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vnmf 0.1.0-beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 13:50+0200\n"
+"POT-Creation-Date: 2026-11-10 21:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -127,7 +127,7 @@ msgstr ""
 msgid "Manhua"
 msgstr ""
 
-#: src/metadata.rs:42 vnmf-gui/src/bin/vnmf-creator.rs:2960
+#: src/metadata.rs:42 vnmf-gui/src/bin/vnmf-creator.rs:2962
 #: vnmf-gui/src/bin/vnmf-reader/prefs.rs:103
 msgid "Webtoon"
 msgstr ""
@@ -224,7 +224,7 @@ msgstr ""
 msgid "Left to right"
 msgstr ""
 
-#: src/metadata.rs:63 vnmf-gui/src/bin/vnmf-creator.rs:2961
+#: src/metadata.rs:63 vnmf-gui/src/bin/vnmf-creator.rs:2963
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:2437
 msgid "Right to left"
 msgstr ""
@@ -273,11 +273,11 @@ msgstr ""
 msgid "Author"
 msgstr ""
 
-#: src/metadata.rs:73 vnmf-gui/src/bin/vnmf-creator.rs:2885
+#: src/metadata.rs:73 vnmf-gui/src/bin/vnmf-creator.rs:2886
 msgid "Writer"
 msgstr ""
 
-#: src/metadata.rs:74 vnmf-gui/src/bin/vnmf-creator.rs:2886
+#: src/metadata.rs:74 vnmf-gui/src/bin/vnmf-creator.rs:2887
 msgid "Artist"
 msgstr ""
 
@@ -341,158 +341,158 @@ msgstr ""
 msgid "Raw provider"
 msgstr ""
 
-#: src/metadata.rs:538 vnmf-gui/src/bin/vnmf-creator.rs:1528
-#: vnmf-gui/src/bin/vnmf-creator.rs:2868
+#: src/metadata.rs:542 vnmf-gui/src/bin/vnmf-creator.rs:1528
+#: vnmf-gui/src/bin/vnmf-creator.rs:2869
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Title"
 msgstr ""
 
-#: src/metadata.rs:539 vnmf-gui/src/bin/vnmf-creator.rs:2869
+#: src/metadata.rs:543 vnmf-gui/src/bin/vnmf-creator.rs:2870
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Original title"
 msgstr ""
 
-#: src/metadata.rs:540 vnmf-gui/src/bin/vnmf-creator.rs:2873
+#: src/metadata.rs:544 vnmf-gui/src/bin/vnmf-creator.rs:2874
 msgid "Romanized"
 msgstr ""
 
-#: src/metadata.rs:542
+#: src/metadata.rs:546
 msgid "Other titles"
 msgstr ""
 
-#: src/metadata.rs:554 vnmf-gui/src/bin/vnmf-creator.rs:2870
+#: src/metadata.rs:558 vnmf-gui/src/bin/vnmf-creator.rs:2871
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Type"
 msgstr ""
 
-#: src/metadata.rs:555
+#: src/metadata.rs:559
 msgid "Publication"
 msgstr ""
 
-#: src/metadata.rs:556 vnmf-gui/src/bin/vnmf-creator.rs:2871
+#: src/metadata.rs:560 vnmf-gui/src/bin/vnmf-creator.rs:2872
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Status"
 msgstr ""
 
-#: src/metadata.rs:557 vnmf-gui/src/bin/vnmf-creator.rs:2878
+#: src/metadata.rs:561 vnmf-gui/src/bin/vnmf-creator.rs:2879
 msgid "Audience"
 msgstr ""
 
-#: src/metadata.rs:559
+#: src/metadata.rs:563
 msgid "Origin"
 msgstr ""
 
-#: src/metadata.rs:571 vnmf-gui/src/bin/vnmf-reader/main.rs:1062
+#: src/metadata.rs:575 vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1065
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1072
 msgid "Authors and team"
 msgstr ""
 
-#: src/metadata.rs:578
+#: src/metadata.rs:582
 msgid "Serialized in"
 msgstr ""
 
-#: src/metadata.rs:579 vnmf-gui/src/bin/vnmf-creator.rs:2942
+#: src/metadata.rs:583 vnmf-gui/src/bin/vnmf-creator.rs:2944
 msgid "Original publisher"
 msgstr ""
 
-#: src/metadata.rs:581
+#: src/metadata.rs:585
 msgid "Years"
 msgstr ""
 
-#: src/metadata.rs:584
+#: src/metadata.rs:588
 #, rust-format
 msgid "since {0}"
 msgstr ""
 
-#: src/metadata.rs:589
+#: src/metadata.rs:593
 msgid "In the series"
 msgstr ""
 
-#: src/metadata.rs:591 vnmf-gui/src/bin/vnmf-info.rs:464
+#: src/metadata.rs:595 vnmf-gui/src/bin/vnmf-info.rs:464
 #, rust-format
 msgid "volumes {0}, chapters {1}"
 msgstr ""
 
-#: src/metadata.rs:592
+#: src/metadata.rs:596
 #, rust-format
 msgid "volumes {0}"
 msgstr ""
 
-#: src/metadata.rs:593 vnmf-gui/src/bin/vnmf-info.rs:464
+#: src/metadata.rs:597 vnmf-gui/src/bin/vnmf-info.rs:464
 #, rust-format
 msgid "chapters {0}"
 msgstr ""
 
-#: src/metadata.rs:597 vnmf-gui/src/widgets.rs:103 vnmf-gui/src/widgets.rs:139
+#: src/metadata.rs:601 vnmf-gui/src/widgets.rs:103 vnmf-gui/src/widgets.rs:139
 msgid "Language"
 msgstr ""
 
-#: src/metadata.rs:600 vnmf-gui/src/bin/vnmf-creator.rs:2897
+#: src/metadata.rs:604 vnmf-gui/src/bin/vnmf-creator.rs:2898
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Translation"
 msgstr ""
 
-#: src/metadata.rs:615 vnmf-gui/src/bin/vnmf-creator.rs:2906
+#: src/metadata.rs:622 vnmf-gui/src/bin/vnmf-creator.rs:2908
 msgid "Publisher"
 msgstr ""
 
-#: src/metadata.rs:616 vnmf-gui/src/bin/vnmf-creator.rs:2907
+#: src/metadata.rs:623 vnmf-gui/src/bin/vnmf-creator.rs:2909
 msgid "Imprint"
 msgstr ""
 
-#: src/metadata.rs:617 vnmf-gui/src/bin/vnmf-creator.rs:2905
+#: src/metadata.rs:624 vnmf-gui/src/bin/vnmf-creator.rs:2907
 msgid "Edition"
 msgstr ""
 
-#: src/metadata.rs:618
+#: src/metadata.rs:625
 msgid "Release date"
 msgstr ""
 
-#: src/metadata.rs:620 vnmf-gui/src/bin/vnmf-creator.rs:2916
+#: src/metadata.rs:627 vnmf-gui/src/bin/vnmf-creator.rs:2918
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Genres"
 msgstr ""
 
-#: src/metadata.rs:621 vnmf-gui/src/bin/vnmf-creator.rs:2917
+#: src/metadata.rs:628 vnmf-gui/src/bin/vnmf-creator.rs:2919
 msgid "Tags"
 msgstr ""
 
-#: src/metadata.rs:622 vnmf-gui/src/bin/vnmf-creator.rs:2920
+#: src/metadata.rs:629 vnmf-gui/src/bin/vnmf-creator.rs:2922
 msgid "Characters"
 msgstr ""
 
-#: src/metadata.rs:623 vnmf-gui/src/bin/vnmf-creator.rs:2918
+#: src/metadata.rs:630 vnmf-gui/src/bin/vnmf-creator.rs:2920
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Age rating"
 msgstr ""
 
-#: src/metadata.rs:624 vnmf-gui/src/bin/vnmf-creator.rs:2921
+#: src/metadata.rs:631 vnmf-gui/src/bin/vnmf-creator.rs:2923
 msgid "Content warnings"
 msgstr ""
 
-#: src/metadata.rs:625
+#: src/metadata.rs:632
 msgid "Reading direction"
 msgstr ""
 
-#: src/metadata.rs:626
+#: src/metadata.rs:633
 msgid "How to read"
 msgstr ""
 
-#: src/metadata.rs:627 vnmf-gui/src/bin/vnmf-creator.rs:2922
+#: src/metadata.rs:634 vnmf-gui/src/bin/vnmf-creator.rs:2924
 msgid "Color"
 msgstr ""
 
-#: src/metadata.rs:630
+#: src/metadata.rs:637
 msgid "Catalogs"
 msgstr ""
 
-#: src/metadata.rs:633
+#: src/metadata.rs:640
 msgid "Links"
 msgstr ""
 
-#: src/metadata.rs:636 vnmf-gui/src/bin/vnmf-creator.rs:2915
-#: vnmf-gui/src/bin/vnmf-creator.rs:2934
+#: src/metadata.rs:643 vnmf-gui/src/bin/vnmf-creator.rs:2917
+#: vnmf-gui/src/bin/vnmf-creator.rs:2936
 msgid "Description"
 msgstr ""
 
@@ -905,7 +905,7 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:887 vnmf-gui/src/bin/vnmf-creator.rs:2979
+#: vnmf-gui/src/bin/vnmf-creator.rs:887 vnmf-gui/src/bin/vnmf-creator.rs:2981
 msgid "Custom covers"
 msgstr ""
 
@@ -937,7 +937,7 @@ msgstr ""
 msgid "Add images with the \"+\" button"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:951 vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:951 vnmf-gui/src/bin/vnmf-creator.rs:2972
 #: vnmf-gui/src/bin/vnmf-info.rs:591
 msgid "None"
 msgstr ""
@@ -1325,239 +1325,243 @@ msgstr ""
 msgid "Saving crashed"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2847
+#: vnmf-gui/src/bin/vnmf-creator.rs:2848
 msgid "not specified"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2857
+#: vnmf-gui/src/bin/vnmf-creator.rs:2858
 msgid "Work"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2858
+#: vnmf-gui/src/bin/vnmf-creator.rs:2859
 msgid ""
 "VNMF metadata: all fields are optional, lists are comma-separated. A CBZ "
 "gets them as ComicInfo.xml"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2862
+#: vnmf-gui/src/bin/vnmf-creator.rs:2863
 msgid "Import vnmf.json or ComicInfo.xml"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2872
+#: vnmf-gui/src/bin/vnmf-creator.rs:2873
 msgid "Other titles and origin"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2872
+#: vnmf-gui/src/bin/vnmf-creator.rs:2873
 msgid "romanized, alternative, language and country"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2874
+#: vnmf-gui/src/bin/vnmf-creator.rs:2875
 msgid "Alternative titles"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2875
+#: vnmf-gui/src/bin/vnmf-creator.rs:2876
 msgid "Original language (ja, ko, zh)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2876
+#: vnmf-gui/src/bin/vnmf-creator.rs:2877
 msgid "Country (JP, KR, CN)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2877
+#: vnmf-gui/src/bin/vnmf-creator.rs:2878
 msgid "Form of publication"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2883
+#: vnmf-gui/src/bin/vnmf-creator.rs:2884
 msgid "Authors"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2884
+#: vnmf-gui/src/bin/vnmf-creator.rs:2885
 msgid "Author (story and art)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2887
+#: vnmf-gui/src/bin/vnmf-creator.rs:2888
 msgid "Other roles"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2887
+#: vnmf-gui/src/bin/vnmf-creator.rs:2888
 msgid "original creator, colorist, editor…"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2895
+#: vnmf-gui/src/bin/vnmf-creator.rs:2896
 msgid "Translation and edition"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2896
+#: vnmf-gui/src/bin/vnmf-creator.rs:2897
 msgid "Text language (en, uk)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2898
+#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+msgid "Translation status"
+msgstr ""
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2900
 msgid "Translation team"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+#: vnmf-gui/src/bin/vnmf-creator.rs:2901
 msgid "Team members"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+#: vnmf-gui/src/bin/vnmf-creator.rs:2901
 msgid "translator, proofreader, typesetter…"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2903
+#: vnmf-gui/src/bin/vnmf-creator.rs:2905
 msgid "Translation notes"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2905
+#: vnmf-gui/src/bin/vnmf-creator.rs:2907
 msgid "publisher, date, ISBN"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2908
+#: vnmf-gui/src/bin/vnmf-creator.rs:2910
 msgid "Edition (Deluxe, digital…)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2909
+#: vnmf-gui/src/bin/vnmf-creator.rs:2911
 msgid "Release date (YYYY-MM-DD)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2919
+#: vnmf-gui/src/bin/vnmf-creator.rs:2921
 msgid "More"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2919
+#: vnmf-gui/src/bin/vnmf-creator.rs:2921
 msgid "characters, warnings, color"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2939
+#: vnmf-gui/src/bin/vnmf-creator.rs:2941
 msgid "Series and catalogs"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2940
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
 msgid "Original publication"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2940
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
 msgid "magazine or platform, years, number of volumes"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2941
+#: vnmf-gui/src/bin/vnmf-creator.rs:2943
 msgid "Magazine / platform"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2943
+#: vnmf-gui/src/bin/vnmf-creator.rs:2945
 msgid "Start (YYYY-MM-DD)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2944
+#: vnmf-gui/src/bin/vnmf-creator.rs:2946
 msgid "End"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2945
+#: vnmf-gui/src/bin/vnmf-creator.rs:2947
 msgid "Total volumes"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2946
+#: vnmf-gui/src/bin/vnmf-creator.rs:2948
 msgid "Total chapters"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2948
+#: vnmf-gui/src/bin/vnmf-creator.rs:2950
 msgid "Catalogs and links"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2952
+#: vnmf-gui/src/bin/vnmf-creator.rs:2954
 msgid "Links (comma-separated URLs)"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2959
+#: vnmf-gui/src/bin/vnmf-creator.rs:2961
 msgid "Parameters"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2960
+#: vnmf-gui/src/bin/vnmf-creator.rs:2962
 msgid "All images form one long page; formats can be mixed"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2961
+#: vnmf-gui/src/bin/vnmf-creator.rs:2963
 msgid "Manga reading direction"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2963 vnmf-gui/src/bin/vnmf-guard.rs:213
+#: vnmf-gui/src/bin/vnmf-creator.rs:2965 vnmf-gui/src/bin/vnmf-guard.rs:213
 msgid "Redundancy, %"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2964
+#: vnmf-gui/src/bin/vnmf-creator.rs:2966
 msgid ""
 "Protection against media damage: a contiguous region of the same size can be "
 "recovered"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2967
+#: vnmf-gui/src/bin/vnmf-creator.rs:2969
 msgid "A copy of the tables at the end of the file"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2967 vnmf-gui/src/bin/vnmf-info.rs:396
+#: vnmf-gui/src/bin/vnmf-creator.rs:2969 vnmf-gui/src/bin/vnmf-info.rs:396
 msgid "Metadata backup copy"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2969
+#: vnmf-gui/src/bin/vnmf-creator.rs:2971
 msgid "Covers"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:2972
 msgid "Custom only"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:2972
 msgid "From pages"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2976
+#: vnmf-gui/src/bin/vnmf-creator.rs:2978
 msgid "Add images…"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2980
+#: vnmf-gui/src/bin/vnmf-creator.rs:2982
 msgid ""
 "Images from files — they don't become pages. A cover from pages is the "
 "\"Cover\" page role. For the file and each volume the first one is the main "
 "one, the rest are additional."
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2989 vnmf-gui/src/bin/vnmf-info.rs:394
+#: vnmf-gui/src/bin/vnmf-creator.rs:2991 vnmf-gui/src/bin/vnmf-info.rs:394
 msgid "Block size"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3004
+#: vnmf-gui/src/bin/vnmf-creator.rs:3006
 msgid "Don't start a chapter here"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3004
+#: vnmf-gui/src/bin/vnmf-creator.rs:3006
 msgid "Start a new chapter here"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3009
+#: vnmf-gui/src/bin/vnmf-creator.rs:3011
 msgid "Don't start a volume here"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3009
+#: vnmf-gui/src/bin/vnmf-creator.rs:3011
 msgid "Start a new volume here"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3013
+#: vnmf-gui/src/bin/vnmf-creator.rs:3015
 msgid "Structure"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3015
+#: vnmf-gui/src/bin/vnmf-creator.rs:3017
 #, rust-format
 msgid "Attachments ({0})…"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3015
+#: vnmf-gui/src/bin/vnmf-creator.rs:3017
 msgid "Sound, text, dark version…"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3019
+#: vnmf-gui/src/bin/vnmf-creator.rs:3021
 msgid "Attachments"
 msgstr ""
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3027
+#: vnmf-gui/src/bin/vnmf-creator.rs:3029
 msgid "Page role"
 msgstr ""
 

@@ -28,8 +28,12 @@ pub mod health;
 pub mod input;
 pub mod metadata;
 pub mod natsort;
+pub mod pack;
 pub mod playback;
+pub mod repair;
+pub mod rewrite;
 pub mod spread;
+pub mod unpack;
 
 /// Human-readable size: `1.4 MiB`.
 pub fn human_size(bytes: u64) -> String {

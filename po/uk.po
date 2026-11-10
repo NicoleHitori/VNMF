@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: vnmf 0.1.0-beta\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-04 13:50+0200\n"
+"POT-Creation-Date: 2026-11-10 21:56+0200\n"
 "PO-Revision-Date: 2026-11-04 12:00+0200\n"
 "Last-Translator: void_nicole (Nicole Hitori)\n"
 "Language-Team: Ukrainian\n"
@@ -137,7 +137,7 @@ msgstr "Манхва"
 msgid "Manhua"
 msgstr "Маньхуа"
 
-#: src/metadata.rs:42 vnmf-gui/src/bin/vnmf-creator.rs:2960
+#: src/metadata.rs:42 vnmf-gui/src/bin/vnmf-creator.rs:2962
 #: vnmf-gui/src/bin/vnmf-reader/prefs.rs:103
 msgid "Webtoon"
 msgstr "Вебтун"
@@ -234,7 +234,7 @@ msgstr "Для всіх"
 msgid "Left to right"
 msgstr "Зліва направо"
 
-#: src/metadata.rs:63 vnmf-gui/src/bin/vnmf-creator.rs:2961
+#: src/metadata.rs:63 vnmf-gui/src/bin/vnmf-creator.rs:2963
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:2437
 msgid "Right to left"
 msgstr "Справа наліво"
@@ -283,11 +283,11 @@ msgstr "Офіційний"
 msgid "Author"
 msgstr "Автор"
 
-#: src/metadata.rs:73 vnmf-gui/src/bin/vnmf-creator.rs:2885
+#: src/metadata.rs:73 vnmf-gui/src/bin/vnmf-creator.rs:2886
 msgid "Writer"
 msgstr "Сценарист"
 
-#: src/metadata.rs:74 vnmf-gui/src/bin/vnmf-creator.rs:2886
+#: src/metadata.rs:74 vnmf-gui/src/bin/vnmf-creator.rs:2887
 msgid "Artist"
 msgstr "Художник"
 
@@ -351,158 +351,158 @@ msgstr "Контроль якості"
 msgid "Raw provider"
 msgstr "Сирці"
 
-#: src/metadata.rs:538 vnmf-gui/src/bin/vnmf-creator.rs:1528
-#: vnmf-gui/src/bin/vnmf-creator.rs:2868
+#: src/metadata.rs:542 vnmf-gui/src/bin/vnmf-creator.rs:1528
+#: vnmf-gui/src/bin/vnmf-creator.rs:2869
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Title"
 msgstr "Назва"
 
-#: src/metadata.rs:539 vnmf-gui/src/bin/vnmf-creator.rs:2869
+#: src/metadata.rs:543 vnmf-gui/src/bin/vnmf-creator.rs:2870
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Original title"
 msgstr "Оригінальна назва"
 
-#: src/metadata.rs:540 vnmf-gui/src/bin/vnmf-creator.rs:2873
+#: src/metadata.rs:544 vnmf-gui/src/bin/vnmf-creator.rs:2874
 msgid "Romanized"
 msgstr "Латиницею"
 
-#: src/metadata.rs:542
+#: src/metadata.rs:546
 msgid "Other titles"
 msgstr "Інші назви"
 
-#: src/metadata.rs:554 vnmf-gui/src/bin/vnmf-creator.rs:2870
+#: src/metadata.rs:558 vnmf-gui/src/bin/vnmf-creator.rs:2871
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Type"
 msgstr "Тип"
 
-#: src/metadata.rs:555
+#: src/metadata.rs:559
 msgid "Publication"
 msgstr "Публікація"
 
-#: src/metadata.rs:556 vnmf-gui/src/bin/vnmf-creator.rs:2871
+#: src/metadata.rs:560 vnmf-gui/src/bin/vnmf-creator.rs:2872
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Status"
 msgstr "Статус"
 
-#: src/metadata.rs:557 vnmf-gui/src/bin/vnmf-creator.rs:2878
+#: src/metadata.rs:561 vnmf-gui/src/bin/vnmf-creator.rs:2879
 msgid "Audience"
 msgstr "Аудиторія"
 
-#: src/metadata.rs:559
+#: src/metadata.rs:563
 msgid "Origin"
 msgstr "Походження"
 
-#: src/metadata.rs:571 vnmf-gui/src/bin/vnmf-reader/main.rs:1062
+#: src/metadata.rs:575 vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1065
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1072
 msgid "Authors and team"
 msgstr "Автори й команда"
 
-#: src/metadata.rs:578
+#: src/metadata.rs:582
 msgid "Serialized in"
 msgstr "Публікувалося в"
 
-#: src/metadata.rs:579 vnmf-gui/src/bin/vnmf-creator.rs:2942
+#: src/metadata.rs:583 vnmf-gui/src/bin/vnmf-creator.rs:2944
 msgid "Original publisher"
 msgstr "Видавець оригіналу"
 
-#: src/metadata.rs:581
+#: src/metadata.rs:585
 msgid "Years"
 msgstr "Роки"
 
-#: src/metadata.rs:584
+#: src/metadata.rs:588
 #, rust-format
 msgid "since {0}"
 msgstr "з {0}"
 
-#: src/metadata.rs:589
+#: src/metadata.rs:593
 msgid "In the series"
 msgstr "У серії"
 
-#: src/metadata.rs:591 vnmf-gui/src/bin/vnmf-info.rs:464
+#: src/metadata.rs:595 vnmf-gui/src/bin/vnmf-info.rs:464
 #, rust-format
 msgid "volumes {0}, chapters {1}"
 msgstr "томів {0}, розділів {1}"
 
-#: src/metadata.rs:592
+#: src/metadata.rs:596
 #, rust-format
 msgid "volumes {0}"
 msgstr "томів {0}"
 
-#: src/metadata.rs:593 vnmf-gui/src/bin/vnmf-info.rs:464
+#: src/metadata.rs:597 vnmf-gui/src/bin/vnmf-info.rs:464
 #, rust-format
 msgid "chapters {0}"
 msgstr "розділів {0}"
 
-#: src/metadata.rs:597 vnmf-gui/src/widgets.rs:103 vnmf-gui/src/widgets.rs:139
+#: src/metadata.rs:601 vnmf-gui/src/widgets.rs:103 vnmf-gui/src/widgets.rs:139
 msgid "Language"
 msgstr "Мова"
 
-#: src/metadata.rs:600 vnmf-gui/src/bin/vnmf-creator.rs:2897
+#: src/metadata.rs:604 vnmf-gui/src/bin/vnmf-creator.rs:2898
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Translation"
 msgstr "Переклад"
 
-#: src/metadata.rs:615 vnmf-gui/src/bin/vnmf-creator.rs:2906
+#: src/metadata.rs:622 vnmf-gui/src/bin/vnmf-creator.rs:2908
 msgid "Publisher"
 msgstr "Видавець"
 
-#: src/metadata.rs:616 vnmf-gui/src/bin/vnmf-creator.rs:2907
+#: src/metadata.rs:623 vnmf-gui/src/bin/vnmf-creator.rs:2909
 msgid "Imprint"
 msgstr "Імпринт"
 
-#: src/metadata.rs:617 vnmf-gui/src/bin/vnmf-creator.rs:2905
+#: src/metadata.rs:624 vnmf-gui/src/bin/vnmf-creator.rs:2907
 msgid "Edition"
 msgstr "Видання"
 
-#: src/metadata.rs:618
+#: src/metadata.rs:625
 msgid "Release date"
 msgstr "Дата виходу"
 
-#: src/metadata.rs:620 vnmf-gui/src/bin/vnmf-creator.rs:2916
+#: src/metadata.rs:627 vnmf-gui/src/bin/vnmf-creator.rs:2918
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Genres"
 msgstr "Жанри"
 
-#: src/metadata.rs:621 vnmf-gui/src/bin/vnmf-creator.rs:2917
+#: src/metadata.rs:628 vnmf-gui/src/bin/vnmf-creator.rs:2919
 msgid "Tags"
 msgstr "Теги"
 
-#: src/metadata.rs:622 vnmf-gui/src/bin/vnmf-creator.rs:2920
+#: src/metadata.rs:629 vnmf-gui/src/bin/vnmf-creator.rs:2922
 msgid "Characters"
 msgstr "Персонажі"
 
-#: src/metadata.rs:623 vnmf-gui/src/bin/vnmf-creator.rs:2918
+#: src/metadata.rs:630 vnmf-gui/src/bin/vnmf-creator.rs:2920
 #: vnmf-gui/src/bin/vnmf-reader/main.rs:1062
 msgid "Age rating"
 msgstr "Вікове обмеження"
 
-#: src/metadata.rs:624 vnmf-gui/src/bin/vnmf-creator.rs:2921
+#: src/metadata.rs:631 vnmf-gui/src/bin/vnmf-creator.rs:2923
 msgid "Content warnings"
 msgstr "Попередження про вміст"
 
-#: src/metadata.rs:625
+#: src/metadata.rs:632
 msgid "Reading direction"
 msgstr "Напрям читання"
 
-#: src/metadata.rs:626
+#: src/metadata.rs:633
 msgid "How to read"
 msgstr "Як читати"
 
-#: src/metadata.rs:627 vnmf-gui/src/bin/vnmf-creator.rs:2922
+#: src/metadata.rs:634 vnmf-gui/src/bin/vnmf-creator.rs:2924
 msgid "Color"
 msgstr "Колір"
 
-#: src/metadata.rs:630
+#: src/metadata.rs:637
 msgid "Catalogs"
 msgstr "Каталоги"
 
-#: src/metadata.rs:633
+#: src/metadata.rs:640
 msgid "Links"
 msgstr "Посилання"
 
-#: src/metadata.rs:636 vnmf-gui/src/bin/vnmf-creator.rs:2915
-#: vnmf-gui/src/bin/vnmf-creator.rs:2934
+#: src/metadata.rs:643 vnmf-gui/src/bin/vnmf-creator.rs:2917
+#: vnmf-gui/src/bin/vnmf-creator.rs:2936
 msgid "Description"
 msgstr "Опис"
 
@@ -921,7 +921,7 @@ msgstr "Зміни буде збережено в новий файл — вих
 msgid "Images"
 msgstr "Зображення"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:887 vnmf-gui/src/bin/vnmf-creator.rs:2979
+#: vnmf-gui/src/bin/vnmf-creator.rs:887 vnmf-gui/src/bin/vnmf-creator.rs:2981
 msgid "Custom covers"
 msgstr "Власні обкладинки"
 
@@ -953,7 +953,7 @@ msgstr "Том {0} (немає в проєкті)"
 msgid "Add images with the \"+\" button"
 msgstr "Додайте зображення кнопкою «+»"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:951 vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:951 vnmf-gui/src/bin/vnmf-creator.rs:2972
 #: vnmf-gui/src/bin/vnmf-info.rs:591
 msgid "None"
 msgstr "Немає"
@@ -1362,15 +1362,15 @@ msgstr "Не вдалося зберегти: {0}"
 msgid "Saving crashed"
 msgstr "Збереження аварійно перервано"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2847
+#: vnmf-gui/src/bin/vnmf-creator.rs:2848
 msgid "not specified"
 msgstr "не вказано"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2857
+#: vnmf-gui/src/bin/vnmf-creator.rs:2858
 msgid "Work"
 msgstr "Твір"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2858
+#: vnmf-gui/src/bin/vnmf-creator.rs:2859
 msgid ""
 "VNMF metadata: all fields are optional, lists are comma-separated. A CBZ "
 "gets them as ComicInfo.xml"
@@ -1378,182 +1378,186 @@ msgstr ""
 "Метадані VNMF: усі поля необов'язкові, списки — через кому. CBZ отримає їх "
 "як ComicInfo.xml"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2862
+#: vnmf-gui/src/bin/vnmf-creator.rs:2863
 msgid "Import vnmf.json or ComicInfo.xml"
 msgstr "Імпорт vnmf.json або ComicInfo.xml"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2872
+#: vnmf-gui/src/bin/vnmf-creator.rs:2873
 msgid "Other titles and origin"
 msgstr "Інші назви й походження"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2872
+#: vnmf-gui/src/bin/vnmf-creator.rs:2873
 msgid "romanized, alternative, language and country"
 msgstr "латиницею, альтернативні, мова й країна"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2874
+#: vnmf-gui/src/bin/vnmf-creator.rs:2875
 msgid "Alternative titles"
 msgstr "Альтернативні назви"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2875
+#: vnmf-gui/src/bin/vnmf-creator.rs:2876
 msgid "Original language (ja, ko, zh)"
 msgstr "Мова оригіналу (ja, ko, zh)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2876
+#: vnmf-gui/src/bin/vnmf-creator.rs:2877
 msgid "Country (JP, KR, CN)"
 msgstr "Країна (JP, KR, CN)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2877
+#: vnmf-gui/src/bin/vnmf-creator.rs:2878
 msgid "Form of publication"
 msgstr "Форма публікації"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2883
+#: vnmf-gui/src/bin/vnmf-creator.rs:2884
 msgid "Authors"
 msgstr "Автори"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2884
+#: vnmf-gui/src/bin/vnmf-creator.rs:2885
 msgid "Author (story and art)"
 msgstr "Автор (сюжет і малюнок)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2887
+#: vnmf-gui/src/bin/vnmf-creator.rs:2888
 msgid "Other roles"
 msgstr "Інші ролі"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2887
+#: vnmf-gui/src/bin/vnmf-creator.rs:2888
 msgid "original creator, colorist, editor…"
 msgstr "першоджерело, колорист, редактор…"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2895
+#: vnmf-gui/src/bin/vnmf-creator.rs:2896
 msgid "Translation and edition"
 msgstr "Переклад і видання"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2896
+#: vnmf-gui/src/bin/vnmf-creator.rs:2897
 msgid "Text language (en, uk)"
 msgstr "Мова тексту (uk, en)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2898
+#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+msgid "Translation status"
+msgstr "Статус перекладу"
+
+#: vnmf-gui/src/bin/vnmf-creator.rs:2900
 msgid "Translation team"
 msgstr "Команда перекладу"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+#: vnmf-gui/src/bin/vnmf-creator.rs:2901
 msgid "Team members"
 msgstr "Склад команди"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2899
+#: vnmf-gui/src/bin/vnmf-creator.rs:2901
 msgid "translator, proofreader, typesetter…"
 msgstr "перекладач, коректор, тайпсеттер…"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2903
+#: vnmf-gui/src/bin/vnmf-creator.rs:2905
 msgid "Translation notes"
 msgstr "Примітки до перекладу"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2905
+#: vnmf-gui/src/bin/vnmf-creator.rs:2907
 msgid "publisher, date, ISBN"
 msgstr "видавець, дата, ISBN"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2908
+#: vnmf-gui/src/bin/vnmf-creator.rs:2910
 msgid "Edition (Deluxe, digital…)"
 msgstr "Видання (Deluxe, цифрове…)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2909
+#: vnmf-gui/src/bin/vnmf-creator.rs:2911
 msgid "Release date (YYYY-MM-DD)"
 msgstr "Дата виходу (РРРР-ММ-ДД)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2919
+#: vnmf-gui/src/bin/vnmf-creator.rs:2921
 msgid "More"
 msgstr "Ще"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2919
+#: vnmf-gui/src/bin/vnmf-creator.rs:2921
 msgid "characters, warnings, color"
 msgstr "персонажі, попередження, колір"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2939
+#: vnmf-gui/src/bin/vnmf-creator.rs:2941
 msgid "Series and catalogs"
 msgstr "Серія й каталоги"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2940
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
 msgid "Original publication"
 msgstr "Публікація оригіналу"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2940
+#: vnmf-gui/src/bin/vnmf-creator.rs:2942
 msgid "magazine or platform, years, number of volumes"
 msgstr "журнал чи платформа, роки, кількість томів"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2941
+#: vnmf-gui/src/bin/vnmf-creator.rs:2943
 msgid "Magazine / platform"
 msgstr "Журнал / платформа"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2943
+#: vnmf-gui/src/bin/vnmf-creator.rs:2945
 msgid "Start (YYYY-MM-DD)"
 msgstr "Початок (РРРР-ММ-ДД)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2944
+#: vnmf-gui/src/bin/vnmf-creator.rs:2946
 msgid "End"
 msgstr "Завершення"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2945
+#: vnmf-gui/src/bin/vnmf-creator.rs:2947
 msgid "Total volumes"
 msgstr "Усього томів"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2946
+#: vnmf-gui/src/bin/vnmf-creator.rs:2948
 msgid "Total chapters"
 msgstr "Усього розділів"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2948
+#: vnmf-gui/src/bin/vnmf-creator.rs:2950
 msgid "Catalogs and links"
 msgstr "Каталоги й посилання"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2952
+#: vnmf-gui/src/bin/vnmf-creator.rs:2954
 msgid "Links (comma-separated URLs)"
 msgstr "Посилання (URL через кому)"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2959
+#: vnmf-gui/src/bin/vnmf-creator.rs:2961
 msgid "Parameters"
 msgstr "Параметри"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2960
+#: vnmf-gui/src/bin/vnmf-creator.rs:2962
 msgid "All images form one long page; formats can be mixed"
 msgstr "Усі зображення — одна довга сторінка; формати можна змішувати"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2961
+#: vnmf-gui/src/bin/vnmf-creator.rs:2963
 msgid "Manga reading direction"
 msgstr "Напрям читання манги"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2963 vnmf-gui/src/bin/vnmf-guard.rs:213
+#: vnmf-gui/src/bin/vnmf-creator.rs:2965 vnmf-gui/src/bin/vnmf-guard.rs:213
 msgid "Redundancy, %"
 msgstr "Надлишковість, %"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2964
+#: vnmf-gui/src/bin/vnmf-creator.rs:2966
 msgid ""
 "Protection against media damage: a contiguous region of the same size can be "
 "recovered"
 msgstr ""
 "Захист від пошкоджень носія: відновлюється суцільна ділянка такого ж розміру"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2967
+#: vnmf-gui/src/bin/vnmf-creator.rs:2969
 msgid "A copy of the tables at the end of the file"
 msgstr "Копія таблиць у кінці файлу"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2967 vnmf-gui/src/bin/vnmf-info.rs:396
+#: vnmf-gui/src/bin/vnmf-creator.rs:2969 vnmf-gui/src/bin/vnmf-info.rs:396
 msgid "Metadata backup copy"
 msgstr "Резервна копія метаданих"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2969
+#: vnmf-gui/src/bin/vnmf-creator.rs:2971
 msgid "Covers"
 msgstr "Обкладинки"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:2972
 msgid "Custom only"
 msgstr "Лише власні"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2970
+#: vnmf-gui/src/bin/vnmf-creator.rs:2972
 msgid "From pages"
 msgstr "Зі сторінок"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2976
+#: vnmf-gui/src/bin/vnmf-creator.rs:2978
 msgid "Add images…"
 msgstr "Додати зображення…"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2980
+#: vnmf-gui/src/bin/vnmf-creator.rs:2982
 msgid ""
 "Images from files — they don't become pages. A cover from pages is the "
 "\"Cover\" page role. For the file and each volume the first one is the main "
@@ -1563,44 +1567,44 @@ msgstr ""
 "роль сторінки «Обкладинка». Для файлу й кожного тому головна — перша, решта "
 "— додаткові."
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:2989 vnmf-gui/src/bin/vnmf-info.rs:394
+#: vnmf-gui/src/bin/vnmf-creator.rs:2991 vnmf-gui/src/bin/vnmf-info.rs:394
 msgid "Block size"
 msgstr "Розмір блоку"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3004
+#: vnmf-gui/src/bin/vnmf-creator.rs:3006
 msgid "Don't start a chapter here"
 msgstr "Не починати тут розділ"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3004
+#: vnmf-gui/src/bin/vnmf-creator.rs:3006
 msgid "Start a new chapter here"
 msgstr "Почати тут новий розділ"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3009
+#: vnmf-gui/src/bin/vnmf-creator.rs:3011
 msgid "Don't start a volume here"
 msgstr "Не починати тут том"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3009
+#: vnmf-gui/src/bin/vnmf-creator.rs:3011
 msgid "Start a new volume here"
 msgstr "Почати тут новий том"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3013
+#: vnmf-gui/src/bin/vnmf-creator.rs:3015
 msgid "Structure"
 msgstr "Структура"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3015
+#: vnmf-gui/src/bin/vnmf-creator.rs:3017
 #, rust-format
 msgid "Attachments ({0})…"
 msgstr "Додатки ({0})…"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3015
+#: vnmf-gui/src/bin/vnmf-creator.rs:3017
 msgid "Sound, text, dark version…"
 msgstr "Звук, текст, темна версія…"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3019
+#: vnmf-gui/src/bin/vnmf-creator.rs:3021
 msgid "Attachments"
 msgstr "Додатки"
 
-#: vnmf-gui/src/bin/vnmf-creator.rs:3027
+#: vnmf-gui/src/bin/vnmf-creator.rs:3029
 msgid "Page role"
 msgstr "Роль сторінки"
 

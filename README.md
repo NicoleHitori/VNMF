@@ -47,6 +47,7 @@ reader or writer without this code.
 | **VNMF Guard** | adds the same kind of Reed–Solomon protection to ordinary media files (MKV, WebM, MP4, FLAC, Ogg/Opus, MP3, zstd, gzip, ISO) without breaking them for other programs |
 | **Thumbnailer** | `.vnmf` thumbnails in file managers |
 | **Android reader** | a reader for Android 12+ built on the same Rust core (`android/`) |
+| **VNMF Server** | a library server (`vnmf-server`): reading over HTTP with everything the format holds, uploads (CBZ converted), metadata and cover editing, reading progress and bookmarks per user, integrity checks and repair, with a built-in web interface (`vnmf-web/`) — see [docs/SERVER.md](docs/SERVER.md) |
 
 The desktop applications use GTK 4 and libadwaita and are available in English and Ukrainian
 (see [Translations](#translations)).

@@ -726,7 +726,7 @@ to manga, manhwa, manhua, webtoons, Western comics, BD, doujinshi, etc. It is id
     { "name": "Vera", "roles": ["translator", "typesetter"] }
   ],
   "language": "uk",
-  "translation": { "type": "fan", "groups": ["Team"] },
+  "translation": { "type": "fan", "status": "ongoing", "groups": ["Team"] },
   "genres": ["Action", "Fantasy"],
   "age_rating": "16+",
   "reading_direction": "ttb",
@@ -770,7 +770,7 @@ to manga, manhwa, manhua, webtoons, Western comics, BD, doujinshi, etc. It is id
 | Field | Type | Meaning |
 |---|---|---|
 | `language` | string | language of the text in this file (BCP 47) |
-| `translation` | `{type?, groups[], notes?}` | translation type, translation/scanlation teams, notes |
+| `translation` | `{type?, status?, groups[], notes?}` | translation type, state of the translation (it can lag behind the series' `status`), translation/scanlation teams, notes |
 | `publisher`, `imprint` | string | publisher and imprint of this edition |
 | `edition` | string | edition (Deluxe, collector's, digital) |
 | `release_date` | date | release date of this edition |
@@ -801,6 +801,7 @@ to manga, manhwa, manhua, webtoons, Western comics, BD, doujinshi, etc. It is id
 | `layout` | `paged`, `double` (in spreads), `strip` (as a strip) |
 | `color` | `bw`, `color`, `mixed` |
 | `translation.type` | `official`, `fan`, `machine` |
+| `translation.status` | as `status` |
 | `credits[].roles` | `author` (story and art), `story`, `art`, `original_creator` (author of the source novel), `penciller`, `inker`, `colorist`, `letterer`, `cover_artist`, `assistant`, `editor`, `translator`, `proofreader`, `typesetter`, `cleaner`, `redrawer`, `quality_checker`, `raw_provider` |
 | `identifiers` (keys) | `anilist`, `mal`, `mangadex`, `mangaupdates`, `kitsu`, `shikimori`, `comicvine`, `webtoons`, `naver`, `kakao`, `bilibili`, `kuaikan`, `tapas` (others are allowed) |
 

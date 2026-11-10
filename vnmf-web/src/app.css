@@ -1,0 +1,544 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+/* Global styles in the spirit of GNOME / libadwaita, with the pink accent.
+   Colors are tokens; the dark theme follows the system or the user's choice (data-theme). */
+
+:root {
+  /* Accent: GNOME's pink. `--accent` is for text and icons, `--accent-bg` for filled buttons. */
+  --accent-bg: #d56199;
+  --accent-fg: #ffffff;
+  --accent: #b1407a;
+  --accent-soft: rgb(213 97 153 / 0.14);
+
+  --window-bg: #fafafb;
+  --view-bg: #ffffff;
+  --headerbar-bg: #ffffff;
+  --headerbar-shade: rgb(0 0 6 / 0.12);
+  --card-bg: #ffffff;
+  --card-shadow: 0 0 0 1px rgb(0 0 6 / 0.03), 0 1px 3px 1px rgb(0 0 6 / 0.07), 0 2px 6px 2px rgb(0 0 6 / 0.03);
+  --popover-bg: #ffffff;
+  --popover-shadow: 0 0 0 1px rgb(0 0 6 / 0.07), 0 2px 8px 2px rgb(0 0 6 / 0.12);
+  --dialog-bg: #ffffff;
+  --fg: rgb(0 0 6 / 0.8);
+  --dim: rgb(0 0 6 / 0.55);
+  --border: rgb(0 0 6 / 0.1);
+  --hover: rgb(0 0 6 / 0.07);
+  --button-bg: rgb(0 0 6 / 0.1);
+  --button-hover: rgb(0 0 6 / 0.15);
+  --button-active: rgb(0 0 6 / 0.25);
+  --entry-bg: rgb(0 0 6 / 0.06);
+  --destructive: #c01c28;
+  --destructive-bg: #e01b24;
+  --success: #1b8553;
+  --warning: #9c6e03;
+  --toast-bg: rgb(30 30 34 / 0.92);
+
+  --radius: 6px;
+  --radius-card: 12px;
+  --font: 'Adwaita Sans', Cantarell, Inter, 'Noto Sans', system-ui, sans-serif;
+  color-scheme: light;
+
+  /* Older names still used in places. */
+  --bg: var(--window-bg);
+  --bg-elevated: var(--card-bg);
+  --bg-hover: var(--hover);
+  --bg-active: var(--button-bg);
+  --text: var(--fg);
+  --text-muted: var(--dim);
+  --accent-text: var(--accent-fg);
+  --danger: var(--destructive);
+  --shadow: var(--popover-shadow);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --accent: #f49cc6;
+    --accent-soft: rgb(213 97 153 / 0.22);
+    --window-bg: #222226;
+    --view-bg: #1d1d20;
+    --headerbar-bg: #2e2e32;
+    --headerbar-shade: rgb(0 0 6 / 0.36);
+    --card-bg: rgb(255 255 255 / 0.08);
+    --card-shadow: 0 0 0 1px rgb(0 0 6 / 0.09), 0 1px 3px 1px rgb(0 0 6 / 0.18), 0 2px 6px 2px rgb(0 0 6 / 0.09);
+    --popover-bg: #36363a;
+    --popover-shadow: 0 0 0 1px rgb(0 0 6 / 0.3), 0 2px 8px 2px rgb(0 0 6 / 0.4);
+    --dialog-bg: #36363a;
+    --fg: #ffffff;
+    --dim: rgb(255 255 255 / 0.55);
+    --border: rgb(255 255 255 / 0.1);
+    --hover: rgb(255 255 255 / 0.07);
+    --button-bg: rgb(255 255 255 / 0.1);
+    --button-hover: rgb(255 255 255 / 0.15);
+    --button-active: rgb(255 255 255 / 0.25);
+    --entry-bg: rgb(255 255 255 / 0.08);
+    --destructive: #ff7b63;
+    --success: #78e9ab;
+    --warning: #ffc252;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --accent: #f49cc6;
+  --accent-soft: rgb(213 97 153 / 0.22);
+  --window-bg: #222226;
+  --view-bg: #1d1d20;
+  --headerbar-bg: #2e2e32;
+  --headerbar-shade: rgb(0 0 6 / 0.36);
+  --card-bg: rgb(255 255 255 / 0.08);
+  --card-shadow: 0 0 0 1px rgb(0 0 6 / 0.09), 0 1px 3px 1px rgb(0 0 6 / 0.18), 0 2px 6px 2px rgb(0 0 6 / 0.09);
+  --popover-bg: #36363a;
+  --popover-shadow: 0 0 0 1px rgb(0 0 6 / 0.3), 0 2px 8px 2px rgb(0 0 6 / 0.4);
+  --dialog-bg: #36363a;
+  --fg: #ffffff;
+  --dim: rgb(255 255 255 / 0.55);
+  --border: rgb(255 255 255 / 0.1);
+  --hover: rgb(255 255 255 / 0.07);
+  --button-bg: rgb(255 255 255 / 0.1);
+  --button-hover: rgb(255 255 255 / 0.15);
+  --button-active: rgb(255 255 255 / 0.25);
+  --entry-bg: rgb(255 255 255 / 0.08);
+  --destructive: #ff7b63;
+  --success: #78e9ab;
+  --warning: #ffc252;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--window-bg);
+  color: var(--fg);
+  font: 15px/1.45 var(--font);
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0 0 0.6rem;
+  font-weight: 800;
+}
+h1 {
+  font-size: 1.65rem;
+}
+h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+/* Adwaita's "heading" above boxed lists. */
+.heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 1.4rem 0 0.5rem;
+}
+
+/* Buttons: tinted by default, "suggested" (accent) and "destructive", "flat", "pill", "circular". */
+button,
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 34px;
+  padding: 5px 14px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--button-bg);
+  color: var(--fg);
+  font: inherit;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+button:hover,
+.button:hover {
+  background: var(--button-hover);
+  text-decoration: none;
+}
+button:active,
+.button:active {
+  background: var(--button-active);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+button.primary,
+.button.primary {
+  background: var(--accent-bg);
+  color: var(--accent-fg);
+}
+button.primary:hover,
+.button.primary:hover {
+  background: color-mix(in srgb, var(--accent-bg), white 10%);
+}
+button.primary:active,
+.button.primary:active {
+  background: color-mix(in srgb, var(--accent-bg), black 10%);
+}
+button.danger {
+  background: var(--button-bg);
+  color: var(--destructive);
+}
+button.danger.filled {
+  background: var(--destructive-bg);
+  color: #fff;
+}
+button.ghost,
+.button.ghost,
+button.flat,
+.button.flat {
+  background: transparent;
+}
+button.ghost:hover,
+.button.ghost:hover,
+button.flat:hover,
+.button.flat:hover {
+  background: var(--hover);
+}
+button.pill,
+.button.pill {
+  border-radius: 9999px;
+  padding: 8px 26px;
+  min-height: 40px;
+}
+button.circular,
+.button.circular {
+  border-radius: 9999px;
+  padding: 0;
+  width: 34px;
+  min-width: 34px;
+}
+button.icon,
+.button.icon {
+  padding: 0;
+  width: 34px;
+  min-width: 34px;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--fg);
+  background: var(--entry-bg);
+  border: none;
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  min-height: 34px;
+  min-width: 0;
+}
+select {
+  cursor: pointer;
+}
+select option {
+  background: var(--popover-bg);
+  color: var(--fg);
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--accent-bg), transparent 30%);
+  outline-offset: -2px;
+}
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-bg), transparent 30%);
+  outline-offset: 1px;
+}
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--accent-bg);
+  width: 18px;
+  height: 18px;
+  min-height: 0;
+  padding: 0;
+}
+input[type='range'] {
+  accent-color: var(--accent-bg);
+  padding: 0;
+  background: transparent;
+  min-height: 0;
+}
+textarea {
+  resize: vertical;
+}
+
+/* A GNOME-like switch: <input type="checkbox" class="switch"> */
+input.switch {
+  appearance: none;
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border-radius: 9999px;
+  background: var(--button-active);
+  cursor: pointer;
+  transition: background 0.15s;
+  flex: none;
+}
+input.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.2);
+  transition: transform 0.15s;
+}
+input.switch:checked {
+  background: var(--accent-bg);
+}
+input.switch:checked::after {
+  transform: translateX(22px);
+}
+
+label.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  color: var(--dim);
+}
+label.check {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+
+/* Boxed list: rows in a rounded card, separated by lines (AdwPreferencesGroup / AdwActionRow). */
+.boxed-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+.boxed-list > * + * {
+  border-top: 1px solid var(--border);
+}
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 14px;
+  color: inherit;
+}
+a.list-row:hover,
+button.list-row:hover,
+label.list-row:hover {
+  background: var(--hover);
+  text-decoration: none;
+}
+button.list-row {
+  width: 100%;
+  border-radius: 0;
+  background: transparent;
+  font-weight: normal;
+  text-align: left;
+  justify-content: flex-start;
+}
+label.list-row {
+  cursor: pointer;
+}
+.list-row .grow {
+  flex: 1;
+  min-width: 0;
+}
+.list-row .title {
+  display: block;
+}
+.list-row .subtitle {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--dim);
+  overflow-wrap: anywhere;
+}
+.list-row select,
+.list-row input:not([type='checkbox']):not([type='range']) {
+  max-width: 55%;
+}
+.list-row input[type='range'] {
+  width: min(16rem, 45%);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  text-align: left;
+  padding: 10px 14px;
+  vertical-align: middle;
+}
+tr + tr td {
+  border-top: 1px solid var(--border);
+}
+th {
+  color: var(--dim);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius-card);
+  box-shadow: var(--card-shadow);
+  padding: 16px;
+}
+
+.muted,
+.dim {
+  color: var(--dim);
+}
+.error-text {
+  color: var(--destructive);
+}
+.success-text {
+  color: var(--success);
+}
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  min-height: 50vh;
+  text-align: center;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 0;
+  padding: 2px 12px;
+  border-radius: 9999px;
+  background: var(--button-bg);
+  color: var(--fg);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+a.chip:hover,
+button.chip:hover {
+  background: var(--button-hover);
+  text-decoration: none;
+}
+.chip.accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.badge {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: rgb(0 0 0 / 0.55);
+  color: #fff;
+  backdrop-filter: blur(6px);
+}
+.badge.danger {
+  background: var(--destructive-bg);
+}
+.badge.success {
+  background: var(--accent-bg);
+}
+
+dialog {
+  border: none;
+  border-radius: 14px;
+  background: var(--dialog-bg);
+  color: var(--fg);
+  box-shadow: var(--popover-shadow);
+  padding: 0;
+  max-width: min(52rem, calc(100vw - 1.5rem));
+  width: 100%;
+}
+dialog::backdrop {
+  background: rgb(0 0 6 / 0.4);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* A page with a limited width, like AdwClamp. */
+.clamp {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+/* A placeholder that something is loading into: a soft light passing over it. */
+.shimmer {
+  background: linear-gradient(100deg, var(--button-bg) 40%, color-mix(in srgb, var(--button-bg), var(--fg) 6%) 50%, var(--button-bg) 60%)
+    var(--button-bg);
+  background-size: 300% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.mono {
+  font-family: ui-monospace, 'Source Code Pro', monospace;
+}

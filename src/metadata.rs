@@ -140,6 +140,10 @@ pub struct Translation {
     /// [`TRANSLATION_TYPES`].
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
     pub kind: Option<String>,
+    /// [`STATUSES`]: state of the translation, which can lag behind the series (`status`): a series
+    /// completed long ago may still be being translated.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub status: Option<String>,
     /// Translation / scanlation teams.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub groups: Vec<String>,
@@ -149,7 +153,7 @@ pub struct Translation {
 
 impl Translation {
     fn is_empty(&self) -> bool {
-        self.kind.is_none() && self.groups.is_empty() && self.notes.is_none()
+        self.kind.is_none() && self.status.is_none() && self.groups.is_empty() && self.notes.is_none()
     }
 }
 
@@ -602,6 +606,9 @@ impl Metadata {
                 let mut parts = Vec::new();
                 if let Some(k) = &t.kind {
                     parts.push(label(TRANSLATION_TYPES, k));
+                }
+                if let Some(s) = &t.status {
+                    parts.push(label(STATUSES, s));
                 }
                 if !t.groups.is_empty() {
                     parts.push(t.groups.join(", "));

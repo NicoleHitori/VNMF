@@ -9,14 +9,14 @@ use std::process::ExitCode;
 
 use anyhow::{Context, Result, bail};
 use clap::{Parser, ValueEnum};
-use serde_json::Value;
-use vnmf_core::{BlockSize, Builder, ChunkSource, InfoFormat, PageBitFlags, PageFormat, PageRole, VnmfReader};
+use vnmf_core::{BlockSize, InfoFormat, VnmfReader};
 
 use vnmf::comicinfo;
-use vnmf::contents::{self, Contents, Toc};
+use vnmf::contents::Toc;
 use vnmf::human_size;
-use vnmf::input::{self, Chapter};
+use vnmf::input;
 use vnmf::metadata::Metadata;
+use vnmf::pack::{self, Cover, InfoSource, PackOptions};
 
 #[derive(Parser)]
 #[command(name = "vnmfpack", version, long_version = vnmf::LONG_VERSION, author = vnmf::AUTHORS, about = "Creates .vnmf from CBZ, folders or individual images")]
@@ -132,103 +132,29 @@ fn run(args: Args) -> Result<()> {
     }
 
     let chapters = input::load_inputs(&args.inputs)?;
-    let total_pages: usize = chapters.iter().map(|c| c.pages.len()).sum();
-    if total_pages == 0 {
-        bail!("no images found");
-    }
-    for ch in &chapters {
-        if !ch.skipped.is_empty() {
-            eprintln!("warning: {}: skipped {} file(s): {}", ch.name, ch.skipped.len(), ch.skipped.join(", "));
-        }
-    }
-
-    let ids = assign_ids(&chapters, args.volume);
-    let contents = chapters_contents(&chapters, &ids);
-
-    let mut builder = Builder::new()
-        .with_uuid(uuid::Uuid::new_v4().into_bytes())
-        .with_block_size(args.block_size.into())
-        .with_tail_duplicate(!args.no_tail_dup)
-        .with_redundancy(args.redundancy)
-        .with_mixed_formats(args.mixed_formats);
-
-    // --- Metadata ---
-    let info = match &args.info {
-        Some(path) => load_info_file(path)?,
-        None => chapters_info(&chapters, &ids),
+    let info = args.info.as_deref().map(load_info_file).transpose()?;
+    let cover = match args.cover.as_deref() {
+        Some("first") => Cover::First,
+        Some(path) => Cover::File(PathBuf::from(path)),
+        None => Cover::None,
     };
-    // Direction: --rtl; otherwise as set in the metadata (it takes precedence over the chapters' ComicInfo);
-    // otherwise <Manga>YesAndRightToLeft</Manga> in the ComicInfo of any chapter.
-    let rtl = args.rtl
-        || match &info {
-            Some(InfoSource::Meta(m)) if m.reading_direction.is_some() => m.is_rtl(),
-            _ => chapters.iter().any(|c| c.comic_info.as_ref().is_some_and(comicinfo::is_rtl)),
-        };
-    match info {
-        // VNMF metadata: volume and chapter titles, reading direction and mode — all together.
-        Some(InfoSource::Meta(meta)) => {
-            let mut meta = *meta;
-            let mut merged = meta.contents.clone();
-            merged.merge(&contents);
-            meta.contents = merged;
-            if rtl && meta.reading_direction.is_none() {
-                meta.reading_direction = Some("rtl".into());
-            }
-            if args.webtoon && meta.layout.is_none() {
-                meta.layout = Some("strip".into());
-            }
-            builder.set_info(meta.to_bytes());
-        }
-        // TOML / text / foreign JSON — as is; chapter titles have nowhere to go then.
-        Some(InfoSource::Raw(bytes)) => {
-            if !contents.is_empty() {
-                eprintln!("warning: Info is not VNMF metadata — volume and chapter titles were not saved");
-            }
-            builder.set_info(bytes);
-        }
-        None => {
-            let mut meta = Metadata::new();
-            meta.contents = contents;
-            if rtl {
-                meta.reading_direction = Some("rtl".into());
-            }
-            if args.webtoon {
-                meta.layout = Some("strip".into());
-            }
-            if !meta.is_empty() {
-                builder.set_info(meta.to_bytes());
-            }
-        }
+    let options = PackOptions {
+        volume: args.volume,
+        webtoon: args.webtoon,
+        mixed_formats: args.mixed_formats,
+        rtl: args.rtl,
+        block_size: args.block_size.into(),
+        redundancy: args.redundancy,
+        tail_duplicate: !args.no_tail_dup,
+        info,
+        cover,
+        uuid: None,
+    };
+    let packed = pack::pack(chapters, options)?;
+    for warning in &packed.warnings {
+        eprintln!("warning: {warning}");
     }
-
-    // --- Cover ---
-    match args.cover.as_deref() {
-        Some("first") => {
-            let first = &chapters.iter().find(|c| !c.pages.is_empty()).unwrap().pages[0];
-            builder.add_preview(first.source.clone(), 0, 0)?;
-        }
-        Some(path) => builder.add_preview_file(path, 0, 0).with_context(|| format!("cover {path}"))?,
-        None => {}
-    }
-
-    // Previews from `previews/` folders (after `vnmfunpack` into a folder).
-    for chapter in &chapters {
-        for (volume, source) in &chapter.previews {
-            builder.add_preview(source.clone(), *volume, 0)?;
-        }
-    }
-
-    // --- Pages ---
-    let base_flags = if rtl { PageBitFlags::READING_RTL } else { 0 };
-    for (chapter, (volume_id, chapter_id)) in chapters.into_iter().zip(ids) {
-        if args.webtoon && !args.mixed_formats {
-            check_uniform_formats(&chapter)?;
-        }
-        builder.set_volume(volume_id);
-        add_chapter(&mut builder, chapter, chapter_id, base_flags, args.webtoon)?;
-    }
-
-    builder.build(&output).with_context(|| format!("writing {}", output.display()))?;
+    packed.builder.build(&output).with_context(|| format!("writing {}", output.display()))?;
 
     // A short summary — re-read the finished file to show the actual result.
     let reader = VnmfReader::open(&output)?;
@@ -261,134 +187,11 @@ fn run(args: Args) -> Result<()> {
     Ok(())
 }
 
-/// A clear error with a hint if webtoon fragments have different formats.
-fn check_uniform_formats(chapter: &Chapter) -> Result<()> {
-    let mut counts: Vec<(PageFormat, usize, &str)> = Vec::new();
-    for page in &chapter.pages {
-        match counts.iter_mut().find(|(f, _, _)| *f == page.format) {
-            Some((_, n, _)) => *n += 1,
-            None => counts.push((page.format, 1, &page.name)),
-        }
-    }
-    if counts.len() > 1 {
-        let list: Vec<String> = counts.iter().map(|(f, n, first)| format!("{f} ×{n} (e.g. {first})")).collect();
-        bail!(
-            "chapter {}: webtoon fragments have different formats: {}.\n\
-             Add --mixed-formats to allow mixed formats in one page",
-            chapter.name,
-            list.join(", ")
-        );
-    }
-    Ok(())
-}
-
-fn add_chapter(builder: &mut Builder, chapter: Chapter, chapter_id: u16, flags: u16, webtoon: bool) -> Result<()> {
-    let name = chapter.name.clone();
-    let start_flags = flags | PageBitFlags::IS_CHAPTER_START;
-
-    if webtoon {
-        // A chapter is one long page: all its attachments belong to it.
-        let sources: Vec<ChunkSource> = chapter.pages.into_iter().map(|p| p.source).collect();
-        builder.add_webtoon(sources, chapter_id, 1, start_flags).with_context(|| format!("chapter {name}"))?;
-        for (_, aux) in chapter.aux {
-            builder.attach_aux(aux).with_context(|| format!("chapter {name}: attachment"))?;
-        }
-        return Ok(());
-    }
-
-    let roles = chapter.comic_info.as_ref().map(comicinfo::page_roles).unwrap_or_default();
-    let mut aux = chapter.aux;
-    for (i, page) in chapter.pages.into_iter().enumerate() {
-        let role = roles.iter().find(|(idx, _)| *idx == i).map_or(PageRole::Normal, |(_, r)| *r);
-        let page_number = u16::try_from(i + 1).context("too many pages in a chapter")?;
-        let page_flags = if i == 0 { start_flags } else { flags };
-        builder.add_page(page.source, role, chapter_id, page_number, page_flags).with_context(|| format!("{name}: {}", page.name))?;
-        for (_, entry) in aux.extract_if(.., |(idx, _)| *idx == i) {
-            builder.attach_aux(entry).with_context(|| format!("{name}: attachment of page {}", i + 1))?;
-        }
-    }
-    for (idx, _) in aux {
-        eprintln!("warning: {name}: attachment for a nonexistent page {} skipped", idx + 1);
-    }
-    Ok(())
-}
-
-/// Volume and number of each chapter.
-///
-/// Volume — found in the name / folder / ComicInfo, otherwise `--volume`, otherwise the previous
-/// chapter's volume (0 — no volume). Number — see [`contents::assign_chapter_ids`].
-fn assign_ids(chapters: &[Chapter], default_volume: Option<u16>) -> Vec<(u16, u16)> {
-    let mut volume = default_volume.unwrap_or(0);
-    let volumes: Vec<u16> = chapters
-        .iter()
-        .map(|c| {
-            volume = c.volume.or(default_volume).unwrap_or(volume);
-            volume
-        })
-        .collect();
-    let numbers: Vec<Option<String>> = chapters.iter().map(|c| c.number.clone()).collect();
-    let ids = contents::assign_chapter_ids(&volumes, &numbers);
-    volumes.into_iter().zip(ids).collect()
-}
-
-/// Volume and chapter titles: from folder names / ComicInfo, overridden by `contents.json` (after vnmfunpack).
-fn chapters_contents(chapters: &[Chapter], ids: &[(u16, u16)]) -> Contents {
-    let mut contents = Contents::default();
-    for (ch, &(volume, chapter)) in chapters.iter().zip(ids) {
-        contents.set_chapter(volume, chapter, ch.number.clone(), ch.title.clone());
-        if ch.volume_title.is_some() {
-            contents.set_volume_title(volume, ch.volume_title.clone());
-        }
-    }
-    for saved in chapters.iter().filter_map(|c| c.contents.as_ref()) {
-        contents.merge(saved);
-    }
-    contents
-}
-
-/// What goes into Info.
-enum InfoSource {
-    /// VNMF metadata (including that converted from ComicInfo or format 1.1 Info).
-    Meta(Box<Metadata>),
-    /// Another format (TOML, text, arbitrary JSON) — stored as is.
-    Raw(Vec<u8>),
-}
-
-/// Info from the chapters: `vnmf.json`, otherwise ComicInfo, otherwise an info file — from the first chapter that has one.
-///
-/// For a multi-chapter file ComicInfo describes the whole series: single-chapter fields (`Title`,
-/// `Number`, `Pages`…) are removed — chapter numbers and titles go into the table of contents.
-fn chapters_info(chapters: &[Chapter], ids: &[(u16, u16)]) -> Option<InfoSource> {
-    if let Some(meta) = chapters.iter().find_map(|c| c.metadata.clone()) {
-        return Some(InfoSource::Meta(Box::new(meta)));
-    }
-    let first = chapters.iter().find(|c| c.comic_info.is_some() || c.info.is_some())?;
-    Some(match &first.comic_info {
-        Some(json) => {
-            let mut json = json.clone();
-            if chapters.len() > 1 {
-                let one_volume = ids.windows(2).all(|w| w[0].0 == w[1].0);
-                comicinfo::strip_chapter_fields(&mut json, one_volume);
-            }
-            InfoSource::Meta(Box::new(Metadata::from_comicinfo(&json)))
-        }
-        None => raw_or_meta(first.info.clone().unwrap()),
-    })
-}
-
-/// JSON that reduces to VNMF metadata (incl. Info 1.1) — metadata; anything else — as is.
-fn raw_or_meta(data: Vec<u8>) -> InfoSource {
-    match serde_json::from_slice::<Value>(&data).ok().as_ref().and_then(Metadata::from_json) {
-        Some(meta) => InfoSource::Meta(Box::new(meta)),
-        None => InfoSource::Raw(data),
-    }
-}
-
 /// File from --info: VNMF metadata (`vnmf.json`), ComicInfo.xml, format 1.1 JSON — reduced to
 /// VNMF metadata; TOML, text and arbitrary JSON are stored as is.
-fn load_info_file(path: &Path) -> Result<Option<InfoSource>> {
+fn load_info_file(path: &Path) -> Result<InfoSource> {
     let data = fs::read(path).with_context(|| format!("could not read {}", path.display()))?;
-    Ok(Some(match InfoFormat::detect(&data) {
+    Ok(match InfoFormat::detect(&data) {
         InfoFormat::Xml => {
             let xml = String::from_utf8(data).context("XML is not UTF-8")?;
             let json = comicinfo::xml_to_json(&xml).with_context(|| format!("{}: invalid XML", path.display()))?;
@@ -398,12 +201,12 @@ fn load_info_file(path: &Path) -> Result<Option<InfoSource>> {
             InfoSource::Meta(Box::new(Metadata::from_comicinfo(&json)))
         }
         InfoFormat::Json => {
-            serde_json::from_slice::<Value>(&data).with_context(|| format!("{}: invalid JSON", path.display()))?;
-            raw_or_meta(data)
+            serde_json::from_slice::<serde_json::Value>(&data).with_context(|| format!("{}: invalid JSON", path.display()))?;
+            InfoSource::from_bytes(data)
         }
         InfoFormat::Binary => bail!("{}: metadata must be text", path.display()),
         InfoFormat::Toml | InfoFormat::Text => InfoSource::Raw(data),
-    }))
+    })
 }
 
 fn default_output(first_input: &Path) -> PathBuf {

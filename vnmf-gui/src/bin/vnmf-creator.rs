@@ -2722,6 +2722,7 @@ fn text_slot<'a>(m: &'a mut Metadata, key: &str) -> &'a mut Option<String> {
         "age_rating" => &mut m.age_rating,
         "color" => &mut m.color,
         "translation.type" => &mut m.translation.kind,
+        "translation.status" => &mut m.translation.status,
         other => unreachable!("unknown form field {other}"),
     }
 }
@@ -2895,6 +2896,7 @@ fn build_sidebar() -> (adw::PreferencesPage, MetaForm, Options) {
     let edition = adw::PreferencesGroup::builder().title(tr("Translation and edition")).build();
     edition.add(&entry(&mut entries, Field::Text("language"), tr("Text language (en, uk)")));
     edition.add(&combo(&mut combos, "translation.type", metadata::TRANSLATION_TYPES, tr("Translation")));
+    edition.add(&combo(&mut combos, "translation.status", metadata::STATUSES, tr("Translation status")));
     edition.add(&entry(&mut entries, Field::List("translation.groups"), tr("Translation team")));
     let team = more(tr("Team members"), tr("translator, proofreader, typesetter…"));
     for role in ["translator", "proofreader", "typesetter", "cleaner", "redrawer", "quality_checker", "raw_provider"] {

@@ -1,0 +1,42 @@
+[package]
+name = "vnmf-server"
+version = "0.1.0-beta"
+edition = "2024"
+authors = ["void_nicole (Nicole Hitori)"]
+license = "GPL-3.0-or-later"
+description = "VNMF library server: reading, uploads, metadata, reading progress, integrity checks and repair over HTTP"
+
+[dependencies]
+vnmf = { path = ".." }
+vnmf-core = { path = "../vnmf-core" }
+anyhow = "1.0.104"
+thiserror = "2.0.18"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+uuid = { version = "1.3", features = ["v4"] }
+clap = { version = "4.6.7", features = ["derive", "env"] }
+# HTTP: axum on tokio; tower-http for serving whole files (Range, conditional requests), CORS and request logs.
+axum = { version = "0.8.9", features = ["multipart"] }
+tokio = { version = "1.53", features = ["rt-multi-thread", "macros", "fs", "io-util", "signal", "sync", "time"] }
+tower-http = { version = "0.6", features = ["fs", "cors", "trace"] }
+bytes = "1.10"
+futures-util = { version = "0.3", default-features = false, features = ["std"] }
+# SQLite compiled in: no system library needed, JSON functions available.
+rusqlite = { version = "0.40", features = ["bundled", "collation"] }
+# Passwords: Argon2id; session tokens: random bytes, stored as SHA-256.
+argon2 = { version = "0.5", features = ["std"] }
+getrandom = "0.3"
+sha2 = "0.10"
+hex = "0.4"
+# Strip fragments taller than browsers decode (32767 px) are cut into JPEG tiles: decoders for the
+# formats books hold (AVIF in pure Rust, as in vnmf-ffi), the JPEG encoder of `image`.
+avif-decode = { version = "3", default-features = false }
+imgref = "1.12"
+rgb = "0.8"
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "webp"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+[dev-dependencies]
+tower = { version = "0.5", features = ["util"] }
+http-body-util = "0.1"
